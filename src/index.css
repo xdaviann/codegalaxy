@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg-primary text-text-primary font-sans;
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #root {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  input, textarea, select {
+    outline: none;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-bg-primary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-bg-tertiary rounded-full;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply w-full py-4 px-6 bg-accent-cyan text-bg-primary font-bold text-base rounded-2xl 
+           transition-all duration-200 active:scale-95 hover:bg-accent-cyan-dark
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply w-full py-4 px-6 bg-transparent text-text-primary font-bold text-base rounded-2xl 
+           border-2 border-border-subtle transition-all duration-200 active:scale-95 
+           hover:border-accent-cyan hover:text-accent-cyan;
+  }
+
+  .btn-google {
+    @apply w-full py-4 px-6 bg-white text-gray-800 font-bold text-base rounded-2xl 
+           flex items-center justify-center gap-3 transition-all duration-200 active:scale-95 
+           hover:bg-gray-100;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-4 bg-bg-tertiary text-text-primary placeholder-text-muted 
+           rounded-2xl border border-border-subtle focus:border-accent-cyan 
+           transition-colors duration-200 font-sans text-base;
+  }
+
+  .card {
+    @apply bg-bg-secondary rounded-2xl border border-border-subtle;
+  }
+
+  .lesson-node-completed {
+    @apply bg-accent-cyan rounded-2xl flex items-center justify-center
+           shadow-cyan-glow cursor-pointer transition-transform duration-200 active:scale-90;
+  }
+
+  .lesson-node-current {
+    @apply bg-bg-tertiary rounded-2xl flex items-center justify-center border-4 border-accent-cyan
+           cursor-pointer transition-transform duration-200 active:scale-90  animate-pulse-glow;
+  }
+
+  .lesson-node-locked {
+    @apply bg-bg-tertiary rounded-2xl flex items-center justify-center border-2 border-text-muted
+           cursor-not-allowed opacity-70;
+  }
+}
+
+@layer utilities {
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #00d4ff, #0090ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-cyan {
+    background: linear-gradient(135deg, #00d4ff, #0090ff);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}

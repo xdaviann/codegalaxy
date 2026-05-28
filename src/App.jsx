@@ -15,8 +15,10 @@ function ProtectedRoute({ children }) {
     return (
       <div className="min-h-dvh bg-bg-primary flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-bg-tertiary border-t-accent-cyan rounded-full animate-spin" />
-          <p className="text-text-muted font-mono text-sm">Cargando CodeGalaxy...</p>
+          <div className="w-14 h-14 rounded-3xl bg-gradient-accent flex items-center justify-center shadow-accent-md animate-spin-slow">
+            <span className="text-white font-extrabold text-xl">C</span>
+          </div>
+          <p className="text-text-muted font-semibold text-sm animate-pulse-soft">Cargando Cody...</p>
         </div>
       </div>
     );
@@ -47,7 +49,7 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>

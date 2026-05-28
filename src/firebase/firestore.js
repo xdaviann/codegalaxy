@@ -11,6 +11,9 @@ import {
 } from 'firebase/firestore';
 import { db } from './config';
 
+// Re-export primitives so consumers can import them from this module
+export { db, doc, setDoc, getDoc, updateDoc, collection, getDocs, serverTimestamp, increment };
+
 // Create user document on first sign-in/register
 export const createUserDocument = async (user, extraData = {}) => {
   if (!user) return;
@@ -51,17 +54,27 @@ export const updateUserStats = async (uid, updates) => {
   await updateDoc(userRef, updates);
 };
 
-// Save lesson progress
-export const saveLessonProgress = async (uid, lessonId, moduleId, score) => {
+// Save round progress for a lesson.
+// roundsCompleted counts how many rounds finished (1, 2, 3).
+// completed = true only when roundsCompleted >= totalRounds (default 3).
+export const saveRoundProgress = async (uid, lessonId, moduleId, roundNum, score, totalRounds = 3) => {
   const progressRef = doc(db, 'users', uid, 'progress', lessonId);
+  const roundsCompleted = roundNum; // roundNum is 1-based: completing round 1 → roundsCompleted=1
+  const completed = roundsCompleted >= totalRounds;
   await setDoc(progressRef, {
     lessonId,
     moduleId,
-    completed: true,
+    roundsCompleted,
+    completed,
     score,
-    completedAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
   }, { merge: true });
+  return { roundsCompleted, completed };
 };
+
+// Legacy alias (kept for backward compat)
+export const saveLessonProgress = saveRoundProgress;
+
 
 // Get all lesson progress for a user
 export const getUserProgress = async (uid) => {

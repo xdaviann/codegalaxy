@@ -1,23 +1,26 @@
 // src/components/learn/ModulePath.jsx
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Lock } from 'lucide-react';
 import LessonNode from './LessonNode';
 import ModuleHeader from './ModuleHeader';
+import LessonPreviewPanel from './LessonPreviewPanel';
 
-const NODE_HEIGHT = 120;
-const ZIGZAG_OFFSETS = [0, 60, 90, 30]; // px from center for zigzag
+const NODE_HEIGHT = 140;
 
 export default function ModulePath({ module }) {
   const { progress, userData } = useAuth();
   const navigate = useNavigate();
   const noHearts = (userData?.hearts ?? 5) <= 0;
 
+  const [previewLesson, setPreviewLesson] = useState(null);
+
   if (module.locked) {
     return (
       <div className="mx-4 mb-8">
         <ModuleHeader module={module} />
-      <div className="flex flex-col items-center py-10 gap-4">
+        <div className="flex flex-col items-center py-10 gap-4">
           <div className="w-16 h-16 rounded-2xl bg-bg-tertiary border-2 border-text-muted flex items-center justify-center opacity-60">
             <Lock size={32} className="text-text-muted" />
           </div>
@@ -38,19 +41,27 @@ export default function ModulePath({ module }) {
     return 'locked';
   });
 
-  const handleLessonClick = (lessonId) => {
+  const handleNodeClick = (lesson, status) => {
+    setPreviewLesson({ lesson, status });
+  };
+
+  const handleStartLesson = (lessonId, status) => {
+    if (status === 'locked') return;
+    if (status === 'current' && noHearts) return;
+    setPreviewLesson(null);
     navigate(`/lesson/${lessonId}`);
   };
 
   // SVG path for winding connector
   const svgHeight = module.lessons.length * NODE_HEIGHT + 40;
-  const cx = 160; // center x
+  const cx = 160; // center x of the 320px wide container
 
   // Generate zigzag path points
+  const zigzagOffsets = [0, 70, -70, 0];
   const points = module.lessons.map((_, i) => {
     const y = i * NODE_HEIGHT + 60;
-    const zigzagX = [cx, cx + 60, cx - 60, cx][i % 4];
-    return { x: zigzagX, y };
+    const x = cx + zigzagOffsets[i % 4];
+    return { x, y };
   });
 
   // Build SVG path
@@ -64,7 +75,6 @@ export default function ModulePath({ module }) {
   }
 
   const completedCount = lessonStatuses.filter((s) => s === 'completed').length;
-  const currentIdx = lessonStatuses.findIndex((s) => s === 'current');
 
   return (
     <div className="mb-8">
@@ -88,7 +98,7 @@ export default function ModulePath({ module }) {
               strokeLinejoin="round"
             />
           )}
-          {/* Progress path (cyan) */}
+          {/* Progress path (colored) */}
           {pathD && completedCount > 0 && (
             <path
               d={pathD}
@@ -124,12 +134,28 @@ export default function ModulePath({ module }) {
                 status={status}
                 index={i}
                 noHearts={noHearts}
-                onClick={() => handleLessonClick(lesson.id)}
+                roundsCompleted={progress[lesson.id]?.roundsCompleted ?? 0}
+                moduleColor={module.color}
+                zigzagX={p.x}
+                containerCx={cx}
+                onClick={() => handleNodeClick(lesson, status)}
               />
             </div>
           );
         })}
       </div>
+
+      {/* Preview panel */}
+      {previewLesson && (
+        <LessonPreviewPanel
+          lesson={previewLesson.lesson}
+          module={module}
+          status={previewLesson.status}
+          noHearts={noHearts}
+          onClose={() => setPreviewLesson(null)}
+          onStart={() => handleStartLesson(previewLesson.lesson.id, previewLesson.status)}
+        />
+      )}
     </div>
   );
 }

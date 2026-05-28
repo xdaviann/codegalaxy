@@ -45,7 +45,30 @@ export const createUserDocument = async (user, extraData = {}) => {
 export const getUserData = async (uid) => {
   const userRef = doc(db, 'users', uid);
   const snapshot = await getDoc(userRef);
-  return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null;
+  if (!snapshot.exists()) return null;
+
+  const data = { id: snapshot.id, ...snapshot.data() };
+
+  // Proactively check if streak is broken
+  if (data.streak > 0 && data.lastActivityDate) {
+    const lastActivity = data.lastActivityDate.toDate();
+    const today = new Date();
+    
+    // Normalize to midnight to safely compare days
+    lastActivity.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    
+    const diffDays = Math.floor((today - lastActivity) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays > 1) {
+      // Streak broken because more than 1 day passed without activity
+      data.streak = 0;
+      // Update in background
+      updateDoc(userRef, { streak: 0 }).catch(e => console.error('Error resetting streak:', e));
+    }
+  }
+
+  return data;
 };
 
 // Update user stats

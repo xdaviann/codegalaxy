@@ -1,10 +1,15 @@
-// src/components/lesson/LessonComplete.jsx
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Target, Star, Coins } from 'lucide-react';
 import CodyMascot from '../ui/CodyMascot';
+import { playLessonCompleteSound } from '../../utils/audio';
 
 export default function LessonComplete({ lessonTitle, coinsEarned, xpEarned, accuracy }) {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    playLessonCompleteSound();
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-bg-primary z-50 flex flex-col items-center justify-center px-6 animate-fade-in">

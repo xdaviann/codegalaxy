@@ -1,8 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import QuickSymbolKeyboard from './QuickSymbolKeyboard';
 
 export default function CodeTypingExercise({ exercise, onAnswer }) {
   const [code, setCode] = useState(exercise.startingCode || '');
   const [submitted, setSubmitted] = useState(false);
+  const textareaRef = useRef(null);
+
+  const insertSymbol = (symbol) => {
+    if (submitted) return;
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    setCode(prev => prev.substring(0, start) + symbol + prev.substring(end));
+    
+    setTimeout(() => {
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + symbol.length;
+    }, 0);
+  };
 
   useEffect(() => {
     setCode(exercise.startingCode || '');
@@ -66,6 +84,7 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
         </div>
         
         <textarea
+          ref={textareaRef}
           value={code}
           onChange={(e) => {
             // Some mobile keyboards insert a literal "\n" string instead of a newline character
@@ -94,6 +113,9 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
           autoCorrect="off"
           className="flex-1 w-full p-4 bg-transparent text-[#c0caf5] font-mono text-sm leading-relaxed resize-none focus:outline-none focus:ring-0 placeholder:text-white/20 disabled:opacity-70 transition-opacity"
         />
+        {!submitted && (
+          <QuickSymbolKeyboard language={exercise.language || 'HTML'} onInsert={insertSymbol} />
+        )}
       </div>
 
       {/* Check button */}

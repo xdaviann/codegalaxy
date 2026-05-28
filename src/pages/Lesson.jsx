@@ -210,6 +210,11 @@ export default function Lesson() {
     setFeedbackMsg(explanation);
     setFeedbackVisible(true);
 
+    import('../utils/audio').then(({ playCorrectSound, playWrongSound }) => {
+      if (isCorrect) playCorrectSound();
+      else playWrongSound();
+    });
+
     let heartsAfter = userData?.hearts ?? 1;
     let currentMistakes = roundMistakes;
 
@@ -218,13 +223,13 @@ export default function Lesson() {
     } else {
       currentMistakes += 1;
       setRoundMistakes(currentMistakes);
+      heartsAfter -= 1; // Optimistic UI update
+
       if (user) {
-        try {
-          heartsAfter = await deductHeart(user.uid);
-          await refreshUserData();
-        } catch (e) {
-          console.error('Error deducting heart:', e);
-        }
+        // Fire and forget so we don't block the UI timeout
+        deductHeart(user.uid)
+          .then(() => refreshUserData())
+          .catch(e => console.error('Error deducting heart:', e));
       }
     }
 

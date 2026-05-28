@@ -1,11 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, CheckCircle2, Circle, Play, Trophy } from 'lucide-react';
+import QuickSymbolKeyboard from './QuickSymbolKeyboard';
 
 export default function ChallengeScreen({ lesson, onClose, onComplete }) {
   const [code, setCode] = useState(lesson.startingCode || '');
   const [results, setResults] = useState([]);
   const [success, setSuccess] = useState(false);
   const [shakingIdxs, setShakingIdxs] = useState([]);
+  const textareaRef = useRef(null);
+
+  const insertSymbol = (symbol) => {
+    if (success) return;
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    setCode(prev => prev.substring(0, start) + symbol + prev.substring(end));
+    
+    setTimeout(() => {
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + symbol.length;
+    }, 0);
+  };
   
   // Initialize results state based on validators
   useEffect(() => {
@@ -42,14 +60,19 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
     setResults(newResults);
     
     const allPassed = newResults.every(r => r.passed);
-    if (allPassed) {
-      setSuccess(true);
-    } else {
-      // Trigger shake + red flash on failed validators
-      const failedIdxs = newResults.map((r, i) => r.passed ? null : i).filter(i => i !== null);
-      setShakingIdxs(failedIdxs);
-      setTimeout(() => setShakingIdxs([]), 800);
-    }
+    
+    import('../../utils/audio').then(({ playCorrectSound, playWrongSound }) => {
+      if (allPassed) {
+        setSuccess(true);
+        playCorrectSound();
+      } else {
+        // Trigger shake + red flash on failed validators
+        const failedIdxs = newResults.map((r, i) => r.passed ? null : i).filter(i => i !== null);
+        setShakingIdxs(failedIdxs);
+        setTimeout(() => setShakingIdxs([]), 800);
+        playWrongSound();
+      }
+    });
   };
 
   const handleFinish = () => {
@@ -89,6 +112,7 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
               </span>
             </div>
             <textarea
+              ref={textareaRef}
               value={code}
               onChange={(e) => {
                 let val = e.target.value;
@@ -116,6 +140,9 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
               autoCorrect="off"
               className="flex-1 w-full p-5 bg-transparent text-[#c0caf5] font-mono text-base leading-relaxed resize-none focus:outline-none focus:ring-0 placeholder:text-white/20 disabled:opacity-70 transition-opacity"
             />
+            {!success && (
+              <QuickSymbolKeyboard language={lesson.language} onInsert={insertSymbol} />
+            )}
           </div>
         </div>
 

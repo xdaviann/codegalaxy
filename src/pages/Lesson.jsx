@@ -111,7 +111,22 @@ export default function Lesson() {
   const isChallenge = lesson.type === 'challenge';
 
   const handleChallengeComplete = (rewards) => {
-    setRoundResult({ roundNum: 1, xpEarned: rewards.xpEarned, coinsEarned: rewards.coinsEarned, accuracy: 100 });
+    const isFirstRoundToday = (() => {
+      if (!userData?.lastActivityDate) return true;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const lastDate = userData.lastActivityDate?.toDate ? userData.lastActivityDate.toDate() : new Date(userData.lastActivityDate);
+      lastDate.setHours(0, 0, 0, 0);
+      return today.getTime() !== lastDate.getTime();
+    })();
+
+    setRoundResult({
+      roundNum: 1,
+      xpEarned: rewards.xpEarned,
+      coinsEarned: rewards.coinsEarned,
+      accuracy: 100,
+      streakJustIgnited: isFirstRoundToday,
+    });
     setAllDone(true);
 
     if (user) {
@@ -209,14 +224,15 @@ export default function Lesson() {
   if (outOfHearts) return <NoHeartsScreen secondsLeft={secondsLeft} />;
 
   if (allDone) {
-    // All 3 rounds done → full LessonComplete
+    // All rounds done → full LessonComplete
     return (
       <LessonComplete
         lessonTitle={lesson.title}
         coinsEarned={roundResult?.coinsEarned ?? currentRound.coins}
         xpEarned={roundResult?.xpEarned ?? currentRound.xpReward}
         accuracy={roundResult?.accuracy ?? 100}
-        streak={userData?.streak ?? 1}
+        streak={(userData?.streak ?? 0) + (roundResult?.streakJustIgnited ? 1 : 0)}
+        streakJustIgnited={roundResult?.streakJustIgnited ?? false}
       />
     );
   }
@@ -231,6 +247,8 @@ export default function Lesson() {
         coinsEarned={roundResult.coinsEarned}
         xpEarned={roundResult.xpEarned}
         accuracy={roundResult.accuracy}
+        streak={(userData?.streak ?? 0) + (roundResult.streakJustIgnited ? 1 : 0)}
+        streakJustIgnited={roundResult.streakJustIgnited ?? false}
         onContinue={() => {
           // Move to next round immediately
           const nextIdx = currentRoundIdx + 1;
@@ -330,6 +348,15 @@ export default function Lesson() {
       const roundNum = currentRound.roundNum;
       const completed = roundNum >= totalRounds;
 
+      const isFirstRoundToday = (() => {
+        if (!userData?.lastActivityDate) return true;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const lastDate = userData.lastActivityDate?.toDate ? userData.lastActivityDate.toDate() : new Date(userData.lastActivityDate);
+        lastDate.setHours(0, 0, 0, 0);
+        return today.getTime() !== lastDate.getTime();
+      })();
+
       if (completed) {
         setAllDone(true);
       }
@@ -339,6 +366,7 @@ export default function Lesson() {
         coinsEarned: currentRound.coins,
         xpEarned: currentRound.xpReward,
         accuracy,
+        streakJustIgnited: isFirstRoundToday,
       });
 
       if (user) {

@@ -1,5 +1,6 @@
-// src/components/lesson/RoundComplete.jsx
+import { useState } from 'react';
 import { Trophy, Star, ChevronRight, Home } from 'lucide-react';
+import StreakModal from '../ui/StreakModal';
 
 const ROUND_META = [
   { label: 'Aprendiendo', emoji: '🌱', color: '#00d4ff' },
@@ -14,14 +15,20 @@ export default function RoundComplete({
   coinsEarned,
   xpEarned,
   accuracy,
+  streak = 1,
+  streakJustIgnited = false,
   onContinue,     // start next round immediately
   onGoHome,       // back to /learn
 }) {
+  const [showStreakModal, setShowStreakModal] = useState(streakJustIgnited);
   const meta = ROUND_META[roundNum - 1] ?? ROUND_META[0];
   const isLastRound = roundNum >= totalRounds;
 
   return (
     <div className="min-h-dvh bg-bg-primary flex flex-col items-center justify-between px-6 py-10 animate-fade-in">
+      {showStreakModal && (
+        <StreakModal streak={streak} onClose={() => setShowStreakModal(false)} />
+      )}
 
       {/* Top: round dots */}
       <div className="flex items-center gap-2 mt-2">

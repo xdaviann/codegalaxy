@@ -1,11 +1,12 @@
 // src/components/layout/Sidebar.jsx
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BookOpen, User, Trophy, LogOut } from 'lucide-react';
+import { BookOpen, User, Trophy, LogOut, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 const navItems = [
   { id: 'learn',       label: 'Aprender', icon: BookOpen, path: '/learn' },
   { id: 'leaderboard', label: 'Ranking',  icon: Trophy,   path: '/leaderboard' },
+  { id: 'shop',        label: 'Tienda',   icon: ShoppingBag, path: '/shop' },
   { id: 'profile',     label: 'Perfil',   icon: User,     path: '/profile' },
 ];
 

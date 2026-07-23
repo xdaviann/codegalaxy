@@ -8,17 +8,21 @@ const AUTO_EXIT_SECONDS = 5;
 
 export default function NoHeartsScreen({ secondsLeft }) {
   const navigate = useNavigate();
+  const [navigated, setNavigated] = useState(false);
   const [autoExit, setAutoExit] = useState(AUTO_EXIT_SECONDS);
 
   // Auto-exit countdown
   useEffect(() => {
-    if (autoExit <= 0) {
+    if (autoExit <= 0 && !navigated) {
+      setNavigated(true);
       navigate('/learn');
       return;
     }
-    const t = setTimeout(() => setAutoExit((s) => s - 1), 1000);
-    return () => clearTimeout(t);
-  }, [autoExit]);
+    if (autoExit > 0) {
+      const t = setTimeout(() => setAutoExit((s) => s - 1), 1000);
+      return () => clearTimeout(t);
+    }
+  }, [autoExit, navigated, navigate]);
 
   const nextHeartIn = formatCountdown(secondsLeft);
 
@@ -69,10 +73,14 @@ export default function NoHeartsScreen({ secondsLeft }) {
         <span className="text-text-secondary font-bold">{autoExit}s</span>...
       </p>
 
-      {/* Manual exit button */}
       <button
         id="no-hearts-exit-btn"
-        onClick={() => navigate('/learn')}
+        onClick={() => {
+          if (!navigated) {
+            setNavigated(true);
+            navigate('/learn');
+          }
+        }}
         className="btn-primary max-w-xs w-full"
       >
         Volver al inicio

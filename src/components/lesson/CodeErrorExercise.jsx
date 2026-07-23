@@ -16,20 +16,19 @@ export default function CodeErrorExercise({ exercise, onAnswer }) {
     if (selectedLine === null || submitted) return;
     setSubmitted(true);
     const isCorrect = selectedLine === exercise.errorLineIndex;
+    const userLineText = exercise.lines?.[selectedLine] || `Línea ${selectedLine + 1}`;
+    const correctLineText = exercise.lines?.[exercise.errorLineIndex] || `Línea ${exercise.errorLineIndex + 1}`;
+
     setTimeout(() => {
       onAnswer({
         isCorrect,
         explanation: exercise.explanation || (isCorrect
           ? '¡Encontraste el error!'
-          : `El error estaba en la línea ${exercise.errorLineIndex + 1}.`),
+          : `Elegiste la línea ${selectedLine + 1}: "${userLineText}". El error real estaba en la línea ${exercise.errorLineIndex + 1}: "${correctLineText}".`),
+        userAnswer: `Línea ${selectedLine + 1}: "${userLineText}"`,
+        correctAnswer: `Línea ${exercise.errorLineIndex + 1}: "${correctLineText}"`
       });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setSelectedLine(null);
-          setSubmitted(false);
-        }, 1000);
-      }
-    }, 1800);
+    }, 400);
   };
 
   const getLineStyle = (idx) => {

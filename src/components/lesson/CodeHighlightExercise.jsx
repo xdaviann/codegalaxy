@@ -92,20 +92,19 @@ export default function CodeHighlightExercise({ exercise, onAnswer }) {
       correctIndices.includes(selectedIndex) || 
       correctIndices.includes(pairs[selectedIndex]);
     
+    const userSelectedText = parts.find(p => p.isToken && (p.index === selectedIndex || pairs[selectedIndex] === p.index))?.text || 'elemento seleccionado';
+    const correctText = parts.find(p => p.isToken && correctIndices.includes(p.index))?.text || 'elemento correcto';
+
     setTimeout(() => {
       onAnswer({
         isCorrect,
         explanation: isCorrect 
           ? '¡Excelente! Has identificado la parte correcta.' 
-          : 'Esa no es la parte correcta del código. Fíjate bien en lo que se pide.'
+          : `Seleccionaste "${userSelectedText}". La parte correcta era "${correctText}".`,
+        userAnswer: userSelectedText,
+        correctAnswer: correctText
       });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setSubmitted(false);
-          setSelectedIndex(null);
-        }, 1000);
-      }
-    }, 1500);
+    }, 400);
   };
 
   return (

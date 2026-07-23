@@ -8,6 +8,7 @@ import Learn from './pages/Learn';
 import Lesson from './pages/Lesson';
 import Profile from './pages/Profile';
 import Leaderboard from './pages/Leaderboard';
+import Shop from './pages/Shop';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -42,6 +43,7 @@ function AppRoutes() {
       <Route path="/lesson/:id" element={<ProtectedRoute><Lesson /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
+      <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/learn" replace />} />
     </Routes>
   );

@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { ChevronDown, CheckCircle, Lock, PlayCircle, RotateCcw } from 'lucide-react';
+import { ChevronDown, CheckCircle, Lock, PlayCircle, RotateCcw, Heart } from 'lucide-react';
 
-export default function ModuleAccordion({ module, defaultOpen = false }) {
+export default function ModuleAccordion({ module, defaultOpen = false, onNoHearts }) {
   const { progress, userData } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(defaultOpen);
@@ -23,7 +23,10 @@ export default function ModuleAccordion({ module, defaultOpen = false }) {
 
   const handleLessonClick = (lesson, status) => {
     if (status === 'locked') return;
-    if (status === 'current' && noHearts) return;
+    if (status === 'current' && noHearts) {
+      if (onNoHearts) onNoHearts();
+      return;
+    }
     navigate(`/lesson/${lesson.id}`);
   };
 

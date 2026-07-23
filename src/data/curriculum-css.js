@@ -2,40 +2,47 @@ export const curriculumCss = [
   {
     id: 'css-1',
     title: 'CSS: Pintando la Web',
-    description: 'Transforma tus sitios web aburridos en obras de arte modernas.',
+    description: 'Transforma tus sitios web estructurados en experiencias visuales modernas e interactivas.',
     color: '#8b5cf6',
     language: 'CSS',
     lessons: [
+      // ── LECCIÓN 1: Sintaxis y Fundamentos ─────────────────────────────────
       {
         id: 'css-1-1',
         title: 'El Pintor y su Brocha (Sintaxis)',
         totalRounds: 3,
         rounds: [
           {
-            roundNum: 1, label: 'La Regla de Oro', xpReward: 10, coins: 8,
+            roundNum: 1, label: 'La Regla de Oro', xpReward: 15, coins: 10,
             theory: [
-              { id: 't1', type: 'welcome', icon: 'Palette', color: '#8b5cf6', title: '¿Qué es CSS?', subtitle: 'La ropa y el maquillaje', body: 'Si HTML es el esqueleto de tu web (sin color ni forma), CSS es la ropa, el peinado y el maquillaje. CSS (*Cascading Style Sheets*) decide cómo se ve todo.' },
-              { id: 't2', type: 'concept', icon: 'Brush', color: '#8b5cf6', title: 'La anatomía de una regla', body: 'Para pintar algo con CSS, escribimos una **regla**. Tiene tres partes:\n1. El **Selector**: A quién quieres pintar.\n2. La **Propiedad**: Qué le quieres cambiar (color, tamaño).\n3. El **Valor**: Cómo debe quedar (rojo, grande).', code: 'selector {\n  propiedad: valor;\n}', codeCaption: 'Cada línea de propiedad termina en punto y coma ;' },
+              { id: 't1', type: 'welcome', icon: 'Palette', color: '#8b5cf6', title: '¿Qué es CSS?', subtitle: 'El diseño y la personalidad visual', body: 'CSS son las siglas de **Cascading Style Sheets** (Hojas de Estilo en Cascada). Mientras HTML crea el esqueleto rígido de la web, CSS determina su apariencia: colores, fuentes, tamaños, márgenes y posicionamiento.' },
+              { id: 't2', type: 'concept', icon: 'Brush', color: '#8b5cf6', title: 'La anatomía de una regla CSS', body: 'Para aplicar estilos a un elemento en CSS escribimos una **regla de diseño**. Consta de tres partes:\n1. **Selector**: Indica a qué elemento le daremos estilo.\n2. **Propiedad**: Qué aspecto queremos cambiar (color, font-size, etc.).\n3. **Valor**: El ajuste específico (red, 16px, center).', code: 'selector {\n  propiedad: valor;\n}', codeCaption: 'El bloque de estilos se encierra entre llaves { }' },
+              { id: 't3', type: 'tip', icon: 'Zap', color: '#eab308', title: 'El sagrado punto y coma ;', body: 'Cada declaración dentro de una regla CSS **debe finalizar obligatoriamente con punto y coma `;`**. Si olvidas el punto y coma, las reglas siguientes no se aplicarán.' },
+              { id: 't4', type: 'compare', icon: 'SplitSquareHorizontal', color: '#8b5cf6', title: 'Dos puntos vs Punto y coma', body: 'En CSS, se usan los **dos puntos `:`** para separar la propiedad de su valor, y el **punto y coma `;`** para marcar el fin de la línea.', leftLabel: 'Separador de valor', leftItems: ['color: red', 'font-size: 18px', 'background: blue'], rightLabel: 'Cierre de declaración', rightItems: ['color: red;', 'font-size: 18px;', 'background: blue;'] }
             ],
             exercises: [
-              { id: 'ex1', type: 'categorize', instruction: 'Imagina que ordenas a un pintor. Clasifica estas palabras.', categories: [{id: 'sel', title: 'Selector (A quién)', color: '#3b82f6'}, {id: 'prop', title: 'Propiedad (Qué cambiar)', color: '#8b5cf6'}, {id: 'val', title: 'Valor (Cómo dejarlo)', color: '#10b981'}], items: [{text: 'El título <h1>', category: 'sel'}, {text: 'Color del texto', category: 'prop'}, {text: 'Azul', category: 'val'}] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca el SÍMBOLO que encierra a todas las propiedades (las llaves).', code: '[[h1]] [[{]]\n  [[color]]: [[red]];\n[[}]]', correctIndex: 1 },
-              { id: 'ex3', type: 'code-highlight', instruction: 'Toca el SÍMBOLO que separa la propiedad del valor.', code: '[[p]] [[{]]\n  [[color]][[:]] [[blue]];\n[[}]]', correctIndex: 3 },
-              { id: 'ex4', type: 'code-error', instruction: 'Encuentra el olvido más común en CSS', filename: 'style.css', lines: ['h1 {', '  color: red', '}'], errorLineIndex: 1, explanation: 'Toda declaración en CSS (la pareja de propiedad y valor) DEBE terminar con un punto y coma (;).' },
-              { id: 'ex5', type: 'drag-sort', prompt: 'Ordena la regla CSS desde el inicio hasta el final', items: ['color: blue;', 'h1', '}', '{'], correctOrder: ['h1', '{', 'color: blue;', '}'] },
-            ],
+              { id: 'ex1', type: 'categorize', instruction: 'Clasifica los componentes de esta regla CSS: h1 { color: blue; }', categories: [{id: 'sel', title: 'Selector (A quién)', color: '#3b82f6'}, {id: 'prop', title: 'Propiedad (Qué cambiar)', color: '#8b5cf6'}, {id: 'val', title: 'Valor (Resultado)', color: '#10b981'}], items: [{text: 'h1', category: 'sel'}, {text: 'color', category: 'prop'}, {text: 'blue', category: 'val'}, {text: 'p', category: 'sel'}, {text: 'font-size', category: 'prop'}, {text: '20px', category: 'val'}] },
+              { id: 'ex2', type: 'code-highlight', instruction: 'Toca las LLAVES { } que delimitan el bloque de declaración.', code: '[[h1]] [[{]]\n  [[color]]: [[red]];\n[[}]]', correctIndex: 1 },
+              { id: 'ex3', type: 'code-highlight', instruction: 'Toca los DOS PUNTOS que separan la propiedad del valor.', code: '[[p]] [[{]]\n  [[color]][[:]] [[blue]];\n[[}]]', correctIndex: 3 },
+              { id: 'ex4', type: 'code-error', instruction: 'Encuentra la línea a la que le falta el punto y coma final.', filename: 'style.css', lines: ['h1 {', '  color: red', '}'], errorLineIndex: 1, explanation: 'Recuerda que toda declaración de propiedad y valor en CSS debe terminar con un punto y coma (;).' },
+              { id: 'ex5', type: 'drag-sort', prompt: 'Ordena los fragmentos para formar una regla CSS válida', items: ['color: blue;', 'h1', '}', '{'], correctOrder: ['h1', '{', 'color: blue;', '}'] },
+              { id: 'ex6', type: 'code-typing', instruction: 'Escribe la declaración color: red; completa.', startingCode: '  color: ', validationRegex: '^\\s*color:\\s*red;$', explanationIncorrect: 'Asegúrate de escribir red; incluyendo el punto y coma final.' },
+              { id: 'ex7', type: 'word-bank', instruction: 'Arma una regla que cambie el tamaño de texto a 18px', filename: 'style.css', parts: ['p {\n  ', '___', ':', '___', ';\n}'], words: ['font-size', '18px', 'color', '18'], answers: ['font-size', '18px'] },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son símbolos indispensables en la sintaxis de CSS?', options: ['Llaves { }', 'Punto y coma ;', 'Dos puntos :', 'Etiqueta <css>'], correctAnswers: [0, 1, 2] }
+            ]
           },
           {
-            roundNum: 2, label: 'Enlazando CSS', xpReward: 12, coins: 10,
+            roundNum: 2, label: 'Enlazando CSS', xpReward: 18, coins: 14,
             theory: [
-              { id: 't1', type: 'concept', icon: 'Link', color: '#8b5cf6', title: 'Conectando HTML y CSS', body: 'CSS se escribe en un archivo separado (ej: `style.css`). Para que el HTML sepa dónde están sus estilos, usamos una "tubería" invisible: la etiqueta `<link>` dentro del `<head>`.' },
-              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'La etiqueta Link', body: 'Se coloca en el archivo HTML. `rel="stylesheet"` significa "Relación: Hoja de Estilos", y el `href` es la ruta del archivo.', code: '<head>\n  <link rel="stylesheet" href="style.css">\n</head>' },
+              { id: 't1', type: 'concept', icon: 'Link', color: '#8b5cf6', title: 'Tres formas de añadir CSS', body: 'Existen tres formas de vincular CSS con HTML:\n1. **External CSS** (Archivos separados `.css`) — La mejor práctica profesional.\n2. **Internal CSS** (Dentro de etiquetas `<style>` en la misma página).\n3. **Inline CSS** (Directo en el atributo `style="..."` de un elemento).' },
+              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'La etiqueta <link> en el Head', body: 'En hojas externas, enlazamos el archivo `.css` escribiendo una etiqueta `<link>` dentro del `<head>` del HTML.', code: '<head>\n  <link rel="stylesheet" href="styles.css">\n</head>' },
+              { id: 't3', type: 'tip', icon: 'Zap', color: '#eab308', title: 'Por qué separar HTML y CSS', body: 'Separar la estructura (HTML) de la presentación (CSS) permite reutilizar una sola hoja de estilos para cientos de páginas web y mantener código limpio.' }
             ],
             exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la etiqueta que "importa" los colores y estilos a tu web.', code: '[[<head>]]\n  [[<title>]]Mi Web[[</title>]]\n  [[<link rel="stylesheet" href="style.css">]]\n[[</head>]]', correctIndex: 3 },
-              { id: 'ex2', type: 'multiple-choice', question: '¿Por qué es mejor tener el CSS en un archivo separado (.css) en vez de escribirlo directo en el HTML?', options: ['Porque el HTML no soporta colores', 'Para mantener el orden: el HTML solo estructura, el CSS solo pinta.', 'Es una regla legal de internet', 'No es mejor, es peor'], correct: 1 },
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la etiqueta que vincula la hoja de estilos externa.', code: '[[<head>]]\n  [[<title>]]Mi Sitio Web[[</title>]]\n  [[<link rel="stylesheet" href="style.css">]]\n[[</head>]]', correctIndex: 3 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Por qué la arquitectura profesional exige separar el archivo .css del HTML?', options: ['Porque HTML no soporta colores', 'Para separar responsabilidades: HTML estructura y CSS maquilla', 'Porque es una ley oficial de los navegadores', 'Porque los estilos pesan demasiado'], correct: 1 },
               {
-                id: 'ex3', type: 'code-fill', instruction: 'Construye la conexión CSS',
+                id: 'ex3', type: 'code-fill', instruction: 'Completa la etiqueta de enlace de estilos externos',
                 codeLines: [
                   { text: '<', type: 'code' },
                   { text: '', type: 'blank', answer: 'link', blankId: 0 }, { text: ' rel="', type: 'code' },
@@ -44,264 +51,386 @@ export const curriculumCss = [
                 ],
                 options: ['link', 'style', 'stylesheet', 'href', 'src'], answers: ['link', 'stylesheet', 'href']
               },
-            ],
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica los métodos de inclusión de CSS', categories: [{id: 'ext', title: 'Externo (Recomendado)', color: '#10b981'}, {id: 'inline', title: 'Inline (No recomendado)', color: '#ef4444'}], items: [{text: '<link rel="stylesheet" href="a.css">', category: 'ext'}, {text: '<p style="color:red">', category: 'inline'}, {text: 'Archivo styles.css separado', category: 'ext'}, {text: 'Atributo style directo', category: 'inline'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea se usó src en lugar de href para el archivo CSS?', filename: 'index.html', lines: ['<head>', '  <title>Tienda</title>', '  <link rel="stylesheet" src="estilos.css">', '</head>'], errorLineIndex: 2, explanation: 'Recuerda que la etiqueta <link> utiliza el atributo href="..." para definir la ruta de la hoja de estilos.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los atributos dentro de la etiqueta link', items: ['href="styles.css">', '<link', 'rel="stylesheet"'], correctOrder: ['<link', 'rel="stylesheet"', 'href="styles.css">'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la ruta en href para el archivo app.css', startingCode: 'href="', validationRegex: '^href="app\\.css"$', explanationIncorrect: 'Debe ser href="app.css"' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿En qué lugar del documento HTML se ubica la etiqueta <link>?', options: ['Dentro del <head>', 'Al final del <body>', 'En el archivo .css', 'Antes del <!DOCTYPE>'], correctAnswers: [0] }
+            ]
           },
           {
-            roundNum: 3, label: 'Comentarios', xpReward: 15, coins: 12,
+            roundNum: 3, label: 'Comentarios y Buenas Prácticas', xpReward: 22, coins: 16,
             theory: [
-              { id: 't1', type: 'concept', icon: 'MessageSquare', color: '#8b5cf6', title: 'Notas Invisibles', body: 'A veces quieres dejarte una nota a ti mismo o a otros programadores en el código ("¡No borrar esto!"). Para eso usamos los **comentarios**. El navegador los ignora por completo.' },
-              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'Sintaxis de comentarios CSS', body: 'En CSS, todo lo que esté entre `/*` y `*/` será invisible para la página.', code: '/* Esto es un comentario. El navegador no lo lee */\nh1 {\n  color: red; /* Letras rojas */\n}' },
+              { id: 't1', type: 'concept', icon: 'MessageSquare', color: '#8b5cf6', title: 'Comentarios en CSS', body: 'Los comentarios en CSS permiten documentar tu código para explicar qué hace cada sección. El navegador los omite al renderizar.' },
+              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'Sintaxis /* */', body: 'En CSS, todo texto que se encuentre entre `/*` y `*/` será tratado como comentario.', code: '/* Estilos de la barra de navegación */\nnav {\n  background: #333;\n}' }
             ],
             exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el comentario CSS.', code: '[[h1]] [[{]]\n  [[/* Título principal */]]\n  [[color]]: [[red]];\n[[}]]', correctIndex: 2 },
-              { id: 'ex2', type: 'categorize', instruction: '¿Se ve o no se ve?', categories: [{id: 'visible', title: 'Afecta la web', color: '#10b981'}, {id: 'oculto', title: 'El navegador lo ignora', color: '#6366f1'}], items: [{text: 'color: blue;', category: 'visible'}, {text: '/* color: blue; */', category: 'oculto'}, {text: '/* Cambiar después */', category: 'oculto'}] },
-              { id: 'ex3', type: 'multiple-choice', question: 'Si envuelves código funcional dentro de /* y */, ¿qué sucederá?', options: ['Dará un error', 'Ese código dejará de funcionar temporalmente (se "comenta")', 'Se borrará del archivo', 'Explotará'], correct: 1 },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'css-1-2',
-        title: 'Selectores: Eligiendo el objetivo',
-        totalRounds: 3,
-        rounds: [
-          {
-            roundNum: 1, label: 'Etiquetas y Clases', xpReward: 10, coins: 8,
-            theory: [
-              { id: 't1', type: 'welcome', icon: 'Target', color: '#8b5cf6', title: 'Afinando la puntería', subtitle: 'A quién vamos a afectar', body: 'En HTML puedes tener cien párrafos `<p>`, pero quizás solo quieres pintar de rojo UNO de ellos. Los selectores CSS son la mira de francotirador.' },
-              { id: 't2', type: 'concept', icon: 'Tag', color: '#8b5cf6', title: 'Selector de Etiqueta', body: 'Si escribes directamente la etiqueta HTML (ej: `p { }`), CSS afectará a **TODOS** los párrafos de tu página entera. Es como pintar la pared entera.' },
-              { id: 't3', type: 'concept', icon: 'Users', color: '#8b5cf6', title: 'Selector de Clase (El punto .)', body: 'Las **clases** son como clubes. Le das una clase al elemento HTML (`class="rojo"`) y en CSS usas un **punto** (`.rojo`) para referirte al club entero.', code: '/* CSS */\n.rojo { color: red; }\n\n<!-- HTML -->\n<p class="rojo">Hola</p>' },
-            ],
-            exercises: [
-              { id: 'ex1', type: 'categorize', instruction: 'Empareja el selector CSS con a cuántos afecta', categories: [{id: 'todos', title: 'Selector Etiqueta (Todos)', color: '#ef4444'}, {id: 'grupo', title: 'Selector Clase (Grupo específico)', color: '#3b82f6'}], items: [{text: 'p { }', category: 'todos'}, {text: '.destacado { }', category: 'grupo'}, {text: 'h1 { }', category: 'todos'}, {text: '.boton-azul { }', category: 'grupo'}] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca el selector que usa el PUNTO para apuntar a una clase.', code: '[[.alerta]] [[{]]\n  [[color]]: [[red]];\n[[}]]\n\n[[h2]] [[{]]\n  [[color]]: [[blue]];\n[[}]]', correctIndex: 0 },
-              { id: 'ex3', type: 'word-bank', instruction: 'Aplica el selector de clase "tarjeta"', filename: 'style.css', parts: ['/* CSS de la clase tarjeta */\n', '___', ' {\n  background: white;\n}'], words: ['.tarjeta', 'tarjeta', '#tarjeta'], answers: ['.tarjeta'] },
-              { id: 'ex4', type: 'multiple-choice', question: '¿Puedes tener múltiples elementos HTML con la MISMA clase?', options: ['No, está prohibido', 'Sí, las clases están hechas exactamente para reutilizar estilos en muchos elementos', 'Sí, pero solo si están en páginas distintas'], correct: 1 },
-            ],
-          },
-          {
-            roundNum: 2, label: 'El ID Único', xpReward: 12, coins: 10,
-            theory: [
-              { id: 't1', type: 'concept', icon: 'Fingerprint', color: '#8b5cf6', title: 'Selector de ID (El hashtag #)', body: 'Mientras que la "clase" es un club, el "ID" es el **documento de identidad**. Debe ser **único** en toda la página (solo un elemento puede tenerlo). En CSS se selecciona con el hashtag `#`.' },
-              { id: 't2', type: 'compare', icon: 'GitMerge', color: '#8b5cf6', title: 'Clase vs ID', body: 'Usa clases para cosas repetitivas (botones, tarjetas). Usa ID para piezas únicas del rompecabezas (el menú principal, el pie de página).', leftLabel: 'Usar Clase (.)', leftItems: ['Muchos botones iguales', 'Lista de productos', 'Textos destacados'], rightLabel: 'Usar ID (#)', rightItems: ['El logo del sitio', 'El menú principal', 'El pie de página'] },
-            ],
-            exercises: [
-              { id: 'ex1', type: 'categorize', instruction: 'Clasifica según el símbolo usado en CSS', categories: [{id: 'class', title: 'Clase (Usa punto .)', color: '#3b82f6'}, {id: 'id', title: 'ID (Usa hashtag #)', color: '#f59e0b'}], items: [{text: '.btn-azul', category: 'class'}, {text: '#menu-principal', category: 'id'}, {text: '.producto', category: 'class'}, {text: '#logo', category: 'id'}] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca el selector que aplica a un elemento ÚNICO en toda la web.', code: '[[#navegacion]] [[{]]\n  [[height]]: [[50px]];\n[[}]]\n\n[[.enlace]] [[{]]\n  [[color]]: [[red]];\n[[}]]', correctIndex: 0 },
-              { id: 'ex3', type: 'code-error', instruction: 'Encuentra el problema lógico/HTML.', filename: 'index.html', lines: ['<body>', '  <div id="caja">A</div>', '  <div id="caja">B</div>', '</body>'], errorLineIndex: 2, explanation: 'Los IDs deben ser únicos. No puedes tener dos elementos con id="caja" en la misma página. Deberías usar clases (class="caja") si quieres repetirlo.' },
-            ],
-          },
-          {
-            roundNum: 3, label: 'Pseudoclases', xpReward: 15, coins: 12,
-            theory: [
-              { id: 't1', type: 'concept', icon: 'MousePointer', color: '#8b5cf6', title: 'Estilos por interacción', body: '¿Has notado que los botones cambian de color cuando les pasas el ratón por encima? CSS puede saber lo que hace el usuario usando las **pseudoclases**, que llevan dos puntos `:hover`.' },
-              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'El estado :hover', body: 'Si añades `:hover` a tu selector, esas reglas SOLO se aplicarán mientras el ratón esté flotando encima del elemento.', code: '.boton { \n  background: blue; \n}\n\n.boton:hover {\n  background: red; /* Se vuelve rojo al pasar el ratón */\n}' },
-            ],
-            exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el selector que se activa mágicamente al pasar el ratón.', code: '[[.card]] [[{]]\n  [[border]]: [[1px]];\n[[}]]\n\n[[.card:hover]] [[{]]\n  [[border]]: [[2px]];\n[[}]]', correctIndex: 5 },
-              { id: 'ex2', type: 'multiple-choice', question: 'Si un enlace tiene "a:hover { color: orange; }", ¿cuándo se verá naranja?', options: ['Siempre', 'Solo cuando le des clic', 'Mientras el cursor del ratón esté descansando sobre el enlace', 'Solo si estás en un celular'], correct: 2 },
-              { id: 'ex3', type: 'code-fill', instruction: 'Completa la pseudoclase', codeLines: [{text: '.menu-item:', type: 'code'}, {text: '', type: 'blank', answer: 'hover', blankId: 0}, {text: ' {\n  background: gray;\n}', type: 'code'}], options: ['hover', 'mouse', 'over'], answers: ['hover'] },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'css-chal-1',
-        type: 'challenge',
-        title: 'Estilista Profesional',
-        language: 'CSS',
-        xpReward: 200,
-        coins: 40,
-        instruction: 'Crea una clase llamada "boton" que tenga fondo azul, texto blanco y texto centrado.',
-        dummyHtml: '<div class="boton">Haz clic aquí</div>',
-        startingCode: '.boton {\n  \n}',
-        validators: [
-          {
-            description: 'La regla debe apuntar a la clase .boton',
-            test: (doc, code) => /\.botons*{/.test(code)
-          },
-          {
-            description: 'El fondo debe ser azul (background o background-color)',
-            test: (doc, code) => /background(-color)?s*:s*blues*;?/i.test(code)
-          },
-          {
-            description: 'El texto debe ser blanco (color)',
-            test: (doc, code) => /colors*:s*whites*;?/i.test(code)
-          },
-          {
-            description: 'El texto debe estar centrado (text-align)',
-            test: (doc, code) => /text-aligns*:s*centers*;?/i.test(code)
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el comentario dentro del bloque CSS.', code: '[[h1]] [[{]]\n  [[/* Titulo de portada */]]\n  [[color]]: [[red]];\n[[}]]', correctIndex: 2 },
+              { id: 'ex2', type: 'categorize', instruction: 'Determina si la instrucción se ejecuta o es ignorada', categories: [{id: 'exec', title: 'El navegador la ejecuta', color: '#10b981'}, {id: 'ignore', title: 'El navegador la ignora', color: '#8b5cf6'}], items: [{text: 'color: blue;', category: 'exec'}, {text: '/* color: blue; */', category: 'ignore'}, {text: '/* Todo: cambiar tipografía */', category: 'ignore'}, {text: 'font-size: 16px;', category: 'exec'}] },
+              { id: 'ex3', type: 'multiple-choice', question: 'Si colocas una regla CSS válida entre los símbolos /* y */, ¿qué ocurrirá?', options: ['Producirá un error sintáctico', 'El navegador la ignorará como si no existiera', 'Se eliminará del disco duro', 'La aplicará solo en modo noche'], correct: 1 },
+              { id: 'ex4', type: 'word-bank', instruction: 'Comenta la regla de estilos para deshabilitarla', filename: 'style.css', parts: ['', '___', ' color: green; ', '___', ''], words: ['/*', '*/', '<!--', '-->'], answers: ['/*', '*/'] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea se usó la sintaxis de comentarios de HTML dentro de CSS?', filename: 'style.css', lines: ['/* Estilos de cabecera */', 'header {', '  <!-- color: red; -->', '}'], errorLineIndex: 2, explanation: 'Recuerda que en archivos CSS los comentarios se escriben con /* ... */ y no con <!-- ... -->.' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Escribe el cierre de un comentario en CSS.', startingCode: '*', validationRegex: '^\\*\\/$', explanationIncorrect: 'Recuerda que los comentarios en CSS se cierran con */' },
+              { id: 'ex7', type: 'drag-sort', prompt: 'Ordena la apertura y cierre de un comentario CSS', items: ['nota */', '/*', 'Esta es una'], correctOrder: ['/*', 'Esta es una', 'nota */'] },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Para qué resulta útil usar comentarios en hojas CSS?', options: ['Explicar la estructura de secciones a otros desarrolladores', 'Desactivar reglas temporalmente mientras pruebas', 'Aumentar la velocidad de descarga', 'Cambiar dinámicamente los colores'], correctAnswers: [0, 1] }
+            ]
           }
         ]
       },
+
+      // ── LECCIÓN 2: Colores y Fondos ───────────────────────────────────────
       {
-        id: 'css-1-3',
+        id: 'css-1-2',
         title: 'Colores y Fondos',
         totalRounds: 3,
         rounds: [
           {
-            roundNum: 1, label: 'Textos y Cajas', xpReward: 10, coins: 8,
+            roundNum: 1, label: 'Paleta de Colores', xpReward: 15, coins: 10,
             theory: [
-              { id: 't1', type: 'concept', icon: 'PaintBucket', color: '#8b5cf6', title: 'Los dos colores principales', body: 'En CSS hay dos propiedades que usarás todo el tiempo:\n- `color`: Pinta el texto o las letras.\n- `background-color`: Pinta el fondo (la caja) detrás del texto.' },
-              { id: 't2', type: 'code', icon: 'Hash', color: '#8b5cf6', title: 'Nombres y HEX', body: 'Puedes usar colores en inglés (`red`, `blue`) pero los profesionales usan códigos Hexadecimales. Son un hashtag y 6 letras/números (`#ff0000` es rojo).', code: 'h1 {\n  color: #ffffff; /* Letras blancas */\n  background-color: #000000; /* Fondo negro */\n}' },
+              { id: 't1', type: 'welcome', icon: 'Palette', color: '#8b5cf6', title: 'Sistemas de Color en CSS', subtitle: 'Expresando tonos en pantalla', body: 'En CSS podemos definir colores usando tres formatos principales:\n1. Nombres clave (`red`, `blue`, `gold`).\n2. Códigos Hexadecimales (`#ff0000`, `#3b82f6`).\n3. Funciones RGB / HSL (`rgb(255, 0, 0)`).' },
+              { id: 't2', type: 'concept', icon: 'Sun', color: '#8b5cf6', title: 'Propiedades color y background-color', body: '- `color`: Determina el color del **texto**.\n- `background-color`: Determina el color de **fondo** del contenedor.', code: 'p {\n  color: white;\n  background-color: #1e1e2e;\n}' }
             ],
             exercises: [
-              { id: 'ex1', type: 'categorize', instruction: '¿Qué pinta cada propiedad?', categories: [{id: 'texto', title: 'Texto / Letras', color: '#10b981'}, {id: 'fondo', title: 'El fondo', color: '#3b82f6'}], items: [{text: 'color', category: 'texto'}, {text: 'background-color', category: 'fondo'}, {text: 'background', category: 'fondo'}] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca el valor en formato HEXADECIMAL.', code: '[[.caja]] [[{]]\n  [[color]]: [[white]];\n  [[background]]: [[#ff5500]];\n[[}]]', correctIndex: 5 },
-              { id: 'ex3', type: 'code-error', instruction: 'El programador quería texto negro, pero la caja entera se puso negra. ¿Dónde está el error?', filename: 'style.css', lines: ['p {', '  background-color: black;', '}'], errorLineIndex: 1, explanation: '"background-color" pinta el fondo de la caja. Si solo quería pintar el texto o letras, debía usar la propiedad "color".' },
-            ],
+              { id: 'ex1', type: 'categorize', instruction: 'Clasifica según la propiedad adecuada', categories: [{id: 'text', title: 'color (Texto)', color: '#ec4899'}, {id: 'bg', title: 'background-color (Fondo)', color: '#3b82f6'}], items: [{text: 'Pintar las letras de negro', category: 'text'}, {text: 'Rellenar la tarjeta de gris', category: 'bg'}, {text: 'Pintar el título de azul', category: 'text'}, {text: 'Pintar el fondo de la pantalla', category: 'bg'}] },
+              { id: 'ex2', type: 'code-highlight', instruction: 'Toca la propiedad que modifica el color del TEXTO.', code: 'p {\n  [[background-color]]: #fff;\n  [[color]]: #000;\n}', correctIndex: 1 },
+              { id: 'ex3', type: 'multiple-choice', question: '¿Cuál de los siguientes es un valor de color escrito en código Hexadecimal?', options: ['red', '#ff5733', 'rgb(0,0,0)', 'hsl(120, 100%, 50%)'], correct: 1 },
+              {
+                id: 'ex4', type: 'code-fill', instruction: 'Establece texto blanco sobre fondo oscuro',
+                codeLines: [
+                  { text: 'div {\n  ', type: 'code' },
+                  { text: '', type: 'blank', answer: 'color', blankId: 0 }, { text: ': white;\n  ', type: 'code' },
+                  { text: '', type: 'blank', answer: 'background-color', blankId: 1 }, { text: ': black;\n}\n', type: 'code' }
+                ],
+                options: ['color', 'background-color', 'text-color', 'bg'], answers: ['color', 'background-color']
+              },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea falta el carácter # del código Hexadecimal?', filename: 'style.css', lines: ['body {', '  color: 333333;', '  background-color: #f5f5f5;', '}'], errorLineIndex: 1, explanation: 'Recuerda que los códigos de color hexadecimales deben comenzar siempre con el signo de numeral (#).' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Escribe la propiedad color: blue;', startingCode: '  ', validationRegex: '^color:\\s*blue;$', explanationIncorrect: 'Debe ser color: blue;' },
+              { id: 'ex7', type: 'drag-sort', prompt: 'Ordena la regla para aplicar fondo amarillo', items: ['background-color: yellow;', 'body {', '}'], correctOrder: ['body {', 'background-color: yellow;', '}'] },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles son formatos de representación de color válidos en CSS?', options: ['Hexadecimal (#000)', 'Nombres en inglés (red)', 'RGB rgb(0,0,0)', 'Puntos cardinales (Norte)'], correctAnswers: [0, 1, 2] }
+            ]
           },
           {
-            roundNum: 2, label: 'La Opacidad (Transparencia)', xpReward: 12, coins: 10,
+            roundNum: 2, label: 'Opacidad y Gradientes', xpReward: 18, coins: 14,
             theory: [
-              { id: 't1', type: 'concept', icon: 'Droplets', color: '#8b5cf6', title: 'Colores Fantasma (RGBA)', body: 'Además de HEX, existe RGBA (Red, Green, Blue, Alpha). El "Alpha" controla la transparencia, de 0 (invisible) a 1 (sólido). Ideal para crear efectos de vidrio o fondos oscurecidos.' },
-              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'Sintaxis RGBA', body: 'Ejemplo: `rgba(0, 0, 0, 0.5)` significa "Negro, al 50% de transparencia".', code: '.vidrio {\n  background-color: rgba(255, 255, 255, 0.8);\n}' },
+              { id: 't1', type: 'concept', icon: 'Eye', color: '#8b5cf6', title: 'Transparencia con RGBA', body: 'La "a" en `rgba(r, g, b, alfa)` controla la opacidad, con valores entre `0` (100% transparente) y `1` (completamente opaco).' },
+              { id: 't2', type: 'code', icon: 'Sparkles', color: '#8b5cf6', title: 'Degradados de Color (linear-gradient)', body: 'Podemos crear fondos con transiciones suaves entre varios colores usando la función `linear-gradient()`.', code: 'div {\n  background: linear-gradient(to right, #6366f1, #ec4899);\n}' }
             ],
             exercises: [
-              { id: 'ex_typing_c1', type: 'code-typing', language: 'CSS', instruction: 'Escribe una regla para pintar el color de texto a rojo (red). ¡No olvides el punto y coma!', startingCode: 'color:', validationRegex: '^color\\\\s*:\\\\s*red\\\\s*;?$', explanationIncorrect: 'Escribe color: red; asegurándote de usar dos puntos y punto y coma.' },
-              { id: 'ex1', type: 'multiple-choice', question: 'En rgbA(255, 0, 0, 0.5), ¿qué significa el 0.5 final?', options: ['Que es 50% rojo', 'Que el color es 50% transparente (Alpha)', 'Que ocupa el 50% de la pantalla'], correct: 1 },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca el valor numérico que controla la transparencia del color.', code: '[[.overlay]] [[{]]\\n  [[background]]: [[rgba(0, 0, 0, ]] [[0.8]] [[)]];\\n[[}]]', correctIndex: 4 },
-            ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el parámetro que indica la transparencia (alfa).', code: 'p {\n  color: rgba(255, 0, 0, [[0.5]]);\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: 'Si la opacidad alfa en rgba() vale 0, ¿cómo se verá el elemento?', options: ['Completamente opaco', 'Completamente transparente e invisible', 'De color negro', 'De color blanco'], correct: 1 },
+              { id: 'ex3', type: 'categorize', instruction: 'Clasifica los valores del canal Alfa (opacidad)', categories: [{id: 'trans', title: 'Transparente', color: '#ec4899'}, {id: 'opac', title: 'Opaco', color: '#10b981'}], items: [{text: '0.0', category: 'trans'}, {text: '1.0', category: 'opac'}, {text: '0.2', category: 'trans'}, {text: '0.9', category: 'opac'}] },
+              { id: 'ex4', type: 'word-bank', instruction: 'Crea un fondo en degradado lineal', filename: 'style.css', parts: ['button {\n  background: ', '___', '(to right, red, blue);\n}'], words: ['linear-gradient', 'gradient', 'rgba', 'color'], answers: ['linear-gradient'] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal formulada la función rgba?', filename: 'style.css', lines: ['header {', '  background: rgba(0, 0, 0);', '}'], errorLineIndex: 1, explanation: 'Recuerda que rgba() requiere 4 parámetros (rojo, verde, azul y opacidad alfa).' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Escribe la propiedad opacity: 0.5;', startingCode: '  opacity: ', validationRegex: '^opacity:\\s*0\\.5;$', explanationIncorrect: 'Debe ser opacity: 0.5;' },
+              { id: 'ex7', type: 'drag-sort', prompt: 'Ordena los parámetros de rgba(0, 128, 255, 0.8)', items: ['0.8)', 'rgba(0, 128, 255,'], correctOrder: ['rgba(0, 128, 255,', '0.8)'] },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Qué propiedades admiten valores de degradados?', options: ['background', 'background-image', 'color', 'font-family'], correctAnswers: [0, 1] }
+            ]
           },
           {
-            roundNum: 3, label: 'Gradientes', xpReward: 15, coins: 12,
+            roundNum: 3, label: 'Dominando Fondos', xpReward: 22, coins: 16,
             theory: [
-              { id: 't1', type: 'concept', icon: 'Sunrise', color: '#8b5cf6', title: 'Degradados de colores', body: 'Un fondo no tiene por qué ser plano. `linear-gradient` permite mezclar varios colores en una transición suave.' },
-              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'Sintaxis de gradiente', body: 'Se usa dentro de la propiedad `background`.', code: '.arcoiris {\n  /* De rojo a azul, hacia la derecha */\n  background: linear-gradient(to right, red, blue);\n}' },
+              { id: 't1', type: 'concept', icon: 'Image', color: '#8b5cf6', title: 'Imágenes de Fondo', body: 'Podemos usar imágenes como fondo de cualquier contenedor mediante la propiedad `background-image: url("ruta.jpg")`.' },
+              { id: 't2', type: 'code', icon: 'Maximize', color: '#8b5cf6', title: 'background-size: cover', body: 'Para asegurar que la imagen de fondo cubra todo el contenedor sin deformarse, la propiedad clave es `background-size: cover;`.', code: 'header {\n  background-image: url("foto.jpg");\n  background-size: cover;\n  background-position: center;\n}' }
             ],
             exercises: [
-              { id: 'ex1', type: 'word-bank', instruction: 'Crea un gradiente que vaya de arriba a abajo con dos colores', filename: 'style.css', parts: ['body {\n  background: ', '___', '(', '___', ', blue);\n}'], words: ['linear-gradient', 'to bottom', 'red', 'to right', 'color'], answers: ['linear-gradient', 'red'] }, // using default vertical if no direction, but let's make it simpler:
-              { id: 'ex1_b', type: 'code-fill', instruction: 'Completa la función de degradado lineal', codeLines: [{text: 'background: ', type: 'code'}, {text: '', type: 'blank', answer: 'linear', blankId: 0}, {text: '-gradient(to right, red, yellow);', type: 'code'}], options: ['linear', 'circle', 'box'], answers: ['linear'] },
-            ],
-          },
-        ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que define la imagen de fondo.', code: 'header {\n  [[background-image]]: url("banner.jpg");\n  [[background-size]]: cover;\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Qué hace la propiedad background-size: cover;?', options: ['Repite la imagen en mosaico', 'Escala la imagen para cubrir todo el contenedor sin deformarse', 'Hace la imagen transparente', 'Oculta la imagen'], correct: 1 },
+              { id: 'ex3', type: 'categorize', instruction: 'Clasifica según la propiedad de fondo correspondiente', categories: [{id: 'img', title: 'background-image', color: '#ec4899'}, {id: 'pos', title: 'background-position', color: '#3b82f6'}], items: [{text: 'url("foto.jpg")', category: 'img'}, {text: 'center', category: 'pos'}, {text: 'top left', category: 'pos'}, {text: 'url("pattern.png")', category: 'img'}] },
+              { id: 'ex4', type: 'word-bank', instruction: 'Establece una imagen de fondo para el héroe', filename: 'style.css', parts: ['section {\n  background-image: ', '___', '("hero.jpg");\n}'], words: ['url', 'src', 'link', 'file'], answers: ['url'] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea se olvidaron las comillas o la función url()?', filename: 'style.css', lines: ['header {', '  background-image: foto.jpg;', '}'], errorLineIndex: 1, explanation: 'Recuerda que las imágenes de fondo deben ir envueltas en la función url("...").' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Escribe background-size: cover;', startingCode: '  background-size: ', validationRegex: '^background-size:\\s*cover;$', explanationIncorrect: 'Debe ser background-size: cover;' },
+              { id: 'ex7', type: 'drag-sort', prompt: 'Ordena la regla completa de fondo con imagen', items: ['background-size: cover;', 'background-image: url("bg.jpg");', 'div {', '}'], correctOrder: ['div {', 'background-image: url("bg.jpg");', 'background-size: cover;', '}'] },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estas propiedades pertenecen al módulo de fondos de CSS?', options: ['background-color', 'background-image', 'background-size', 'text-align'], correctAnswers: [0, 1, 2] }
+            ]
+          }
+        ]
       },
+
+      // ── DESAFÍO PRÁCTICO 1 ────────────────────────────────────────────────
       {
-        id: 'css-1-4',
-        title: 'El Box Model (El modelo de caja)',
+        id: 'css-chal-1',
+        type: 'challenge',
+        title: 'Desafío: Tarjeta de Presentación',
+        language: 'CSS',
+        xpReward: 250,
+        coins: 50,
+        instruction: 'Crea reglas de estilo para una tarjeta de perfil. El .card debe tener background-color oscuro (#1e1e2e) y color de texto blanco (#ffffff). El h1 interno debe tener color dorado (#f59e0b).',
+        startingCode: '.card {\n  \n}\n\n.card h1 {\n  \n}',
+        validators: [
+          {
+            description: 'El .card debe tener background-color: #1e1e2e',
+            test: (doc, code) => code.toLowerCase().includes('.card') && code.toLowerCase().includes('background-color') && code.toLowerCase().includes('#1e1e2e')
+          },
+          {
+            description: 'El .card debe tener color: #ffffff (o white)',
+            test: (doc, code) => code.toLowerCase().includes('color') && (code.toLowerCase().includes('#ffffff') || code.toLowerCase().includes('white'))
+          },
+          {
+            description: 'El .card h1 debe tener color: #f59e0b',
+            test: (doc, code) => code.toLowerCase().includes('h1') && code.toLowerCase().includes('#f59e0b')
+          }
+        ]
+      },
+
+      // ── LECCIÓN 3: El Modelo de Caja (Box Model) ──────────────────────────
+      {
+        id: 'css-1-3',
+        title: 'El Modelo de Caja (Box Model)',
         totalRounds: 3,
         rounds: [
           {
-            roundNum: 1, label: 'Cajas Invisibles', xpReward: 10, coins: 8,
+            roundNum: 1, label: 'Padding vs Margin', xpReward: 15, coins: 10,
             theory: [
-              { id: 't1', type: 'welcome', icon: 'Box', color: '#8b5cf6', title: 'El secreto de la Matrix web', subtitle: 'Todo, absolutamente todo, es un rectángulo.', body: 'En HTML y CSS, un botón circular sigue siendo una caja cuadrada invisible. Todo elemento de la página es una caja con capas protectoras como una muñeca Matryoshka.' },
-              { id: 't2', type: 'concept', icon: 'Layers', color: '#8b5cf6', title: 'Las Capas de la Caja', body: 'Desde adentro hacia afuera:\n1. **Content**: El texto/imagen real.\n2. **Padding**: El espacio de respiración *interno*.\n3. **Border**: El marco *visible*.\n4. **Margin**: El espacio *externo* que lo separa de otros elementos.' },
+              { id: 't1', type: 'welcome', icon: 'Box', color: '#8b5cf6', title: 'Todo en CSS es una caja', subtitle: 'El secreto del maquetado', body: 'En CSS, **absolutamente todos los elementos** son cajas rectangulares concéntricas.\n- `padding`: Espacio INTERNO (entre el contenido y el borde).\n- `margin`: Espacio EXTERNO (entre el borde y otros elementos vecinos).' }
             ],
             exercises: [
-              { id: 'ex1', type: 'drag-sort', prompt: 'Ordena las capas de la caja de ADENTRO hacia AFUERA', items: ['Margin (Margen)', 'Border (Borde)', 'Content (Contenido)', 'Padding (Relleno)'], correctOrder: ['Content (Contenido)', 'Padding (Relleno)', 'Border (Borde)', 'Margin (Margen)'] },
-              { id: 'ex2', type: 'categorize', instruction: '¿Es espacio interno o externo?', categories: [{id: 'in', title: 'Interno (Afecta el tamaño del botón)', color: '#10b981'}, {id: 'out', title: 'Externo (Empuja cosas ajenas)', color: '#f59e0b'}], items: [{text: 'Padding', category: 'in'}, {text: 'Margin', category: 'out'}] },
-              { id: 'ex3', type: 'multiple-choice', question: 'Si quieres que el texto de un botón esté más separado de sus bordes, para que el botón se vea más "gordito", ¿qué propiedad usas?', options: ['margin', 'padding', 'border', 'spacing'], correct: 1 },
-            ],
+              { id: 'ex1', type: 'categorize', instruction: 'Clasifica el tipo de espacio', categories: [{id: 'pad', title: 'padding (Espacio Interno)', color: '#10b981'}, {id: 'mar', title: 'margin (Espacio Externo)', color: '#ec4899'}], items: [{text: 'Alejar la tarjeta de otros elementos', category: 'mar'}, {text: 'Separar el texto del borde de la caja', category: 'pad'}, {text: 'Relleno por dentro del botón', category: 'pad'}, {text: 'Separación entre párrafos', category: 'mar'}] },
+              { id: 'ex2', type: 'code-highlight', instruction: 'Toca la propiedad que añade espacio por DENTRO del contenedor.', code: 'div {\n  [[margin]]: 20px;\n  [[padding]]: 15px;\n}', correctIndex: 1 },
+              { id: 'ex3', type: 'multiple-choice', question: 'Si quieres aumentar el colchón interno de un botón para que el texto no toque sus bordes, usas:', options: ['margin', 'padding', 'border', 'width'], correct: 1 },
+              { id: 'ex4', type: 'word-bank', instruction: 'Establece un relleno interno de 20px', filename: 'style.css', parts: ['button {\n  ', '___', ': 20px;\n}'], words: ['padding', 'margin', 'border', 'spacing'], answers: ['padding'] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea falta el punto y coma?', filename: 'style.css', lines: ['.caja {', '  padding: 10px', '  margin: 20px;', '}'], errorLineIndex: 1, explanation: 'Toda propiedad en CSS debe finalizar obligatoriamente con punto y coma (;).' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena de afuera hacia adentro en el Box Model', items: ['Content (Contenido)', 'Margin (Margen externo)', 'Padding (Relleno interno)'], correctOrder: ['Margin (Margen externo)', 'Padding (Relleno interno)', 'Content (Contenido)'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe margin: 10px;', startingCode: '  margin: ', validationRegex: '^margin:\\s*10px;$', explanationIncorrect: 'Debe ser margin: 10px;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes son capas del Box Model de CSS?', options: ['Content', 'Padding', 'Border', 'Margin'], correctAnswers: [0, 1, 2, 3] }
+            ]
           },
           {
-            roundNum: 2, label: 'Bordes y Shorthands', xpReward: 12, coins: 10,
+            roundNum: 2, label: 'Lados Individuales', xpReward: 18, coins: 14,
             theory: [
-              { id: 't1', type: 'concept', icon: 'Maximize', color: '#8b5cf6', title: 'Construyendo el Borde', body: 'La propiedad `border` requiere tres ingredientes en una sola línea: el grosor, el estilo y el color. Ejemplo: `border: 2px solid black;`.' },
-              { id: 't2', type: 'tip', icon: 'Clock', color: '#eab308', title: 'El truco del Reloj', body: 'Si le das 4 números al margin o padding, CSS los aplica como las manecillas del reloj (Arriba, Derecha, Abajo, Izquierda).', code: '/* Arriba: 10px, Derecha: 20px, Abajo: 30px, Izq: 40px */\nmargin: 10px 20px 30px 40px;' },
+              { id: 't1', type: 'concept', icon: 'Maximize2', color: '#8b5cf6', title: 'Control por cada lado', body: 'Podemos controlar individualmente cada lado: `padding-top`, `padding-right`, `padding-bottom`, `padding-left` (en sentido horario: arriba, derecha, abajo, izquierda).' }
             ],
             exercises: [
-              { id: 'ex1', type: 'drag-sort', prompt: 'Ordena la declaración del borde: grosor, estilo, color', items: ['black;', 'solid', '2px', 'border:'], correctOrder: ['border:', '2px', 'solid', 'black;'] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca el valor que define el margen de la DERECHA según la regla del reloj.', code: '[[margin]]: [[10px]] [[20px]] [[30px]] [[40px]];', correctIndex: 2 },
-              { id: 'ex3', type: 'word-bank', instruction: 'Aplica un borde de puntos rojos de 1px', filename: 'style.css', parts: ['border: ', '___', ' ', '___', ' red;'], words: ['1px', 'dotted', 'solid', '5px'], answers: ['1px', 'dotted'] },
-            ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que modifica únicamente el margen INFERIOR.', code: 'div {\n  [[margin-top]]: 10px;\n  [[margin-bottom]]: 30px;\n}', correctIndex: 1 },
+              { id: 'ex2', type: 'multiple-choice', question: 'En el atajo padding: 10px 20px 30px 40px;, ¿a qué lado corresponde el valor 10px?', options: ['Arriba (Top)', 'Derecha (Right)', 'Abajo (Bottom)', 'Izquierda (Left)'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Añade un margen superior de 50px', filename: 'style.css', parts: ['h1 {\n  ', '___', ': 50px;\n}'], words: ['margin-top', 'padding-top', 'margin-left', 'border-top'], answers: ['margin-top'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica la propiedad según el lado que modifica', categories: [{id: 'top', title: 'Arriba', color: '#3b82f6'}, {id: 'bot', title: 'Abajo', color: '#ec4899'}], items: [{text: 'padding-top', category: 'top'}, {text: 'margin-bottom', category: 'bot'}, {text: 'border-bottom', category: 'bot'}, {text: 'margin-top', category: 'top'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrita la propiedad del margen izquierdo?', filename: 'style.css', lines: ['.box {', '  margin-izquierda: 10px;', '}'], errorLineIndex: 1, explanation: 'Las propiedades de CSS están en inglés: debe ser margin-left: 10px;.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la notación de reloj de 4 valores (Clockwise)', items: ['Left (Izquierda)', 'Right (Derecha)', 'Top (Arriba)', 'Bottom (Abajo)'], correctOrder: ['Top (Arriba)', 'Right (Derecha)', 'Bottom (Abajo)', 'Left (Izquierda)'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe padding-left: 15px;', startingCode: '  padding-left: ', validationRegex: '^padding-left:\\s*15px;$', explanationIncorrect: 'Debe ser padding-left: 15px;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son nombres válidos de propiedades de lados en CSS?', options: ['margin-top', 'padding-right', 'margin-bottom', 'padding-left'], correctAnswers: [0, 1, 2, 3] }
+            ]
           },
           {
-            roundNum: 3, label: 'La Caja Mágica', xpReward: 15, coins: 12,
+            roundNum: 3, label: 'box-sizing: border-box', xpReward: 22, coins: 16,
             theory: [
-              { id: 't1', type: 'concept', icon: 'AlertTriangle', color: '#8b5cf6', title: 'El defecto de CSS', body: 'Históricamente, si un elemento tenía un `width: 100px` y le agregabas `padding: 20px`, CSS sumaba todo (140px totales). Esto rompía los diseños enteros.' },
-              { id: 't2', type: 'code', icon: 'CheckCircle', color: '#8b5cf6', title: 'El Reset Mágico', body: 'Para arreglar esto, TODOS los sitios web usan `box-sizing: border-box`. Hace que el padding "empuje hacia adentro", respetando el ancho que le diste.', code: '* {\n  box-sizing: border-box;\n}' },
+              { id: 't1', type: 'concept', icon: 'Shield', color: '#8b5cf6', title: 'El salvavidas: box-sizing', body: 'Por defecto en CSS (`content-box`), al añadir padding a una caja de `width: 200px` su tamaño TOTAL aumenta. Usar `box-sizing: border-box;` obliga a que el tamaño total no cambie jamás.' }
             ],
             exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que arregla el modelo de caja de CSS para que el ancho definido sea el real.', code: '[[*]] [[{]]\n  [[box-sizing]]: [[border-box]];\n[[}]]', correctIndex: 2 },
-              { id: 'ex2', type: 'multiple-choice', question: 'Sin usar border-box, ¿cuánto medirá físicamente una caja con width: 100px y un padding izquierdo y derecho de 10px cada uno?', options: ['100px', '120px (100 + 10 + 10)', '80px', '110px'], correct: 1 },
-              { id: 'ex3', type: 'word-bank', instruction: 'Aplica el "reset" a todos los elementos usando el selector universal asterisco', filename: 'style.css', parts: ['___', ' {\n  box-sizing: ', '___', ';\n}'], words: ['*', 'border-box', 'html', 'content-box'], answers: ['*', 'border-box'] },
-            ],
-          },
-        ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el valor que mantiene el tamaño exacto del contenedor al añadir padding.', code: '* {\n  [[box-sizing]]: [[border-box]];\n}', correctIndex: 1 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Por qué todos los desarrolladores añaden * { box-sizing: border-box; } al inicio de su código?', options: ['Para que los anchos declarados en width incluyan el padding sin ensanchar la caja', 'Para cambiar los colores a pastel', 'Para eliminar el HTML', 'Para que las fuentes sean más grandes'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Aplica el cálculo moderno de cajas a todo el documento', filename: 'style.css', parts: ['* {\n  box-sizing: ', '___', ';\n}'], words: ['border-box', 'content-box', 'padding-box', 'fit-content'], answers: ['border-box'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Compara los modos de box-sizing', categories: [{id: 'bb', title: 'border-box (Recomendado)', color: '#10b981'}, {id: 'cb', title: 'content-box (Defecto)', color: '#ef4444'}], items: [{text: 'El padding no aumenta el width total', category: 'bb'}, {text: 'El padding suma y ensancha la caja', category: 'cb'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrito el valor de box-sizing?', filename: 'style.css', lines: ['* {', '  box-sizing: borderbox;', '}'], errorLineIndex: 1, explanation: 'Recuerda que el valor lleva guion entre las palabras: border-box.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla global de box-sizing', items: ['box-sizing: border-box;', '* {', '}'], correctOrder: ['* {', 'box-sizing: border-box;', '}'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe box-sizing: border-box;', startingCode: '  box-sizing: ', validationRegex: '^box-sizing:\\s*border-box;$', explanationIncorrect: 'Debe ser box-sizing: border-box;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Qué ventajas ofrece usar box-sizing: border-box;?', options: ['Evita descuadres al diseñar layouts', 'Mantiene los anchos exactos al añadir padding o border', 'Facilita la maquetación responsive', 'Cambia el idioma a español'], correctAnswers: [0, 1, 2] }
+            ]
+          }
+        ]
       },
+
+      // ── LECCIÓN 4: Tipografía y Estilo de Texto ───────────────────────────
+      {
+        id: 'html-1-4',
+        title: 'Tipografía y Estilo de Texto',
+        totalRounds: 3,
+        rounds: [
+          {
+            roundNum: 1, label: 'Fuentes y Tamaños', xpReward: 15, coins: 10,
+            theory: [
+              { id: 't1', type: 'welcome', icon: 'Type', color: '#8b5cf6', title: 'Fuentes Tipográficas', subtitle: 'Personalidad en las letras', body: '- `font-family`: Tipo de letra (Roboto, Arial, sans-serif).\n- `font-size`: Tamaño del texto (`16px`, `1.2rem`).' }
+            ],
+            exercises: [
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que define la fuente tipográfica.', code: 'body {\n  [[font-family]]: "Inter", sans-serif;\n  [[font-size]]: 16px;\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Cuál es la unidad recomendada para la accesibilidad en font-size en vez de px?', options: ['rem', 'cm', 'in', 'pt'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Establece el tamaño del título en 2rem', filename: 'style.css', parts: ['h1 {\n  ', '___', ': 2rem;\n}'], words: ['font-size', 'font-family', 'text-size', 'size'], answers: ['font-size'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica la propiedad tipográfica', categories: [{id: 'ff', title: 'font-family (Familia)', color: '#3b82f6'}, {id: 'fs', title: 'font-size (Tamaño)', color: '#ec4899'}], items: [{text: '"Arial", sans-serif', category: 'ff'}, {text: '1.5rem', category: 'fs'}, {text: '24px', category: 'fs'}, {text: '"Roboto", serif', category: 'ff'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de sintaxis en font-size?', filename: 'style.css', lines: ['p {', '  font-size: 16;', '}'], errorLineIndex: 1, explanation: 'Recuerda especificar la unidad de medida (por ejemplo 16px o 1rem).' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los estilos tipográficos básicos', items: ['font-size: 1rem;', 'font-family: sans-serif;', 'p {', '}'], correctOrder: ['p {', 'font-family: sans-serif;', 'font-size: 1rem;', '}'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe font-size: 1.2rem;', startingCode: '  font-size: ', validationRegex: '^font-size:\\s*1\\.2rem;$', explanationIncorrect: 'Debe ser font-size: 1.2rem;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles son propiedades válidas para modificar el texto en CSS?', options: ['font-family', 'font-size', 'font-weight', 'text-align'], correctAnswers: [0, 1, 2, 3] }
+            ]
+          },
+          {
+            roundNum: 2, label: 'Grosor y Alineación', xpReward: 18, coins: 14,
+            theory: [
+              { id: 't1', type: 'concept', icon: 'Bold', color: '#8b5cf6', title: 'font-weight y text-align', body: '- `font-weight`: Grosor del texto (`normal`, `bold`, `400`, `700`).\n- `text-align`: Alineación (`left`, `center`, `right`, `justify`).' }
+            ],
+            exercises: [
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que centra el texto en pantalla.', code: 'h1 {\n  [[text-align]]: [[center]];\n  [[font-weight]]: bold;\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿A qué equivale numéricamente un font-weight: bold; estándar?', options: ['100', '400', '700', '900'], correct: 2 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Alinea el texto del título al centro', filename: 'style.css', parts: ['h1 {\n  ', '___', ': ', '___', ';\n}'], words: ['text-align', 'center', 'font-weight', 'bold'], answers: ['text-align', 'center'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica según el valor pertenezca a font-weight o text-align', categories: [{id: 'fw', title: 'font-weight', color: '#f59e0b'}, {id: 'ta', title: 'text-align', color: '#10b981'}], items: [{text: 'bold', category: 'fw'}, {text: 'center', category: 'ta'}, {text: '700', category: 'fw'}, {text: 'justify', category: 'ta'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea la propiedad está mal escrita?', filename: 'style.css', lines: ['h1 {', '  align-text: center;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta en CSS es text-align, no align-text.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla para texto centrado y en negrita', items: ['font-weight: bold;', 'text-align: center;', 'h2 {', '}'], correctOrder: ['h2 {', 'text-align: center;', 'font-weight: bold;', '}'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe font-weight: bold;', startingCode: '  font-weight: ', validationRegex: '^font-weight:\\s*bold;$', explanationIncorrect: 'Debe ser font-weight: bold;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son valores válidos para text-align?', options: ['left', 'center', 'right', 'justify'], correctAnswers: [0, 1, 2, 3] }
+            ]
+          },
+          {
+            roundNum: 3, label: 'Interlineado y Mayúsculas', xpReward: 22, coins: 16,
+            theory: [
+              { id: 't1', type: 'concept', icon: 'AlignJustify', color: '#8b5cf6', title: 'line-height y text-transform', body: '- `line-height`: Separa las líneas de texto del párrafo.\n- `text-transform`: Convierte a `uppercase`, `lowercase` o `capitalize`.' }
+            ],
+            exercises: [
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que fuerza la conversión del texto a MAYÚSCULAS.', code: 'button {\n  [[text-transform]]: [[uppercase]];\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Por qué es mejor usar text-transform: uppercase en CSS en vez de escribir en mayúsculas en el HTML?', options: ['Mantiene el contenido semántico limpio en HTML y controla la presentación visual en CSS', 'Para que la imagen cargue rápido', 'No hay diferencia', 'Porque el HTML no lo permite'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Establece un interlineado de 1.6 en el párrafo', filename: 'style.css', parts: ['p {\n  ', '___', ': 1.6;\n}'], words: ['line-height', 'letter-spacing', 'font-size', 'margin'], answers: ['line-height'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica los valores de text-transform', categories: [{id: 'up', title: 'uppercase', color: '#ec4899'}, {id: 'cap', title: 'capitalize', color: '#3b82f6'}], items: [{text: 'TODO EN MAYÚSCULAS', category: 'up'}, {text: 'Primera Letra De Cada Palabra', category: 'cap'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de sintaxis?', filename: 'style.css', lines: ['p {', '  line-height: 1,6;', '}'], errorLineIndex: 1, explanation: 'En CSS los decimales utilizan punto en lugar de coma: line-height: 1.6;' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena las propiedades tipográficas avanzadas', items: ['text-transform: uppercase;', 'line-height: 1.5;', 'p {', '}'], correctOrder: ['p {', 'line-height: 1.5;', 'text-transform: uppercase;', '}'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe text-transform: uppercase;', startingCode: '  text-transform: ', validationRegex: '^text-transform:\\s*uppercase;$', explanationIncorrect: 'Debe ser text-transform: uppercase;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estos ajustes mejoran la legibilidad de párrafos largos?', options: ['Aumentar el line-height a 1.5 o 1.6', 'Usar un tamaño de fuente accesible (1rem)', 'Poner todo el texto en mayúsculas sostenidas', 'Limitar el ancho del contenedor de lectura'], correctAnswers: [0, 1, 3] }
+            ]
+          }
+        ]
+      },
+
+      // ── LECCIÓN 5: Bordes, Sombras y Efectos ──────────────────────────────
       {
         id: 'css-1-5',
-        title: 'Tipografía',
+        title: 'Bordes, Sombras y Efectos',
         totalRounds: 3,
         rounds: [
           {
-            roundNum: 1, label: 'Controlando el Texto', xpReward: 10, coins: 8,
+            roundNum: 1, label: 'Bordes y Esquinas', xpReward: 15, coins: 10,
             theory: [
-              { id: 't1', type: 'welcome', icon: 'Type', color: '#8b5cf6', title: 'Diseño Editorial', subtitle: 'Haciendo la web legible', body: 'CSS nos permite ser verdaderos diseñadores gráficos manipulando la fuente (familia), su tamaño, su grosor y alineación.' },
-              { id: 't2', type: 'concept', icon: 'FileText', color: '#8b5cf6', title: 'Las propiedades base', body: '- `font-family`: Qué fuente usas (Arial, Helvetica).\n- `font-size`: Qué tan grande es (en pixeles o `rem`).\n- `font-weight`: El grosor (normal, bold).' },
+              { id: 't1', type: 'welcome', icon: 'Square', color: '#8b5cf6', title: 'Bordes y Redondeos', subtitle: 'Definiendo contornos', body: '- `border`: Grueso, estilo y color (`1px solid #ccc`).\n- `border-radius`: Redondea las esquinas (`8px`, `50%` para círculos).' }
             ],
             exercises: [
-              { id: 'ex1', type: 'categorize', instruction: 'Asigna cada tarea a su propiedad CSS', categories: [{id: 'size', title: 'Tamaño de Letra', color: '#3b82f6'}, {id: 'weight', title: 'Grosor (Negrita)', color: '#10b981'}, {id: 'align', title: 'Alineación', color: '#f59e0b'}], items: [{text: 'font-size', category: 'size'}, {text: 'font-weight', category: 'weight'}, {text: 'text-align', category: 'align'}] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca la propiedad que convierte el texto normal en un texto GRUESO (Bold).', code: '[[h1]] [[{]]\n  [[font-weight]]: [[bold]];\n[[}]]', correctIndex: 2 },
-              { id: 'ex3', type: 'code-error', instruction: 'El texto no se centra. ¿Dónde está el error de sintaxis CSS?', filename: 'style.css', lines: ['p {', '  text-decoration: center;', '}'], errorLineIndex: 1, explanation: 'La propiedad para centrar u orillar texto es "text-align". "text-decoration" sirve para subrayados.' },
-            ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que convierte una caja cuadrada en un círculo perfecto.', code: '.avatar {\n  width: 100px;\n  height: 100px;\n  [[border-radius]]: [[50%]];\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Cuáles son las 3 partes requeridas del atajo de propiedad border?', options: ['ancho, estilo, color', 'fuente, tamaño, alineación', 'alto, sombra, opacidad', 'padding, margin, flex'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Aplica un borde sólido de 2px en color azul', filename: 'style.css', parts: ['div {\n  ', '___', ': 2px ', '___', ' blue;\n}'], words: ['border', 'solid', 'dashed', 'radius'], answers: ['border', 'solid'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica los valores de border-style', categories: [{id: 'sol', title: 'Línea Continua', color: '#10b981'}, {id: 'dash', title: 'Línea Punteada', color: '#f59e0b'}], items: [{text: 'solid', category: 'sol'}, {text: 'dashed', category: 'dash'}, {text: 'dotted', category: 'dash'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea falta el estilo de borde (solid)?', filename: 'style.css', lines: ['button {', '  border: 2px red;', '}'], errorLineIndex: 1, explanation: 'Falta especificar el tipo de borde (por ejemplo: solid, dashed o dotted).' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los valores del atajo border', items: ['#3b82f6;', 'solid', '2px'], correctOrder: ['2px', 'solid', '#3b82f6;'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe border-radius: 8px;', startingCode: '  border-radius: ', validationRegex: '^border-radius:\\s*8px;$', explanationIncorrect: 'Debe ser border-radius: 8px;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son estilos de borde válidos en CSS?', options: ['solid', 'dashed', 'dotted', 'double'], correctAnswers: [0, 1, 2, 3] }
+            ]
           },
           {
-            roundNum: 2, label: 'Detalles visuales', xpReward: 12, coins: 10,
+            roundNum: 2, label: 'Sombras (box-shadow)', xpReward: 18, coins: 14,
             theory: [
-              { id: 't1', type: 'concept', icon: 'CaseUpper', color: '#8b5cf6', title: 'Transformar texto', body: 'Con `text-transform: uppercase;` puedes hacer que el texto se vea en MAYÚSCULAS sin importar cómo el usuario lo haya escrito en el HTML original.' },
-              { id: 't2', type: 'concept', icon: 'AlignJustify', color: '#8b5cf6', title: 'Respiración del texto', body: 'Un texto es ilegible si las líneas están muy juntas. Usa `line-height` para separar las líneas de texto (como el interlineado en Word).' },
+              { id: 't1', type: 'concept', icon: 'Layers', color: '#8b5cf6', title: 'Profundidad con box-shadow', body: '`box-shadow` agrega sombras para dar sensación de elevación 3D.\nSintaxis: `box-shadow: X Y desfoque color;`' }
             ],
             exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que aumenta la separación entre los renglones del párrafo.', code: '[[p]] [[{]]\n  [[line-height]]: [[1.6]];\n[[}]]', correctIndex: 2 },
-              { id: 'ex2', type: 'multiple-choice', question: '¿Por qué usar text-transform: uppercase en CSS en vez de escribir las mayúsculas directamente en el HTML?', options: ['Porque CSS es el encargado del estilo visual y el HTML del contenido original.', 'Porque escribir mayúsculas en HTML daña el teclado', 'No hay diferencia, pero en HTML es más aburrido', 'Porque Google odia el HTML en mayúsculas'], correct: 0 },
-            ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que otorga sombra y elevación a la tarjeta.', code: '.card {\n  [[box-shadow]]: 0 4px 10px rgba(0,0,0,0.1);\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Para qué sirve el tercer valor numérico en box-shadow: 0 4px 10px black;?', options: ['Sombra en X', 'Sombra en Y', 'Radio de desfoque / difuminado (blur)', 'Color de fondo'], correct: 2 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Crea una sombra sutil para el contenedor', filename: 'style.css', parts: ['.card {\n  ', '___', ': 0 10px 20px rgba(0,0,0,0.15);\n}'], words: ['box-shadow', 'text-shadow', 'shadow', 'border-shadow'], answers: ['box-shadow'] },
+              { id: 'ex4', type: 'categorize', instruction: '¿A qué elemento le aplicas la sombra?', categories: [{id: 'box', title: 'box-shadow (Contenedor)', color: '#3b82f6'}, {id: 'txt', title: 'text-shadow (Texto)', color: '#ec4899'}], items: [{text: 'Una tarjeta <div>', category: 'box'}, {text: 'Un botón de compra', category: 'box'}, {text: 'Un gran título <h1>', category: 'txt'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error en la propiedad?', filename: 'style.css', lines: ['.btn {', '  card-shadow: 0 2px 4px #000;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta en CSS es box-shadow.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los parámetros de box-shadow', items: ['rgba(0,0,0,0.1);', '10px', '0 4px', 'box-shadow:'], correctOrder: ['box-shadow:', '0 4px', '10px', 'rgba(0,0,0,0.1);'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el nombre de la propiedad box-shadow:', startingCode: '  box-', validationRegex: '^box-shadow:$', explanationIncorrect: 'Debe ser box-shadow:' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Qué efectos visuales aporta usar box-shadow?', options: ['Efecto de elevación o flotación sobre el fondo', 'Profundidad de interfaz moderna', 'Destacar tarjetas activas o en hover', 'Reconocer el código de barras'], correctAnswers: [0, 1, 2] }
+            ]
           },
           {
-            roundNum: 3, label: 'Unidades de Tamaño', xpReward: 15, coins: 12,
+            roundNum: 3, label: 'Transiciones e Interacción', xpReward: 22, coins: 16,
             theory: [
-              { id: 't1', type: 'concept', icon: 'Ruler', color: '#8b5cf6', title: 'El mundo del REM', body: 'A los principiantes les encantan los pixeles (`px`), pero los profesionales usan `rem`. 1 rem equivale al tamaño por defecto del navegador (usualmente 16px). Es genial porque si un usuario con mala vista sube el tamaño de su navegador, los `rem` escalan automáticamente.' },
+              { id: 't1', type: 'concept', icon: 'Zap', color: '#8b5cf6', title: 'Transiciones suaves (:hover)', body: 'Al pasar el cursor sobre un botón (`:hover`), la propiedad `transition: all 0.3s ease;` hace que el cambio de color o tamaño no sea brusco, sino una animación fluida.' }
             ],
             exercises: [
-              { id: 'ex1', type: 'categorize', instruction: 'Clasifica las unidades de medida CSS', categories: [{id: 'fija', title: 'Fija / Rígida', color: '#ef4444'}, {id: 'flexible', title: 'Relativa / Accesible', color: '#10b981'}], items: [{text: 'px (Pixeles)', category: 'fija'}, {text: 'rem', category: 'flexible'}, {text: '% (Porcentajes)', category: 'flexible'}] },
-              { id: 'ex2', type: 'multiple-choice', question: 'Si el tamaño base del navegador es 16px, ¿a cuánto equivalen 2rem?', options: ['2 pixeles', '16 pixeles', '32 pixeles', '200 pixeles'], correct: 2 },
-            ],
-          },
-        ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la pseudoclase que detecta cuando el ratón está SOBRE el botón.', code: 'button[[:hover]] {\n  background-color: blue;\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Para qué sirve la propiedad transition: all 0.3s ease;?', options: ['Hace que los cambios de estilo al pasar el cursor sean suaves y animados', 'Oculta el botón', 'Elimina el CSS', 'Descarga un gif'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Aplica una transición suave de 0.2 segundos', filename: 'style.css', parts: ['button {\n  ', '___', ': all 0.2s ease;\n}'], words: ['transition', 'animation', 'transform', 'hover'], answers: ['transition'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica los estados', categories: [{id: 'norm', title: 'Estado Normal', color: '#3b82f6'}, {id: 'hov', title: 'Estado :hover (Cursor encima)', color: '#10b981'}], items: [{text: 'button { background: red; }', category: 'norm'}, {text: 'button:hover { background: darkred; }', category: 'hov'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de sintaxis en el hover?', filename: 'style.css', lines: ['button.hover {', '  background: blue;', '}'], errorLineIndex: 0, explanation: 'Las pseudoclases en CSS usan dos puntos (:) antes del nombre: button:hover.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla de transición en el elemento base', items: ['background: blue;', 'transition: background 0.3s;', 'button {', '}'], correctOrder: ['button {', 'background: blue;', 'transition: background 0.3s;', '}'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la pseudoclase :hover', startingCode: ':', validationRegex: '^:hover$', explanationIncorrect: 'Debe ser :hover' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Qué propiedades se pueden animar con transition?', options: ['background-color', 'opacity', 'transform', 'border-radius'], correctAnswers: [0, 1, 2, 3] }
+            ]
+          }
+        ]
       },
+
+      // ── LECCIÓN 6: Flexbox Fundamentos ────────────────────────────────────
       {
         id: 'css-1-6',
         title: 'Flexbox: El Ordenador',
         totalRounds: 3,
         rounds: [
           {
-            roundNum: 1, label: 'El Contenedor Padre', xpReward: 10, coins: 8,
+            roundNum: 1, label: 'El Contenedor Padre', xpReward: 15, coins: 10,
             theory: [
-              { id: 't1', type: 'welcome', icon: 'LayoutTemplate', color: '#8b5cf6', title: 'La magia de Flexbox', subtitle: 'Alineando cajas', body: 'Antes, poner dos elementos uno al lado del otro era una pesadilla. Flexbox revolucionó todo. Convierte un contenedor padre en una cuadrícula flexible.' },
-              { id: 't2', type: 'concept', icon: 'Power', color: '#8b5cf6', title: 'El Botón de Encendido', body: 'Para que la magia ocurra, debes ir al elemento PADRE (el que envuelve a los hijos) y decirle `display: flex;`. Inmediatamente, todos sus hijos se colocarán en una sola fila.', code: '.padre {\n  display: flex;\n}' },
+              { id: 't1', type: 'welcome', icon: 'LayoutTemplate', color: '#8b5cf6', title: 'La Magia de Flexbox', subtitle: 'Alineación de elementos', body: 'Flexbox es un modelo de maquetado unidimensional. Permite distribuir espacio y alinear elementos dentro de un contenedor de forma dinámica.' },
+              { id: 't2', type: 'concept', icon: 'Power', color: '#8b5cf6', title: 'display: flex', body: 'Para activar Flexbox, seleccionamos el contenedor **PADRE** y declaramos `display: flex;`. De inmediato, sus hijos se colocan en fila.', code: '.padre {\n  display: flex;\n}' }
             ],
             exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que enciende Flexbox y pone a todos los hijos en fila.', code: '[[.contenedor]] [[{]]\n  [[display]]: [[flex]];\n[[}]]', correctIndex: 2 },
-              { id: 'ex2', type: 'multiple-choice', question: '¿A quién debes aplicarle "display: flex"?', options: ['A los elementos hijos individualmente', 'Al contenedor padre que los envuelve', 'Al elemento <body> siempre', 'A la etiqueta <link>'], correct: 1 },
-              { id: 'ex3', type: 'code-error', instruction: 'Flexbox no está funcionando. ¿Por qué?', filename: 'style.css', lines: ['.padre {', '  flex-display: true;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta es "display" con el valor "flex". Es decir: display: flex;' },
-            ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que enciende Flexbox en el contenedor.', code: '.contenedor {\n  [[display]]: [[flex]];\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿A quién debes aplicarle la declaración display: flex;?', options: ['Al contenedor PADRE que envuelve a los elementos', 'A cada elemento hijo individualmente', 'Al <body> siempre', 'Al archivo HTML'], correct: 0 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Activa Flexbox en la barra de navegación', filename: 'style.css', parts: ['nav {\n  ', '___', ': ', '___', ';\n}'], words: ['display', 'flex', 'block', 'grid'], answers: ['display', 'flex'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Clasifica el rol de los elementos en Flexbox', categories: [{id: 'padre', title: 'Contenedor Padre (display: flex)', color: '#3b82f6'}, {id: 'hijo', title: 'Elementos Hijos (Flex items)', color: '#10b981'}], items: [{text: 'Contiene las reglas de alineación', category: 'padre'}, {text: 'Se ordenan en fila o columna', category: 'hijo'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrita la propiedad?', filename: 'style.css', lines: ['.padre {', '  flex-display: true;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta para encender Flexbox es display: flex;.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla para encender Flexbox', items: ['display: flex;', '.box {', '}'], correctOrder: ['.box {', 'display: flex;', '}'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe display: flex;', startingCode: '  display: ', validationRegex: '^display:\\s*flex;$', explanationIncorrect: 'Debe ser display: flex;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Qué sucede inmediatamente al aplicar display: flex a un contenedor?', options: ['Los hijos directos se colocan en fila horizontal', 'Los hijos se convierten en elementos flex items', 'Se borra el texto del navegador', 'Se habilita la alineación con justify-content'], correctAnswers: [0, 1, 3] }
+            ]
           },
           {
-            roundNum: 2, label: 'Justificar y Alinear', xpReward: 12, coins: 10,
+            roundNum: 2, label: 'Justificar y Alinear', xpReward: 18, coins: 14,
             theory: [
-              { id: 't1', type: 'concept', icon: 'AlignHorizontalJustifyCenter', color: '#8b5cf6', title: 'Moviendo los hilos', body: 'Una vez activado flexbox, tienes dos palancas principales:\n- `justify-content`: Alinea en el eje principal (horizontal, de izq a der).\n- `align-items`: Alinea en el eje cruzado (vertical, de arriba a abajo).' },
-              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'El Centro del Universo', body: 'Si combinas ambas propiedades con el valor `center`, el elemento hijo quedará perfectamente centrado en el medio de la caja. ¡El Santo Grial del CSS!', code: '.padre {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}' },
+              { id: 't1', type: 'concept', icon: 'AlignHorizontalJustifyCenter', color: '#8b5cf6', title: 'Los dos ejes de Flexbox', body: '- `justify-content`: Alinea en el eje principal (horizontal por defecto).\n- `align-items`: Alinea en el eje cruzado (vertical por defecto).' },
+              { id: 't2', type: 'code', icon: 'Code', color: '#8b5cf6', title: 'El Centrado Perfecto', body: 'Combinar ambos ejes con `center` logra el famoso centrado perfecto en CSS.', code: '.padre {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}' }
             ],
             exercises: [
-              { id: 'ex1', type: 'categorize', instruction: '¿En qué dirección mueven las cosas?', categories: [{id: 'horiz', title: 'Eje Principal (Horizontal)', color: '#3b82f6'}, {id: 'vert', title: 'Eje Cruzado (Vertical)', color: '#f59e0b'}], items: [{text: 'justify-content', category: 'horiz'}, {text: 'align-items', category: 'vert'}] },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca la propiedad que centra los elementos de IZQUIERDA a DERECHA.', code: '[[.caja]] [[{]]\n  [[display]]: [[flex]];\n  [[justify-content]]: [[center]];\n[[}]]', correctIndex: 4 },
-              { id: 'ex3', type: 'word-bank', instruction: 'Centra los elementos tanto vertical como horizontalmente', filename: 'style.css', parts: ['.hero {\n  display: flex;\n  justify-content: ', '___', ';\n  align-items: ', '___', ';\n}'], words: ['center', 'flex-start', 'center', 'space-between'], answers: ['center', 'center'] },
-            ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca la propiedad que centra los elementos HORIZONTALMENTE.', code: '.padre {\n  display: flex;\n  [[justify-content]]: [[center]];\n  [[align-items]]: center;\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'multiple-choice', question: '¿Qué propiedad de Flexbox controla la alineación VERTICAL por defecto?', options: ['justify-content', 'align-items', 'flex-direction', 'margin'], correct: 1 },
+              { id: 'ex3', type: 'word-bank', instruction: 'Centra totalmente el contenido en ambos ejes', filename: 'style.css', parts: ['.hero {\n  display: flex;\n  justify-content: ', '___', ';\n  align-items: ', '___', ';\n}'], words: ['center', 'center', 'flex-start', 'flex-end'], answers: ['center', 'center'] },
+              { id: 'ex4', type: 'categorize', instruction: 'Asigna la propiedad según su eje', categories: [{id: 'horiz', title: 'Eje Principal (justify-content)', color: '#3b82f6'}, {id: 'vert', title: 'Eje Cruzado (align-items)', color: '#ec4899'}], items: [{text: 'Alineación horizontal', category: 'horiz'}, {text: 'Alineación vertical', category: 'vert'}] },
+              { id: 'ex5', type: 'code-error', instruction: '¿Dónde se confundieron los nombres de las propiedades?', filename: 'style.css', lines: ['.caja {', '  display: flex;', '  align-content: center;', '}'], errorLineIndex: 2, explanation: 'Para alinear los items en el eje cruzado la propiedad es align-items: center;.' },
+              { id: 'ex6', type: 'drag-sort', prompt: 'Ordena el centrado total con Flexbox', items: ['align-items: center;', 'justify-content: center;', 'display: flex;', '.hero {'], correctOrder: ['.hero {', 'display: flex;', 'justify-content: center;', 'align-items: center;'] },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe justify-content: center;', startingCode: '  justify-content: ', validationRegex: '^justify-content:\\s*center;$', explanationIncorrect: 'Debe ser justify-content: center;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son valores válidos para justify-content?', options: ['flex-start', 'center', 'flex-end', 'space-between'], correctAnswers: [0, 1, 2, 3] }
+            ]
           },
           {
-            roundNum: 3, label: 'Espaciando Elementos', xpReward: 15, coins: 12,
+            roundNum: 3, label: 'Espaciado y Brecha (gap)', xpReward: 22, coins: 16,
             theory: [
-              { id: 't1', type: 'concept', icon: 'SplitSquareHorizontal', color: '#8b5cf6', title: 'Separaciones automáticas', body: '`justify-content` tiene valores mágicos:\n- `space-between`: Pega el primer hijo a la izquierda, el último a la derecha, y distribuye el resto en medio.\n- `space-around`: Pone un colchón de espacio alrededor de cada elemento.' },
-              { id: 't2', type: 'concept', icon: 'Spacing', color: '#8b5cf6', title: 'El bendito GAP', body: 'Si solo quieres forzar un espacio exacto entre hijos sin depender de margins locos, usa la propiedad `gap` (ej: `gap: 20px`). ¡Súper limpio!' },
+              { id: 't1', type: 'concept', icon: 'SplitSquareHorizontal', color: '#8b5cf6', title: 'space-between y gap', body: '- `justify-content: space-between`: Pega los extremos y reparte el espacio restante en medio.\n- `gap: 20px`: Añade un espacio constante entre todos los elementos sin márgenes raros.' }
             ],
             exercises: [
-              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el valor de justify-content que empuja los elementos hacia los bordes extremos (izquierda y derecha).', code: '[[.nav]] [[{]]\n  [[display]]: [[flex]];\n  [[justify-content]]: [[space-between]];\n[[}]]', correctIndex: 5 },
-              { id: 'ex2', type: 'code-highlight', instruction: 'Toca la propiedad que crea un hueco estricto de 20px entre cada hijo.', code: '[[.padre]] [[{]]\n  [[display]]: [[flex]];\n  [[gap]]: [[20px]];\n[[}]]', correctIndex: 4 },
-              { id: 'ex3', type: 'multiple-choice', question: '¿Por qué `gap` en Flexbox es mejor que ponerle `margin-right` a todos los hijos?', options: ['Porque `gap` no le añade margen sobrante al último elemento de la fila', 'Porque el margen atrae virus', 'Porque margin requiere de cálculos matemáticos avanzados', 'No es mejor, es igual'], correct: 0 },
-            ],
-          },
-        ],
+              { id: 'ex1', type: 'code-highlight', instruction: 'Toca el valor de justify-content que empuja los elementos hacia los extremos.', code: 'nav {\n  display: flex;\n  [[justify-content]]: [[space-between]];\n}', correctIndex: 0 },
+              { id: 'ex2', type: 'code-highlight', instruction: 'Toca la propiedad que crea un espacio exacto de 20px entre los ítems.', code: '.galeria {\n  display: flex;\n  [[gap]]: [[20px]];\n}', correctIndex: 0 },
+              { id: 'ex3', type: 'multiple-choice', question: '¿Por qué la propiedad gap es superior a usar margin en los elementos hijos?', options: ['Porque gap solo añade espacio ENTRE los hijos y no en los bordes exteriores', 'Porque gap cambia los colores', 'Porque margin no funciona con flexbox', 'No hay diferencia'], correct: 0 },
+              { id: 'ex4', type: 'word-bank', instruction: 'Añade una separación de 15px entre elementos flex', filename: 'style.css', parts: ['.row {\n  display: flex;\n  ', '___', ': 15px;\n}'], words: ['gap', 'spacing', 'padding', 'margin'], answers: ['gap'] },
+              { id: 'ex5', type: 'categorize', instruction: 'Clasifica los tipos de espaciado', categories: [{id: 'space', title: 'Distribución (justify-content)', color: '#10b981'}, {id: 'gap', title: 'Separación fija (gap)', color: '#f59e0b'}], items: [{text: 'space-between', category: 'space'}, {text: 'gap: 24px', category: 'gap'}, {text: 'space-around', category: 'space'}] },
+              { id: 'ex6', type: 'code-error', instruction: '¿En qué línea está mal aplicada la propiedad gap?', filename: 'style.css', lines: ['.box {', '  flex-gap: 20px;', '}'], errorLineIndex: 1, explanation: 'La propiedad se llama simplemente gap: 20px;.' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe gap: 20px;', startingCode: '  gap: ', validationRegex: '^gap:\\s*20px;$', explanationIncorrect: 'Debe ser gap: 20px;' },
+              { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estos valores de justify-content distribuyen espacio automáticamente?', options: ['space-between', 'space-around', 'space-evenly', 'center'], correctAnswers: [0, 1, 2] }
+            ]
+          }
+        ]
       },
-    ],
-  },
+
+      // ── DESAFÍO FINAL CSS ─────────────────────────────────────────────────
+      {
+        id: 'css-chal-final',
+        type: 'challenge',
+        title: 'Desafío Final CSS',
+        language: 'CSS',
+        xpReward: 500,
+        coins: 100,
+        instruction: '¡Crea una barra de navegación profesional! El .nav debe ser flex (display: flex) con espacio entre elementos (justify-content: space-between) y centrado vertical (align-items: center). El .logo debe tener font-weight: bold.',
+        startingCode: '.nav {\n  \n}\n\n.logo {\n  \n}',
+        validators: [
+          {
+            description: 'El .nav debe incluir display: flex',
+            test: (doc, code) => code.toLowerCase().includes('.nav') && code.toLowerCase().includes('display') && code.toLowerCase().includes('flex')
+          },
+          {
+            description: 'El .nav debe incluir justify-content: space-between',
+            test: (doc, code) => code.toLowerCase().includes('justify-content') && code.toLowerCase().includes('space-between')
+          },
+          {
+            description: 'El .nav debe incluir align-items: center',
+            test: (doc, code) => code.toLowerCase().includes('align-items') && code.toLowerCase().includes('center')
+          },
+          {
+            description: 'El .logo debe incluir font-weight: bold (o 700)',
+            test: (doc, code) => code.toLowerCase().includes('.logo') && code.toLowerCase().includes('font-weight')
+          }
+        ]
+      }
+    ]
+  }
 ];

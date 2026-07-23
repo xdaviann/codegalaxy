@@ -32,22 +32,19 @@ export default function DragSortExercise({ exercise, onAnswer }) {
     setSubmitted(true);
     const isCorrect = items.every((item, i) => item === exercise.correctOrder[i]);
     setResult(isCorrect);
+    const userOrderStr = items.join(' → ');
+    const correctOrderStr = exercise.correctOrder.join(' → ');
+
     setTimeout(() => {
       onAnswer({
         isCorrect,
         explanation: isCorrect
           ? (exercise.explanationCorrect || exercise.explanation || '¡Orden perfecto!')
-          : (exercise.explanationIncorrect || exercise.explanation || `El orden correcto era: ${exercise.correctOrder.join(' → ')}`),
+          : (exercise.explanationIncorrect || exercise.explanation || 'Recuerda la jerarquía y el orden secuencial correcto que debe tener este código.'),
+        userAnswer: userOrderStr,
+        correctAnswer: correctOrderStr
       });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setItems([...exercise.items]);
-          setSelected(null);
-          setSubmitted(false);
-          setResult(null);
-        }, 1000);
-      }
-    }, 1600);
+    }, 400);
   };
 
   const getItemStyle = (idx) => {

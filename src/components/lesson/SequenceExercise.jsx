@@ -39,16 +39,19 @@ export default function SequenceExercise({ exercise, onAnswer }) {
       ? exercise.explanationCorrect ||
         "Buen trabajo. El orden que armaste coincide con la secuencia correcta."
       : exercise.explanationIncorrect ||
-        `Orden correcto: ${correctOrder.join(" -> ")}.`;
+        "Recuerda el orden lógico e instruccional en que se debe construir esta secuencia.";
+
+    const userOrder = picked.map((idx) => items[idx]).join(' -> ');
+    const expectedOrder = correctOrder.join(' -> ');
 
     setTimeout(() => {
-      onAnswer({ isCorrect: correct, explanation });
-      if (!correct) {
-        setTimeout(() => {
-          handleReset();
-        }, 1000);
-      }
-    }, 1400);
+      onAnswer({
+        isCorrect: correct,
+        explanation,
+        userAnswer: userOrder,
+        correctAnswer: expectedOrder
+      });
+    }, 400);
   };
 
   const selectedLabels = picked.map((idx) => items[idx]);

@@ -24,7 +24,7 @@ export default function MultiSelectExercise({ exercise, onAnswer }) {
       return (
         exercise.explanationCorrect ||
         exercise.explanation ||
-        "Excelente. Identificaste correctamente todas las opciones validas."
+        "Excelente. Identificaste correctamente todas las opciones válidas."
       );
     }
 
@@ -54,15 +54,17 @@ export default function MultiSelectExercise({ exercise, onAnswer }) {
 
     setSubmitted(true);
 
+    const userChoiceStr = selected.map((i) => exercise.options?.[i]).filter(Boolean).join(', ');
+    const correctChoiceStr = correctAnswers.map((i) => exercise.options?.[i]).filter(Boolean).join(', ');
+
     setTimeout(() => {
-      onAnswer({ isCorrect, explanation });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setSelected([]);
-          setSubmitted(false);
-        }, 1000);
-      }
-    }, 1200);
+      onAnswer({
+        isCorrect,
+        explanation,
+        userAnswer: userChoiceStr,
+        correctAnswer: correctChoiceStr
+      });
+    }, 400);
   };
 
   const getOptionStyle = (idx) => {
@@ -70,51 +72,51 @@ export default function MultiSelectExercise({ exercise, onAnswer }) {
 
     if (!submitted) {
       return chosen
-        ? "bg-accent-cyan/15 border-accent-cyan text-text-primary"
-        : "bg-bg-tertiary border-border-subtle hover:border-accent-cyan hover:bg-bg-card text-text-primary";
+        ? "bg-accent-light border-accent text-accent shadow-accent-sm"
+        : "bg-white border-border hover:border-accent/40 hover:bg-bg-tertiary text-text-primary";
     }
 
     const isCorrectOption = correctAnswers.includes(idx);
 
     if (isCorrectOption) {
-      return "bg-accent-green/20 border-accent-green text-accent-green";
+      return "bg-accent-green-light border-accent-green text-accent-green";
     }
 
     if (chosen && !isCorrectOption) {
-      return "bg-accent-red/20 border-accent-red text-accent-red";
+      return "bg-accent-red-light border-accent-red text-accent-red animate-shake";
     }
 
-    return "bg-bg-tertiary border-border-subtle text-text-muted";
+    return "bg-bg-tertiary border-border opacity-50 text-text-muted";
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 animate-fade-in">
-      <div className="bg-bg-secondary rounded-2xl p-5 border border-border-subtle">
-        <p className="text-text-primary text-base font-medium leading-relaxed font-mono">
+    <div className="flex flex-col gap-4 animate-fade-in-up pt-2">
+      <div className="card p-5 shadow-card-md">
+        <p className="text-text-primary text-base font-semibold leading-relaxed">
           {exercise.prompt ||
             exercise.question ||
             "Selecciona todas las opciones correctas"}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
+      <div className="flex flex-col gap-2.5">
         {exercise.options.map((option, idx) => (
           <button
             key={idx}
             type="button"
             onClick={() => toggleOption(idx)}
             disabled={submitted}
-            className={`w-full py-4 px-5 rounded-2xl border-2 text-left font-semibold text-sm transition-all duration-200 ${getOptionStyle(idx)}`}
+            className={`w-full py-4 px-5 rounded-2xl border-2 text-left font-semibold text-sm transition-all duration-200 active:scale-[0.98] ${getOptionStyle(idx)}`}
           >
             <div className="flex items-center justify-between gap-3">
-              <span>{option}</span>
+              <span className="leading-snug">{option}</span>
               {submitted && correctAnswers.includes(idx) && (
-                <CheckCircle size={18} className="text-accent-green" />
+                <CheckCircle size={18} className="text-accent-green flex-shrink-0" />
               )}
               {submitted &&
                 isSelected(idx) &&
                 !correctAnswers.includes(idx) && (
-                  <XCircle size={18} className="text-accent-red" />
+                  <XCircle size={18} className="text-accent-red flex-shrink-0" />
                 )}
             </div>
           </button>
@@ -125,13 +127,13 @@ export default function MultiSelectExercise({ exercise, onAnswer }) {
         type="button"
         onClick={handleSubmit}
         disabled={selected.length === 0 || submitted}
-        className={`w-full py-3.5 rounded-2xl font-bold transition-all duration-200 ${
+        className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide transition-all duration-200 ${
           selected.length > 0 && !submitted
-            ? "bg-accent-cyan text-bg-primary shadow-cyan-glow active:scale-95"
+            ? "btn-primary"
             : "bg-bg-tertiary text-text-muted cursor-not-allowed"
         }`}
       >
-        Comprobar
+        {submitted ? 'Comprobando...' : 'Comprobar'}
       </button>
     </div>
   );

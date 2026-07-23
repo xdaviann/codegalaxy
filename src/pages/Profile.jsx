@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { curriculum } from '../data/curriculum';
 import MainLayout from '../components/layout/MainLayout';
-import { LogOut, Award, BookOpen, Zap, Flame, Coins, Code2, TrendingUp } from 'lucide-react';
+import { LogOut, Award, BookOpen, Zap, Flame, Coins, Code2, TrendingUp, Lock, Shield } from 'lucide-react';
+import { ACHIEVEMENTS } from '../firebase/firestore';
 
 export default function Profile() {
   const { user, userData, progress, logout } = useAuth();
@@ -90,20 +91,156 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* ── Achievements (placeholder) ───────────────────────────── */}
+            {/* ── Achievements (Logros) ───────────────────────────── */}
             <div className="flex flex-col gap-4 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
               <h2 className="text-text-primary font-bold text-sm md:text-base uppercase tracking-wide flex items-center gap-2">
                 <Award size={18} className="text-accent-gold" />
-                Logros Recientes
+                Medallas y Logros
               </h2>
-              <div className="card p-6 border-dashed flex flex-col items-center justify-center text-center gap-3 h-full min-h-[200px] bg-white/50">
-                <div className="w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center">
-                  <Award size={24} className="text-accent-gold opacity-50" />
-                </div>
-                <div>
-                  <p className="text-text-primary font-bold text-base">Aún no hay logros</p>
-                  <p className="text-text-muted text-sm mt-1">Completa más módulos para desbloquear medallas.</p>
-                </div>
+              
+              <div className="flex flex-col gap-3">
+                {ACHIEVEMENTS.map((ach) => {
+                  const isUnlocked = userData?.unlockedAchievements?.includes(ach.id);
+                  const Icon = {
+                    Zap: Zap,
+                    Flame: Flame,
+                    Award: Award,
+                    Shield: Shield,
+                    BookOpen: BookOpen
+                  }[ach.icon] || Award;
+                  
+                  // Compute custom progress
+                  let progressInfo = { current: 0, total: 1, percent: 0, text: '' };
+                  if (ach.id === 'ACH_FIRST') {
+                    const completedAny = progress ? Object.values(progress).some(p => p.roundsCompleted > 0 || p.completed) : false;
+                    progressInfo = {
+                      current: completedAny ? 1 : 0,
+                      total: 1,
+                      percent: completedAny ? 100 : 0,
+                      text: completedAny ? '¡Completado!' : 'Completa tu primera ronda'
+                    };
+                  } else if (ach.id === 'ACH_STREAK_3') {
+                    const streak3 = userData?.streak || 0;
+                    progressInfo = {
+                      current: Math.min(streak3, 3),
+                      total: 3,
+                      percent: Math.min(Math.round((streak3 / 3) * 100), 100),
+                      text: `Racha actual: ${streak3}/3 días`
+                    };
+                  } else if (ach.id === 'ACH_STREAK_7') {
+                    const streak7 = userData?.streak || 0;
+                    progressInfo = {
+                      current: Math.min(streak7, 7),
+                      total: 7,
+                      percent: Math.min(Math.round((streak7 / 7) * 100), 100),
+                      text: `Racha actual: ${streak7}/7 días`
+                    };
+                  } else if (ach.id === 'ACH_PERFECT') {
+                    const maxAccuracy = progress ? Math.max(0, ...Object.values(progress).map(p => p.score || 0)) : 0;
+                    progressInfo = {
+                      current: maxAccuracy,
+                      total: 100,
+                      percent: maxAccuracy,
+                      text: `Precisión máxima: ${maxAccuracy}/100%`
+                    };
+                  } else if (ach.id === 'ACH_SHIELD') {
+                    const hasShield = (userData?.streakShields || 0) > 0 || userData?.boughtShieldOnce === true;
+                    progressInfo = {
+                      current: hasShield ? 1 : 0,
+                      total: 1,
+                      percent: hasShield ? 100 : 0,
+                      text: hasShield ? '¡Escudo comprado!' : 'Visita la tienda y equípalo'
+                    };
+                  } else if (ach.id === 'ACH_MODULES') {
+                    const htmlLessonsList = ['html-1-1', 'html-1-2', 'html-1-3', 'html-1-4'];
+                    const cssLessonsList = ['css-1-1', 'css-1-2', 'css-1-3'];
+                    const htmlComp = progress ? htmlLessonsList.filter(id => progress[id]?.completed).length : 0;
+                    const cssComp = progress ? cssLessonsList.filter(id => progress[id]?.completed).length : 0;
+                    const maxComp = Math.max(htmlComp, cssComp);
+                    const target = maxComp === cssComp ? 3 : 4;
+                    progressInfo = {
+                      current: maxComp,
+                      total: target,
+                      percent: Math.round((maxComp / target) * 100),
+                      text: `Progreso módulo: ${maxComp}/${target} lecciones`
+                    };
+                  }
+
+                  return (
+                    <div 
+                      key={ach.id}
+                      className={`card p-4 flex gap-4 items-center border transition-all duration-300 ${
+                        isUnlocked 
+                          ? `bg-gradient-to-r from-accent/5 to-white border-accent-light shadow-sm hover:shadow-md` 
+                          : 'bg-white/40 border-border opacity-75'
+                      }`}
+                    >
+                      {/* Icon Badge */}
+                      <div className={`relative w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
+                        isUnlocked 
+                          ? `bg-gradient-to-tr ${ach.gradient} text-white shadow-accent-sm` 
+                          : 'bg-bg-tertiary text-text-muted border border-border/80'
+                      }`}>
+                        <Icon size={24} className={isUnlocked ? 'animate-pulse-slow' : ''} />
+                        {!isUnlocked && (
+                          <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white border border-border rounded-lg flex items-center justify-center text-text-muted shadow-sm">
+                            <Lock size={10} />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="font-extrabold text-sm md:text-base text-text-primary truncate">
+                            {ach.title}
+                          </h3>
+                          {isUnlocked && (
+                            <span className="shrink-0 text-[10px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+                              Reclamado
+                            </span>
+                          )}
+                        </div>
+                        
+                        <p className="text-text-muted text-xs leading-normal mt-0.5">
+                          {ach.description}
+                        </p>
+
+                        {/* Progress Bar for Locked / Active state */}
+                        <div className="mt-2.5">
+                          <div className="flex justify-between text-[10px] font-bold text-text-muted mb-1">
+                            <span>{progressInfo.text}</span>
+                            <span>{progressInfo.percent}%</span>
+                          </div>
+                          <div className="h-1.5 bg-bg-tertiary rounded-full overflow-hidden border border-border/50">
+                            <div 
+                              className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                                isUnlocked ? 'bg-gradient-to-r from-accent to-accent-light' : 'bg-text-muted/40'
+                              }`}
+                              style={{ width: `${progressInfo.percent}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Rewards info if locked */}
+                        {!isUnlocked && (
+                          <div className="flex items-center gap-1.5 mt-2">
+                            <span className="text-[10px] font-bold text-text-muted">Recompensa:</span>
+                            <div className="flex gap-1">
+                              <span className="text-[10px] font-extrabold bg-indigo-50 text-indigo-600 border border-indigo-100 px-1.5 py-0.5 rounded">
+                                +{ach.xpReward} XP
+                              </span>
+                              <span className="text-[10px] font-extrabold bg-yellow-50 text-yellow-700 border border-yellow-100 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+                                <Coins size={8} className="text-accent-gold" />
+                                +{ach.coinsReward}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

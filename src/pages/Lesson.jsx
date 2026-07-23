@@ -1,14 +1,16 @@
-// src/pages/Lesson.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { getLessonById } from '../data/curriculum';
-import { CheckCircle2, XCircle } from 'lucide-react';
+import { CheckCircle2, XCircle, Zap, Flame, Award, Shield, BookOpen, Coins, Sparkles } from 'lucide-react';
+import { generateAIFeedback } from '../services/aiService';
 import {
   saveRoundProgress,
   awardLessonRewards,
   updateStreak,
   deductHeart,
+  checkAndUnlockAchievements,
+  ACHIEVEMENTS
 } from '../firebase/firestore';
 import { useHeartRefill } from '../hooks/useHeartRefill';
 import LessonHeader from '../components/lesson/LessonHeader';
@@ -31,7 +33,7 @@ import TheoryScreen from '../components/lesson/TheoryScreen';
 export default function Lesson() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user, userData, progress, refreshUserData } = useAuth();
+  const { user, userData, progress, loading, refreshUserData } = useAuth();
 
   // ── Resolve lesson data ───────────────────────────────────────────────────
   const result = getLessonById(id);
@@ -56,14 +58,24 @@ export default function Lesson() {
   const [roundResult, setRoundResult] = useState(null); // { roundNum, coinsEarned, xpEarned, accuracy }
   const [allDone, setAllDone] = useState(false);        // all 3 rounds finished
   const [outOfHearts, setOutOfHearts] = useState(() => (userData?.hearts ?? 5) <= 0);
+  const [currentHearts, setCurrentHearts] = useState(() => userData?.hearts ?? 5);
   const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [lastCorrect, setLastCorrect] = useState(null);
   const [feedbackMsg, setFeedbackMsg] = useState(null);
+  const [isAiGenerated, setIsAiGenerated] = useState(false);
   const [saving, setSaving] = useState(false);
   const [roundMistakes, setRoundMistakes] = useState(0);
+  const [unlockedAchievementsToShow, setUnlockedAchievementsToShow] = useState([]);
   const [showQuitWarning, setShowQuitWarning] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   const { secondsLeft } = useHeartRefill(user, userData, refreshUserData);
+
+  useEffect(() => {
+    if (userData?.hearts !== undefined) {
+      setCurrentHearts(userData.hearts);
+    }
+  }, [userData?.hearts]);
 
   const handleCloseLesson = () => {
     if (currentExIndex > 0) {
@@ -72,6 +84,17 @@ export default function Lesson() {
       navigate('/learn');
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-dvh bg-bg-primary flex items-center justify-center">
+        <div className="card p-6 flex items-center gap-3 shadow-card">
+          <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+          <span className="text-text-primary font-semibold text-sm">Cargando lección...</span>
+        </div>
+      </div>
+    );
+  }
 
   if (!result) {
     return (
@@ -111,6 +134,11 @@ export default function Lesson() {
 
         // Refresh so ModuleAccordion sees the new progress immediately
         await refreshUserData();
+        const newAch = await checkAndUnlockAchievements(user.uid);
+        if (newAch && newAch.length > 0) {
+          setUnlockedAchievementsToShow(newAch);
+        }
+        await refreshUserData();
         console.log('[Challenge] Progress saved. progress.html-chal-1 should be completed=true');
       } catch (err) {
         console.error('[Challenge] Error saving progress:', err);
@@ -120,6 +148,40 @@ export default function Lesson() {
     setAllDone(true);
   };
 
+  // ── Achievements Modal Overlay ────────────────────────────────────────────
+  if (unlockedAchievementsToShow.length > 0) {
+    const firstAchId = unlockedAchievementsToShow[0];
+    const achMeta = ACHIEVEMENTS.find(a => a.id === firstAchId);
+    if (achMeta) {
+      const AchIcon = { Zap, Flame, Award, Shield, BookOpen }[achMeta.icon] || Award;
+      return (
+        <div className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-bg-secondary rounded-3xl p-6 w-full max-w-sm shadow-card-lg border border-accent/20 text-center animate-scale-in relative overflow-hidden">
+            <div className="absolute -inset-10 bg-gradient-radial from-accent/10 via-transparent to-transparent pointer-events-none" />
+            <div className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${achMeta.gradient} text-white mx-auto flex items-center justify-center shadow-accent-sm mb-4`}>
+              <AchIcon size={36} className="animate-bounce-slow" />
+            </div>
+            <p className="text-accent text-[10px] font-mono uppercase tracking-widest mb-1">¡Logro Desbloqueado!</p>
+            <h3 className="text-xl font-extrabold text-text-primary mb-1">{achMeta.title}</h3>
+            <p className="text-text-muted text-xs px-2 mb-5 leading-normal">{achMeta.description}</p>
+            <div className="flex justify-center gap-2 mb-6">
+              <span className="text-[10px] font-extrabold bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded-xl">+{achMeta.xpReward} XP</span>
+              <span className="text-[10px] font-extrabold bg-yellow-50 text-yellow-700 border border-yellow-100 px-2 py-1 rounded-xl flex items-center gap-0.5">
+                <Coins size={10} className="text-accent-gold" /> +{achMeta.coinsReward}
+              </span>
+            </div>
+            <button 
+              onClick={() => setUnlockedAchievementsToShow(prev => prev.slice(1))} 
+              className="btn-primary w-full py-3.5 rounded-xl font-bold"
+            >
+              ¡Excelente!
+            </button>
+          </div>
+        </div>
+      );
+    }
+  }
+
   if (isChallenge) {
     if (allDone) {
       return (
@@ -128,6 +190,7 @@ export default function Lesson() {
           coinsEarned={roundResult?.coinsEarned ?? lesson.coins ?? 15}
           xpEarned={roundResult?.xpEarned ?? lesson.xpReward ?? 100}
           accuracy={100}
+          streak={userData?.streak ?? 1}
         />
       );
     }
@@ -157,6 +220,7 @@ export default function Lesson() {
         coinsEarned={roundResult?.coinsEarned ?? currentRound.coins}
         xpEarned={roundResult?.xpEarned ?? currentRound.xpReward}
         accuracy={roundResult?.accuracy ?? 100}
+        streak={userData?.streak ?? 1}
       />
     );
   }
@@ -204,88 +268,106 @@ export default function Lesson() {
   // ── Answer handler ────────────────────────────────────────────────────────
   const handleAnswer = async (result) => {
     const isCorrect = typeof result === 'object' ? result.isCorrect : result;
-    const explanation = typeof result === 'object' ? result.explanation : null;
+    const defaultExplanation = typeof result === 'object' ? result.explanation : null;
+    const userAnswer = typeof result === 'object' ? result.userAnswer : null;
+    const correctAnswer = typeof result === 'object' ? result.correctAnswer : null;
 
     setLastCorrect(isCorrect);
-    setFeedbackMsg(explanation);
+    setFeedbackMsg(defaultExplanation);
     setFeedbackVisible(true);
+    setIsAiGenerated(false);
 
     import('../utils/audio').then(({ playCorrectSound, playWrongSound }) => {
       if (isCorrect) playCorrectSound();
       else playWrongSound();
     });
 
-    let heartsAfter = userData?.hearts ?? 1;
-    let currentMistakes = roundMistakes;
-
     if (isCorrect) {
       setCorrectCount((prev) => prev + 1);
     } else {
-      currentMistakes += 1;
+      const currentMistakes = roundMistakes + 1;
       setRoundMistakes(currentMistakes);
-      heartsAfter -= 1; // Optimistic UI update
+      setCurrentHearts((prev) => Math.max(0, prev - 1));
 
       if (user) {
-        // Fire and forget so we don't block the UI timeout
+        // Fire and forget so we don't block the UI
         deductHeart(user.uid)
           .then(() => refreshUserData())
           .catch(e => console.error('Error deducting heart:', e));
       }
     }
 
-    const delay = (!isCorrect && currentMistakes >= 3) ? 2000 : 800;
-
-    setTimeout(async () => {
-      setFeedbackVisible(false);
-
-      if (!isCorrect && heartsAfter <= 0) {
-        setOutOfHearts(true);
-        return;
+    // Consulta asíncrona a Gemini IA para enriquecer la explicación / motivación
+    generateAIFeedback({
+      exercise: currentExercise,
+      userAnswer: userAnswer || 'respuesta elegida',
+      correctAnswer: correctAnswer,
+      isCorrect,
+      defaultExplanation
+    }).then((aiMsg) => {
+      if (aiMsg && aiMsg !== defaultExplanation) {
+        setFeedbackMsg(aiMsg);
+        setIsAiGenerated(true);
       }
+    }).catch(err => console.error('Error generando feedback con IA:', err));
+  };
 
-      if (!isCorrect && currentMistakes >= 3) {
-        setCurrentExIndex(0);
-        setCorrectCount(0);
-        setRoundMistakes(0);
-        return;
-      }
+  const handleContinueExercise = async () => {
+    setFeedbackVisible(false);
 
-      if (currentExIndex + 1 >= totalExercises) {
-        // Round exercises finished → save progress
-        if (user) {
-          setSaving(true);
-          try {
-            const localCorrect = isCorrect ? correctCount + 1 : correctCount;
-            const accuracy = Math.round((localCorrect / totalExercises) * 100);
-            const roundNum = currentRound.roundNum;
+    if (!lastCorrect && currentHearts <= 0) {
+      setOutOfHearts(true);
+      return;
+    }
 
-            const [{ roundsCompleted, completed }] = await Promise.all([
-              saveRoundProgress(user.uid, lesson.id, module.id, roundNum, accuracy, totalRounds),
-              awardLessonRewards(user.uid, currentRound.coins, currentRound.xpReward),
-              updateStreak(user.uid),
-            ]);
-            await refreshUserData();
+    if (!lastCorrect && roundMistakes >= 3) {
+      setCurrentExIndex(0);
+      setCorrectCount(0);
+      setRoundMistakes(0);
+      setRetryCount((c) => c + 1);
+      return;
+    }
 
-            if (completed) {
-              setAllDone(true);
-            }
+    if (currentExIndex + 1 >= totalExercises) {
+      // Round exercises finished → save progress
+      if (user) {
+        setSaving(true);
+        try {
+          const accuracy = Math.round((correctCount / totalExercises) * 100);
+          const roundNum = currentRound.roundNum;
 
-            setRoundResult({
-              roundNum,
-              coinsEarned: currentRound.coins,
-              xpEarned: currentRound.xpReward,
-              accuracy,
-            });
-          } catch (e) {
-            console.error('Error saving round:', e);
-          } finally {
-            setSaving(false);
+          const [{ roundsCompleted, completed }] = await Promise.all([
+            saveRoundProgress(user.uid, lesson.id, module.id, roundNum, accuracy, totalRounds),
+            awardLessonRewards(user.uid, currentRound.coins, currentRound.xpReward),
+            updateStreak(user.uid),
+          ]);
+          await refreshUserData();
+
+          const newAch = await checkAndUnlockAchievements(user.uid);
+          if (newAch && newAch.length > 0) {
+            setUnlockedAchievementsToShow(newAch);
           }
+          await refreshUserData();
+
+          if (completed) {
+            setAllDone(true);
+          }
+
+          setRoundResult({
+            roundNum,
+            coinsEarned: currentRound.coins,
+            xpEarned: currentRound.xpReward,
+            accuracy,
+          });
+        } catch (e) {
+          console.error('Error saving round:', e);
+        } finally {
+          setSaving(false);
         }
-      } else {
-        setCurrentExIndex((prev) => prev + 1);
       }
-    }, delay);
+    } else {
+      setCurrentExIndex((prev) => prev + 1);
+    }
   };
 
   // ── Practice UI ───────────────────────────────────────────────────────────
@@ -294,24 +376,39 @@ export default function Lesson() {
 
   return (
     <div className="min-h-dvh bg-bg-primary flex flex-col">
-      {/* Feedback toast — from top */}
+      {/* Feedback Panel — Bottom Sheet */}
       {feedbackVisible && (
-        <div className={`fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none`}>
-          <div className={`flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-card-lg animate-toast-in max-w-sm w-full ${
-            lastCorrect
-              ? 'bg-accent-green text-white'
-              : 'bg-accent-red text-white'
-          }`}>
-            {lastCorrect
-              ? <CheckCircle2 size={20} className="flex-shrink-0" />
-              : <XCircle size={20} className="flex-shrink-0" />}
-            <div>
-              <p className="font-bold text-sm">{lastCorrect ? '¡Correcto!' : '¡Incorrecto!'}</p>
-              <p className="text-white/85 text-xs mt-0.5">
-                {lastCorrect
-                  ? (feedbackMsg || '¡Excelente respuesta!')
-                  : (roundMistakes >= 3 ? 'Demasiados errores. Reiniciando ronda...' : (feedbackMsg || 'Sigue intentando.'))}
-              </p>
+        <div className="fixed bottom-0 left-0 right-0 z-[100] animate-slide-up">
+          <div className={`w-full ${lastCorrect ? 'bg-accent-green-light border-accent-green' : 'bg-accent-red-light border-accent-red'} border-t-2 px-4 py-6 md:px-8 flex flex-col gap-4 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]`}>
+            <div className="max-w-lg mx-auto w-full flex flex-col gap-4">
+              <div className="flex items-start gap-3">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${lastCorrect ? 'bg-accent-green text-white' : 'bg-accent-red text-white'}`}>
+                  {lastCorrect ? <CheckCircle2 size={24} /> : <XCircle size={24} />}
+                </div>
+                <div>
+                  {isAiGenerated && (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-indigo-100 text-indigo-700 border border-indigo-200 mb-1.5 shadow-sm">
+                      <Sparkles size={11} className="text-indigo-600 animate-pulse" />
+                      Cody IA
+                    </span>
+                  )}
+                  <h3 className={`text-xl font-extrabold ${lastCorrect ? 'text-accent-green' : 'text-accent-red'}`}>
+                    {lastCorrect ? '¡Correcto!' : '¡Incorrecto!'}
+                  </h3>
+                  <p className={`text-sm font-bold mt-1 ${lastCorrect ? 'text-accent-green/80' : 'text-accent-red/80'}`}>
+                    {lastCorrect
+                      ? (feedbackMsg || '¡Excelente respuesta!')
+                      : (roundMistakes >= 3 ? 'Demasiados errores. Reiniciando ronda...' : (feedbackMsg || 'La respuesta no es correcta.'))}
+                  </p>
+                </div>
+              </div>
+              
+              <button 
+                onClick={handleContinueExercise}
+                className={`w-full py-4 rounded-2xl font-bold text-white shadow-sm active:scale-95 transition-all ${lastCorrect ? 'bg-accent-green hover:bg-accent-green/90' : 'bg-accent-red hover:bg-accent-red/90'}`}
+              >
+                Continuar
+              </button>
             </div>
           </div>
         </div>
@@ -345,7 +442,7 @@ export default function Lesson() {
       <div className={`flex-1 max-w-lg mx-auto w-full pb-8 px-4 ${feedbackVisible ? 'pointer-events-none' : ''}`}>
         {currentExercise && (() => {
           const exType = currentExercise.type ?? currentRound.type ?? 'multiple-choice';
-          const key = `${lesson.id}-r${currentRoundIdx}-${currentExIndex}`;
+          const key = `${lesson.id}-r${currentRoundIdx}-${currentExIndex}-${retryCount}`;
           if (exType === 'multiple-choice') return <MultipleChoiceExercise key={key} exercise={currentExercise} onAnswer={handleAnswer} />;
           if (exType === 'multi-select')   return <MultiSelectExercise   key={key} exercise={currentExercise} onAnswer={handleAnswer} />;
           if (exType === 'sequence')       return <SequenceExercise      key={key} exercise={currentExercise} onAnswer={handleAnswer} />;

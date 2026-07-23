@@ -86,14 +86,21 @@ export default function CodeFillExercise({
     );
     setIsCorrect(correct);
     setSubmitted(true);
+
+    const userFilledList = Object.keys(filledBlanks).map((k) => filledBlanks[k]).join(', ');
+    const expectedList = exercise.answers.join(', ');
+    const explanation = correct
+      ? '¡Excelente! Has completado el código correctamente.'
+      : (exercise.explanationIncorrect || exercise.explanation || 'Recuerda las reglas de estructura y sintaxis para rellenar este código.');
+
     setTimeout(() => {
-      onAnswer(correct);
-      if (!correct) {
-        setTimeout(() => {
-          handleReset();
-        }, 1000);
-      }
-    }, 1200);
+      onAnswer({
+        isCorrect: correct,
+        explanation,
+        userAnswer: userFilledList,
+        correctAnswer: expectedList
+      });
+    }, 400);
   };
 
   const displayLines = buildDisplay(exercise.codeLines, filledBlanks);

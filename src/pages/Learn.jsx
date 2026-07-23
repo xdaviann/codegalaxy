@@ -6,7 +6,8 @@ import TopBar from '../components/layout/TopBar';
 import MainLayout from '../components/layout/MainLayout';
 import ModuleAccordion from '../components/learn/ModuleAccordion';
 import { curriculum } from '../data/curriculum';
-import { Flame, Zap, BookOpen, Sparkles, Trophy } from 'lucide-react';
+import { Flame, Zap, BookOpen, Sparkles, Trophy, Heart } from 'lucide-react';
+import { useHeartRefill, formatCountdown } from '../hooks/useHeartRefill';
 
 const TRACKS = [
   { id: 'web', label: 'Desarrollo web', languages: ['HTML', 'CSS'] },
@@ -15,13 +16,17 @@ const TRACKS = [
 ];
 
 export default function Learn() {
-  const { userData } = useAuth();
+  const { userData, user, refreshUserData } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [showHeartsModal, setShowHeartsModal] = useState(false);
   const [activeTrack, setActiveTrack] = useState(
     TRACKS.some(t => t.id === searchParams.get('track'))
       ? searchParams.get('track')
       : 'web'
   );
+
+  const { secondsLeft } = useHeartRefill(user, userData, refreshUserData);
+  const countdown = formatCountdown(secondsLeft) || 'cargando...';
 
   const handleTrackChange = (id) => {
     setActiveTrack(id);
@@ -105,6 +110,7 @@ export default function Learn() {
                     key={module.id}
                     module={module}
                     defaultOpen={i === 0}
+                    onNoHearts={() => setShowHeartsModal(true)}
                   />
                 ))
               ) : (
@@ -168,6 +174,47 @@ export default function Learn() {
 
         </div>
       </main>
+
+      {showHeartsModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-bg-secondary rounded-3xl p-6 w-full max-w-sm shadow-card-lg border border-border animate-scale-in text-center flex flex-col items-center">
+            {/* Pulsing heart graphic */}
+            <div className="relative mb-5 animate-bounce-in">
+              <div className="w-20 h-20 rounded-full bg-accent-red/10 border-2 border-accent-red/20 flex items-center justify-center">
+                <Heart
+                  size={42}
+                  className="text-accent-red fill-accent-red animate-pulse"
+                  strokeWidth={1.5}
+                />
+              </div>
+            </div>
+
+            <h3 className="text-2xl font-extrabold text-text-primary mb-2">¡Sin vidas! 💔</h3>
+            <p className="text-text-secondary text-sm mb-6 leading-relaxed">
+              No tienes corazones disponibles para iniciar esta lección. Espera a que se recarguen de forma automática para continuar.
+            </p>
+
+            {/* Countdown container */}
+            <div className="bg-accent-red/5 border border-accent-red/20 rounded-2xl px-5 py-3 flex items-center gap-3 w-full justify-center mb-6">
+              <div className="text-center">
+                <p className="text-text-muted text-[10px] font-mono uppercase tracking-wider">
+                  Siguiente vida en
+                </p>
+                <p className="text-accent-red text-2xl font-black font-mono tabular-nums">
+                  {countdown}
+                </p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setShowHeartsModal(false)} 
+              className="btn-primary w-full py-3.5 rounded-2xl text-sm font-bold shadow-[0_0_20px_rgba(99,102,241,0.2)]"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </MainLayout>
   );
 }

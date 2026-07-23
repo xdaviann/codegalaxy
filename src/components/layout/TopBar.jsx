@@ -1,5 +1,6 @@
 // src/components/layout/TopBar.jsx
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Heart, Flame, Coins, ChevronDown } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useHeartRefill, formatCountdown } from '../../hooks/useHeartRefill';
@@ -11,6 +12,7 @@ export default function TopBar({
   onCourseChange,
 }) {
   const { user, userData, refreshUserData } = useAuth();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -88,16 +90,19 @@ export default function TopBar({
         {/* Right — Stats pills */}
         <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 overflow-x-auto no-scrollbar">
           {/* Hearts */}
-          <div className={`flex items-center gap-1 rounded-full px-2 sm:px-2.5 py-1.5 border text-[11px] sm:text-xs font-bold transition-colors shrink-0 ${
-            isFull
-              ? 'bg-bg-tertiary border-border text-text-secondary'
-              : 'bg-accent-red-light border-accent-red/30 text-accent-red'
-          }`}>
+          <button 
+            onClick={() => navigate('/shop')}
+            className={`flex items-center gap-1 rounded-full px-2 sm:px-2.5 py-1.5 border text-[11px] sm:text-xs font-bold transition-all shrink-0 hover:scale-105 active:scale-95 cursor-pointer ${
+              isFull
+                ? 'bg-bg-tertiary border-border text-text-secondary hover:bg-bg-secondary'
+                : 'bg-accent-red-light border-accent-red/30 text-accent-red hover:bg-accent-red/20'
+            }`}
+          >
             <Heart size={13} className={hearts > 0 ? 'fill-accent-red text-accent-red' : 'text-text-muted'} />
             <span>{hearts}</span>
             {!isFull && countdown && <span className="text-[10px] font-mono opacity-80">·{countdown}</span>}
             {isFull && <span className="hidden min-[380px]:inline text-accent-green text-[10px] font-bold ml-0.5">MAX</span>}
-          </div>
+          </button>
 
           {/* Streak */}
           <div className="flex items-center gap-1 bg-orange-50 border border-orange-200 rounded-full px-2 sm:px-2.5 py-1.5 text-[11px] sm:text-xs font-bold text-orange-600 shrink-0">
@@ -106,10 +111,13 @@ export default function TopBar({
           </div>
 
           {/* Coins */}
-          <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-200 rounded-full px-2 sm:px-2.5 py-1.5 text-[11px] sm:text-xs font-bold text-yellow-600 shrink-0">
+          <button 
+            onClick={() => navigate('/shop')}
+            className="flex items-center gap-1 bg-yellow-50 border border-yellow-200 rounded-full px-2 sm:px-2.5 py-1.5 text-[11px] sm:text-xs font-bold text-yellow-600 shrink-0 hover:scale-105 active:scale-95 cursor-pointer hover:bg-yellow-100"
+          >
             <Coins size={13} className="text-accent-gold" />
             <span>{coins}</span>
-          </div>
+          </button>
         </div>
       </div>
     </header>

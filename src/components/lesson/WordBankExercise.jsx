@@ -45,21 +45,19 @@ export default function WordBankExercise({ exercise, onAnswer }) {
     if (filled.includes(null) || submitted) return;
     setSubmitted(true);
     const isCorrect = filled.every((w, i) => w?.trim() === exercise.answers[i]?.trim());
+    const userWords = filled.join(', ');
+    const expectedWords = exercise.answers.join(', ');
+
     setTimeout(() => {
       onAnswer({
         isCorrect,
         explanation: isCorrect
           ? (exercise.explanationCorrect || exercise.explanation || '¡Código correcto!')
-          : (exercise.explanationIncorrect || exercise.explanation || `Respuesta correcta: ${exercise.answers.join(', ')}`),
+          : (exercise.explanationIncorrect || exercise.explanation || 'Recuerda las reglas de sintaxis y comillas para construir este código correctamente.'),
+        userAnswer: userWords,
+        correctAnswer: expectedWords
       });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setFilled(Array(blankCount).fill(null));
-          setUsedIdxs([]);
-          setSubmitted(false);
-        }, 1000);
-      }
-    }, 1600);
+    }, 400);
   };
 
   // ── Render code parts with inline blank slots ─────────────────────

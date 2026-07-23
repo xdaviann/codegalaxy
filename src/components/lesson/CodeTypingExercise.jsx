@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import QuickSymbolKeyboard from './QuickSymbolKeyboard';
+import { evaluateCodeWithAI } from '../../services/aiService';
 
 export default function CodeTypingExercise({ exercise, onAnswer }) {
   const [code, setCode] = useState(exercise.startingCode || '');
   const [submitted, setSubmitted] = useState(false);
+  const [evaluating, setEvaluating] = useState(false);
   const textareaRef = useRef(null);
 
   const insertSymbol = (symbol) => {
-    if (submitted) return;
+    if (submitted || evaluating) return;
     const textarea = textareaRef.current;
     if (!textarea) return;
     
@@ -25,6 +27,7 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
   useEffect(() => {
     setCode(exercise.startingCode || '');
     setSubmitted(false);
+    setEvaluating(false);
   }, [exercise]);
 
   const validateCode = (userCode) => {
@@ -41,24 +44,35 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
     return false;
   };
 
-  const handleCheck = () => {
-    if (code.trim() === '' || submitted) return;
-    setSubmitted(true);
+  const handleCheck = async () => {
+    if (code.trim() === '' || submitted || evaluating) return;
+    setEvaluating(true);
     
-    const isCorrect = validateCode(code);
-    
-    const explanation = isCorrect
+    let isCorrect = validateCode(code);
+    let explanation = isCorrect
       ? (exercise.explanationCorrect || exercise.explanation || '¡Excelente! Escribiste el código correctamente.')
       : (exercise.explanationIncorrect || exercise.explanation || 'El código no es exactamente lo que se pedía. Revisa la sintaxis y los caracteres.');
 
-    setTimeout(() => {
-      onAnswer({ isCorrect, explanation });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setSubmitted(false);
-        }, 1000);
+    if (!isCorrect) {
+      const aiEval = await evaluateCodeWithAI({
+        instruction: exercise.instruction || exercise.question,
+        expectedAnswers: exercise.expectedAnswers,
+        userCode: code,
+        language: exercise.language || 'HTML'
+      });
+
+      if (aiEval) {
+        isCorrect = aiEval.isCorrect;
+        explanation = aiEval.feedback;
       }
-    }, 1200);
+    }
+
+    setSubmitted(true);
+    setEvaluating(false);
+    
+    setTimeout(() => {
+      onAnswer({ isCorrect, explanation, userAnswer: code });
+    }, 300);
   };
 
   return (
@@ -122,14 +136,14 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
       <div className="mt-auto">
         <button
           onClick={handleCheck}
-          disabled={code.trim() === '' || submitted}
+          disabled={code.trim() === '' || submitted || evaluating}
           className={`w-full py-4 rounded-2xl font-bold text-sm tracking-wide transition-all duration-200 ${
-            code.trim() !== '' && !submitted
+            code.trim() !== '' && !submitted && !evaluating
               ? 'btn-primary'
               : 'bg-bg-tertiary text-text-muted cursor-not-allowed'
           }`}
         >
-          {submitted ? 'Comprobando...' : 'Comprobar'}
+          {evaluating ? 'Evaluando con IA...' : submitted ? 'Comprobando...' : 'Comprobar'}
         </button>
       </div>
     </div>

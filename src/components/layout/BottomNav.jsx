@@ -1,10 +1,11 @@
 // src/components/layout/BottomNav.jsx
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BookOpen, User, Trophy } from 'lucide-react';
+import { BookOpen, User, Trophy, ShoppingBag } from 'lucide-react';
 
 const navItems = [
   { id: 'learn',        label: 'Aprender', icon: BookOpen, path: '/learn' },
   { id: 'leaderboard', label: 'Ranking',   icon: Trophy,   path: '/leaderboard' },
+  { id: 'shop',        label: 'Tienda',    icon: ShoppingBag, path: '/shop' },
   { id: 'profile',     label: 'Perfil',    icon: User,     path: '/profile' },
 ];
 
@@ -22,7 +23,7 @@ export default function BottomNav() {
               key={id}
               id={`nav-${id}`}
               onClick={() => navigate(path)}
-              className="relative flex flex-col items-center gap-0.5 py-2 px-6 rounded-xl transition-all duration-200 group"
+              className="relative flex-1 flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl transition-all duration-200 group"
             >
               {/* Active pill indicator */}
               {isActive && (

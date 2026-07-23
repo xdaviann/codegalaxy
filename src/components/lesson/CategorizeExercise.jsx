@@ -58,19 +58,21 @@ export default function CategorizeExercise({ exercise, onAnswer }) {
     // Check if every assignment matches the correct category
     const isCorrect = exercise.items.every((item, idx) => item.category === assignments[idx]);
     
+    const userMapping = exercise.items.map((item, idx) => {
+      const catObj = exercise.categories.find(c => c.id === assignments[idx]);
+      return `${item.text} → ${catObj?.title || 'sin categoría'}`;
+    }).join(', ');
+
     setTimeout(() => {
       onAnswer({
         isCorrect,
         explanation: isCorrect 
           ? '¡Excelente clasificación!' 
-          : 'Algún elemento está en la categoría incorrecta. Revisa con cuidado.'
+          : (exercise.explanationIncorrect || exercise.explanation || 'Recuerda revisar las características y reglas que definen a cada categoría.'),
+        userAnswer: userMapping,
+        correctAnswer: 'Clasificación adecuada de los elementos en sus categorías'
       });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setSubmitted(false);
-        }, 1000);
-      }
-    }, 1500);
+    }, 400);
   };
 
   return (

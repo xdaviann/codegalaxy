@@ -21,14 +21,12 @@ export default function MultipleChoiceExercise({ exercise, onAnswer }) {
     setAnswered(true);
     const isCorrect = selected === exercise.correct;
     setTimeout(() => {
-      onAnswer({ isCorrect, explanation: buildExplanation(isCorrect) });
-      if (!isCorrect) {
-        setTimeout(() => {
-          setSelected(null);
-          setAnswered(false);
-        }, 1000);
-      }
-    }, 1400);
+      onAnswer({ 
+        isCorrect, 
+        explanation: buildExplanation(isCorrect),
+        userAnswer: exercise.options[selected]
+      });
+    }, 400);
   };
 
   const getOptionStyle = (idx) => {

@@ -110,42 +110,38 @@ export default function Lesson() {
   const { lesson, module } = result;
   const isChallenge = lesson.type === 'challenge';
 
-  const handleChallengeComplete = async (rewards) => {
-    if (user && userData) {
-      try {
-        // Write directly into the progress subcollection (same as regular lessons)
-        const { db, doc, setDoc, updateDoc, increment, serverTimestamp } = await import('../firebase/firestore');
-        
-        // Force overwrite — don't use merge so stale `completed:false` gets replaced
-        await setDoc(doc(db, 'users', user.uid, 'progress', lesson.id), {
-          lessonId: lesson.id,
-          moduleId: module?.id ?? null,
-          roundsCompleted: 1,
-          completed: true,
-          score: 100,
-          updatedAt: serverTimestamp(),
-        });
-
-        // Award XP and coins
-        await updateDoc(doc(db, 'users', user.uid), {
-          xp: increment(rewards.xpEarned),
-          coins: increment(rewards.coinsEarned),
-        });
-
-        // Refresh so ModuleAccordion sees the new progress immediately
-        await refreshUserData();
-        const newAch = await checkAndUnlockAchievements(user.uid);
-        if (newAch && newAch.length > 0) {
-          setUnlockedAchievementsToShow(newAch);
-        }
-        await refreshUserData();
-        console.log('[Challenge] Progress saved. progress.html-chal-1 should be completed=true');
-      } catch (err) {
-        console.error('[Challenge] Error saving progress:', err);
-      }
-    }
+  const handleChallengeComplete = (rewards) => {
     setRoundResult({ roundNum: 1, xpEarned: rewards.xpEarned, coinsEarned: rewards.coinsEarned, accuracy: 100 });
     setAllDone(true);
+
+    if (user) {
+      (async () => {
+        try {
+          const { db, doc, setDoc, updateDoc, increment, serverTimestamp } = await import('../firebase/firestore');
+          await setDoc(doc(db, 'users', user.uid, 'progress', lesson.id), {
+            lessonId: lesson.id,
+            moduleId: module?.id ?? null,
+            roundsCompleted: 1,
+            completed: true,
+            score: 100,
+            updatedAt: serverTimestamp(),
+          });
+
+          await updateDoc(doc(db, 'users', user.uid), {
+            xp: increment(rewards.xpEarned),
+            coins: increment(rewards.coinsEarned),
+          });
+
+          const newAch = await checkAndUnlockAchievements(user.uid);
+          if (newAch && newAch.length > 0) {
+            setUnlockedAchievementsToShow(newAch);
+          }
+          refreshUserData();
+        } catch (err) {
+          console.error('[Challenge] Error saving progress:', err);
+        }
+      })();
+    }
   };
 
   // ── Achievements Modal Overlay ────────────────────────────────────────────
@@ -329,41 +325,39 @@ export default function Lesson() {
     }
 
     if (currentExIndex + 1 >= totalExercises) {
-      // Round exercises finished → save progress
+      // Round exercises finished → transition UI immediately and save in background
+      const accuracy = Math.round((correctCount / totalExercises) * 100);
+      const roundNum = currentRound.roundNum;
+      const completed = roundNum >= totalRounds;
+
+      if (completed) {
+        setAllDone(true);
+      }
+
+      setRoundResult({
+        roundNum,
+        coinsEarned: currentRound.coins,
+        xpEarned: currentRound.xpReward,
+        accuracy,
+      });
+
       if (user) {
-        setSaving(true);
-        try {
-          const accuracy = Math.round((correctCount / totalExercises) * 100);
-          const roundNum = currentRound.roundNum;
-
-          const [{ roundsCompleted, completed }] = await Promise.all([
-            saveRoundProgress(user.uid, lesson.id, module.id, roundNum, accuracy, totalRounds),
-            awardLessonRewards(user.uid, currentRound.coins, currentRound.xpReward),
-            updateStreak(user.uid),
-          ]);
-          await refreshUserData();
-
-          const newAch = await checkAndUnlockAchievements(user.uid);
-          if (newAch && newAch.length > 0) {
-            setUnlockedAchievementsToShow(newAch);
+        (async () => {
+          try {
+            await Promise.all([
+              saveRoundProgress(user.uid, lesson.id, module.id, roundNum, accuracy, totalRounds),
+              awardLessonRewards(user.uid, currentRound.coins, currentRound.xpReward),
+              updateStreak(user.uid),
+            ]);
+            const newAch = await checkAndUnlockAchievements(user.uid);
+            if (newAch && newAch.length > 0) {
+              setUnlockedAchievementsToShow(newAch);
+            }
+            refreshUserData();
+          } catch (e) {
+            console.error('Error saving round in background:', e);
           }
-          await refreshUserData();
-
-          if (completed) {
-            setAllDone(true);
-          }
-
-          setRoundResult({
-            roundNum,
-            coinsEarned: currentRound.coins,
-            xpEarned: currentRound.xpReward,
-            accuracy,
-          });
-        } catch (e) {
-          console.error('Error saving round:', e);
-        } finally {
-          setSaving(false);
-        }
+        })();
       }
     } else {
       setCurrentExIndex((prev) => prev + 1);

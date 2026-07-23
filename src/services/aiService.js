@@ -1,13 +1,24 @@
 // src/services/aiService.js
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+function getApiKey() {
+  const raw = import.meta.env.VITE_GEMINI_API_KEY || '';
+  if (!raw) return '';
+  try {
+    if (!raw.startsWith('AQ.') && !raw.startsWith('AIza')) {
+      return atob(raw);
+    }
+  } catch (e) {}
+  return raw;
+}
+
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 /**
  * Llama a la API de Gemini con timeout para no bloquear la interfaz.
  */
 async function callGemini(promptText, timeoutMs = 4000) {
-  if (!GEMINI_API_KEY) {
+  const apiKey = getApiKey();
+  if (!apiKey) {
     console.warn('[AI Service] VITE_GEMINI_API_KEY no configurada. Usando fallback estático.');
     return null;
   }
@@ -16,7 +27,7 @@ async function callGemini(promptText, timeoutMs = 4000) {
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(`${API_URL}?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,

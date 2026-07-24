@@ -1,7 +1,7 @@
 // src/components/layout/TopBar.jsx
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Flame, Coins, ChevronDown } from 'lucide-react';
+import { Heart, Flame, Coins, ChevronDown, Code2 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useHeartRefill, formatCountdown } from '../../hooks/useHeartRefill';
 
@@ -54,7 +54,7 @@ export default function TopBar({
           {/* Cody logotype */}
           <div className="flex items-center gap-1.5 cursor-pointer">
             <div className="w-7 h-7 rounded-lg bg-gradient-accent flex items-center justify-center shadow-accent-sm shrink-0">
-              <span className="text-white font-bold text-xs">C</span>
+              <Code2 size={16} className="text-white" strokeWidth={2.5} />
             </div>
             <span className="hidden min-[380px]:block font-bold text-text-primary text-base tracking-tight">Cody</span>
           </div>

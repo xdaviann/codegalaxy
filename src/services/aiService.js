@@ -101,17 +101,27 @@ REGLAS DE ORO PARA TU EXPLICACIÓN:
 /**
  * Evalúa mediante IA el código escrito por el usuario en ejercicios de tipeo o desafío.
  */
-export async function evaluateCodeWithAI({ instruction, expectedAnswers, userCode, language = 'HTML' }) {
+export async function evaluateCodeWithAI({ instruction, expectedAnswers, validationRegex, userCode, language = 'HTML' }) {
+  let reference = '';
+  if (expectedAnswers && expectedAnswers.length > 0) {
+    reference = JSON.stringify(expectedAnswers);
+  } else if (validationRegex) {
+    reference = `La intención es que coincida con esta expresión regular: ${validationRegex}`;
+  } else {
+    reference = 'N/A';
+  }
+
   const prompt = `Eres un compilador y tutor experto en ${language} para la app educativa Cody.
 Consigna: "${instruction}"
-Respuestas esperadas/referencia: ${JSON.stringify(expectedAnswers || [])}
+Respuestas esperadas/referencia: ${reference}
 
 Código escrito por el estudiante:
 \`\`\`${language.toLowerCase()}
 ${userCode}
 \`\`\`
 
-Analiza si el código del estudiante cumple semánticamente con la consigna. Sé permisivo con espacios, saltos de línea o comillas simples/dobles siempre que la estructura de código sea correcta y cumpla lo pedido.
+Analiza si el código del estudiante cumple semánticamente con la consigna. Sé MUY permisivo con espacios extra, saltos de línea al principio o al final, o usar comillas simples en lugar de dobles. Concéntrate en si escribió correctamente la lógica o etiqueta pedida.
+Si la referencia es una expresión regular, úsala solo para entender qué se espera, pero permite flexibilidad humana (espacios, saltos de línea).
 
 Responde ÚNICAMENTE en formato JSON estructurado como este, sin texto alrededor y sin bloques markdown:
 {"isCorrect": true, "feedback": "Explicación breve de 1 oración en español sobre por qué es correcto o qué error cometió."}`;

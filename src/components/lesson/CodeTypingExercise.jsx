@@ -31,13 +31,14 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
   }, [exercise]);
 
   const validateCode = (userCode) => {
+    const trimmed = userCode.trim();
     if (exercise.validationRegex) {
-      return new RegExp(exercise.validationRegex, 'i').test(userCode);
+      return new RegExp(exercise.validationRegex, 'i').test(trimmed);
     }
     
     if (exercise.expectedAnswers) {
       const normalize = (str) => str.trim().replace(/\s+/g, ' ').toLowerCase();
-      const normUser = normalize(userCode);
+      const normUser = normalize(trimmed);
       return exercise.expectedAnswers.some((ans) => normalize(ans) === normUser);
     }
     
@@ -57,6 +58,7 @@ export default function CodeTypingExercise({ exercise, onAnswer }) {
       const aiEval = await evaluateCodeWithAI({
         instruction: exercise.instruction || exercise.question,
         expectedAnswers: exercise.expectedAnswers,
+        validationRegex: exercise.validationRegex,
         userCode: code,
         language: exercise.language || 'HTML'
       });

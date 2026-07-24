@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.jsx
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BookOpen, User, Trophy, LogOut, ShoppingBag } from 'lucide-react';
+import { BookOpen, User, Trophy, LogOut, ShoppingBag, Code2 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
 const navItems = [
@@ -26,7 +26,7 @@ export default function Sidebar() {
         {/* Logo */}
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/learn')}>
           <div className="w-10 h-10 rounded-xl bg-gradient-accent flex items-center justify-center shadow-accent-sm">
-            <span className="text-white font-extrabold text-lg">C</span>
+            <Code2 size={20} className="text-white" strokeWidth={2.5} />
           </div>
           <span className="font-extrabold text-text-primary text-2xl tracking-tight">Cody</span>
         </div>

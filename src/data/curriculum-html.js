@@ -22,7 +22,7 @@ export const curriculumHtml = [
               { id: 't5', type: 'tip', icon: 'Zap', color: '#eab308', title: 'Sensibilidad a Mayúsculas', body: 'Aunque HTML no distingue entre `<P>` y `<p>`, **la regla de oro profesional es escribir SIEMPRE las etiquetas en minúsculas**. Esto garantiza código limpio y compatible.' }
             ],
             exercises: [
-              { id: 'ex_typing_1', type: 'code-typing', instruction: '¡Escribe tu primera etiqueta! Cierra la etiqueta de párrafo con el texto "Hola".', startingCode: '<p>Hola', validationRegex: '^<p>\\s*Hola\\s*<\\/p>$', explanationIncorrect: 'Recuerda que las etiquetas de cierre siempre llevan una barra diagonal antes del nombre: </p>' },
+              { id: 'ex_typing_1', type: 'code-typing', instruction: '¡Escribe tu primera etiqueta! Abre y cierra una etiqueta de párrafo (p) con el texto Hola.', startingCode: '<p>Hola', validationRegex: '^<p>\\s*Hola\\s*<\\/p>$', explanationIncorrect: 'Recuerda que las etiquetas de cierre siempre llevan una barra diagonal antes del nombre: </p>' },
               { id: 'ex1', type: 'multiple-choice', question: 'Si HTML fuera la construcción de un edificio, ¿qué rol cumple?', options: ['La pintura y color de las paredes', 'Los ladrillos, vigas y cimientos', 'Los ascensores automáticos', 'Las cortinas y muebles'], correct: 1 },
               { id: 'ex2', type: 'categorize', instruction: 'Clasifica estas etiquetas entre las que abren y las que cierran', categories: [{id: 'open', title: 'Apertura (Sin /)', color: '#3b82f6'}, {id: 'close', title: 'Cierre (Con /)', color: '#ec4899'}], items: [{text: '<p>', category: 'open'}, {text: '</h1>', category: 'close'}, {text: '<body>', category: 'open'}, {text: '</div>', category: 'close'}, {text: '<span>', category: 'open'}, {text: '</main>', category: 'close'}] },
               { id: 'ex3', type: 'code-highlight', instruction: 'Toca la barra diagonal que convierte esta etiqueta en una ETIQUETA DE CIERRE.', code: '<[[p]]>Hola mundo<[[/]][[p]]>', correctIndex: 1 },
@@ -43,7 +43,7 @@ export const curriculumHtml = [
             ],
             exercises: [
               { id: 'ex1', type: 'categorize', instruction: 'Clasifica según dónde debe ubicarse cada elemento', categories: [{id: 'head', title: '<head> (Invisible)', color: '#8b5cf6'}, {id: 'body', title: '<body> (Visible)', color: '#10b981'}], items: [{text: 'Título de la pestaña', category: 'head'}, {text: 'Imágenes y videos', category: 'body'}, {text: 'Párrafos de texto', category: 'body'}, {text: 'Información para buscadores', category: 'head'}, {text: 'Botones de acción', category: 'body'}] },
-              { id: 'ex_typing_2', type: 'code-typing', instruction: 'Escribe la estructura del cuerpo (body) vacío.', startingCode: '', validationRegex: '^<body>\\s*<\\/body>$', explanationIncorrect: 'Recuerda que debes escribir la etiqueta de apertura <body> y su correspondiente cierre </body>.' },
+              { id: 'ex_typing_2', type: 'code-typing', instruction: 'Abre y cierra la estructura del cuerpo (body) de forma vacía.', startingCode: '', validationRegex: '^<body>\\s*<\\/body>$', explanationIncorrect: 'Recuerda que debes escribir la etiqueta de apertura <body> y su correspondiente cierre </body>.' },
               {
                 id: 'ex2', type: 'code-fill', instruction: 'Completa la estructura separando el head del body',
                 codeLines: [
@@ -77,7 +77,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'multiple-choice', question: '¿En qué lugar de la etiqueta se escriben siempre los atributos?', options: ['En la etiqueta de cierre', 'Dentro de la etiqueta de apertura, antes de cerrar el >', 'Por fuera de los corchetes angulares', 'Al final de todo el archivo'], correct: 1 },
               { id: 'ex5', type: 'code-error', instruction: '¿Qué línea tiene un error de sintaxis en la comilla del atributo?', filename: 'index.html', lines: ['<div class="caja">', '  <p color="rojo>', '    Hola', '  </p>', '</div>'], errorLineIndex: 1, explanation: 'Recuerda que a los valores de los atributos no les puede faltar la comilla de cierre: debe ser color="rojo".' },
               { id: 'ex6', type: 'code-highlight', instruction: 'Toca el VALOR del atributo en esta etiqueta.', code: '<[[input]] [[type]]="[[password]]">', correctIndex: 2 },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe un comentario en HTML con el texto "Inicio".', startingCode: '<!-- ', validationRegex: '^<!--\\s*Inicio\\s*-->$', explanationIncorrect: 'Recuerda cerrar el comentario con -->' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Inserta un comentario en HTML con el texto Inicio.', startingCode: '<!-- ', validationRegex: '^<!--\\s*Inicio\\s*-->$', explanationIncorrect: 'Recuerda cerrar el comentario con -->' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes son etiquetas huérfanas o vacías que NO tienen cierre?', options: ['<br>', '<p>', '<hr>', '<div>'], correctAnswers: [0, 2] }
             ]
           }
@@ -104,7 +104,7 @@ export const curriculumHtml = [
               { id: 'ex3', type: 'multiple-choice', question: 'Si deseas hacer un texto más grande pero NO es el título principal de la página, ¿cuál es la mejor práctica?', options: ['Usar <h1> de todos modos', 'Usar un párrafo <p> y cambiar su tamaño visual con CSS', 'Usar <h6>', 'Usar la etiqueta <grande>'], correct: 1 },
               { id: 'ex4', type: 'code-error', instruction: 'Identifica la línea con error SEO (uso repetido del H1).', filename: 'index.html', lines: ['<body>', '  <h1>Bienvenido a la Tienda</h1>', '  <h2>Sección Ofertas</h2>', '  <h1>Sección Calzado</h1>', '</body>'], errorLineIndex: 3, explanation: 'Recuerda que solo debe existir un <h1> por página. La sección "Calzado" debe ser un <h2>.' },
               { id: 'ex5', type: 'categorize', instruction: 'Clasifica los textos según su nivel correspondiente', categories: [{id: 'h1', title: 'Usar <h1>', color: '#ec4899'}, {id: 'h2', title: 'Usar <h2>', color: '#3b82f6'}], items: [{text: 'Título del artículo del blog', category: 'h1'}, {text: 'Nombre principal del sitio web', category: 'h1'}, {text: 'Subtítulo de una sección interna', category: 'h2'}, {text: 'Categoría secundaria de productos', category: 'h2'}] },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe el titular secundario <h2>Noticias</h2>.', startingCode: '', validationRegex: '^<h2>\\s*Noticias\\s*<\\/h2>$', explanationIncorrect: 'Recuerda abrir con <h2> y cerrar con </h2>.' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Inserta el titular secundario (h2) con el texto Noticias.', startingCode: '', validationRegex: '^<h2>\\s*Noticias\\s*<\\/h2>$', explanationIncorrect: 'Recuerda abrir con <h2> y cerrar con </h2>.' },
               { id: 'ex7', type: 'multi-select', prompt: '¿Cuáles de los siguientes son niveles válidos de encabezados en HTML?', options: ['<h1>', '<h4>', '<h7>', '<h6>'], correctAnswers: [0, 1, 3] },
               { id: 'ex8', type: 'word-bank', instruction: 'Completa la estructura del encabezado principal', filename: 'index.html', parts: ['', '___', 'Mi Perfil Profesional', '___', ''], words: ['<h1>', '</h1>', '<h6>', '<head>'], answers: ['<h1>', '</h1>'] }
             ]
@@ -132,7 +132,7 @@ export const curriculumHtml = [
               { id: 'ex3', type: 'categorize', instruction: 'Empareja la etiqueta con su rol semántico', categories: [{id: 'strong', title: 'strong (Negrita / Importante)', color: '#f59e0b'}, {id: 'em', title: 'em (Cursiva / Énfasis)', color: '#10b981'}], items: [{text: 'Importancia y seriedad alta', category: 'strong'}, {text: 'Énfasis o tono de voz', category: 'em'}, {text: 'Advertencias de seguridad', category: 'strong'}, {text: 'Términos o tecnicismos', category: 'em'}] },
               { id: 'ex4', type: 'multiple-choice', question: 'Si colocas 5 saltos de línea con la tecla Enter dentro de tu archivo HTML, ¿cómo los interpreta el navegador?', options: ['Como 5 saltos de línea', 'Como un único espacio en blanco', 'Muestra un error en consola', 'Crea 5 párrafos nuevos'], correct: 1 },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea las etiquetas están mal anidadas?', filename: 'index.html', lines: ['<p>', '  Texto <em>destacado', '  <strong>relevante</em></strong>', '</p>'], errorLineIndex: 2, explanation: 'Recuerda la regla de anidamiento: si abriste <strong> dentro de <em>, debes cerrar </strong> antes de cerrar </em>.' },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe un párrafo <p>Hola</p>.', startingCode: '', validationRegex: '^<p>\\s*Hola\\s*<\\/p>$', explanationIncorrect: 'Asegúrate de incluir la apertura <p> y cierre </p>.' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Abre un párrafo, escribe la palabra Hola y luego ciérralo.', startingCode: '', validationRegex: '^<p>\\s*Hola\\s*<\\/p>$', explanationIncorrect: 'Asegúrate de incluir la apertura <p> y cierre </p>.' },
               { id: 'ex7', type: 'word-bank', instruction: 'Inserta una línea divisoria entre dos párrafos', filename: 'index.html', parts: ['<p>Párrafo 1</p>\n', '___', '\n<p>Párrafo 2</p>'], words: ['<hr>', '<br>', '<line>', '<div>'], answers: ['<hr>'] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes son etiquetas huérfanas sin cierre?', options: ['<br>', '<p>', '<hr>', '<strong>'], correctAnswers: [0, 2] }
             ]
@@ -152,7 +152,7 @@ export const curriculumHtml = [
               { id: 'ex5', type: 'code-highlight', instruction: 'Toca la etiqueta que indica fragmentos de código de programación.', code: '<p>\n  Usa el comando [[<code>]]npm install[[</code>]] para instalar.\n</p>', correctIndex: 0 },
               { id: 'ex6', type: 'code-error', instruction: '¿Dónde está el error al encerrar la cita?', filename: 'index.html', lines: ['<p>', '  El autor dijo:', '  <blockquote text="cita">Frase</blockquote>', '</p>'], errorLineIndex: 2, explanation: 'Recuerda que <blockquote> es un elemento de bloque y no debe anidarse dentro de un párrafo <p>.' },
               { id: 'ex7', type: 'drag-sort', prompt: 'Ordena de mayor jerarquía a menor jerarquía temática', items: ['<blockquote>', '<h2>', '<h1>'], correctOrder: ['<h1>', '<h2>', '<blockquote>'] },
-              { id: 'ex8', type: 'code-typing', instruction: 'Escribe una etiqueta preformateada <pre></pre> vacía.', startingCode: '', validationRegex: '^<pre>\\s*<\\/pre>$', explanationIncorrect: 'Recuerda abrir con <pre> y cerrar con </pre>.' }
+              { id: 'ex8', type: 'code-typing', instruction: 'Crea una etiqueta de texto preformateado (pre) vacía.', startingCode: '', validationRegex: '^<pre>\\s*<\\/pre>$', explanationIncorrect: 'Recuerda abrir con <pre> y cerrar con </pre>.' }
             ]
           }
         ]
@@ -185,7 +185,7 @@ export const curriculumHtml = [
               },
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea se usó un atributo equivocado para el enlace?', filename: 'index.html', lines: ['<p>', '  Visita mi', '  <a src="miweb.com">página</a>', '</p>'], errorLineIndex: 2, explanation: 'Recuerda que los enlaces utilizan el atributo href="...". El atributo src se emplea en imágenes.' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena las partes para estructurar el enlace', items: ['>Visitar sitio</a>', '<a', 'href="https://web.com"'], correctOrder: ['<a', 'href="https://web.com"', '>Visitar sitio</a>'] },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe un enlace <a href="https://cody.app">Cody</a>', startingCode: '', validationRegex: '^<a\\s+href="https:\\/\\/cody\\.app">\\s*Cody\\s*<\\/a>$', explanationIncorrect: 'Recuerda utilizar la sintaxis <a href="URL">Texto</a>.' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Crea un enlace con el texto Cody que redirija hacia https://cody.app', startingCode: '', validationRegex: '^<a\\s+href="https:\\/\\/cody\\.app">\\s*Cody\\s*<\\/a>$', explanationIncorrect: 'Recuerda utilizar la sintaxis <a href="URL">Texto</a>.' },
               { id: 'ex7', type: 'categorize', instruction: 'Clasifica los componentes de la etiqueta de enlace', categories: [{id: 'tag', title: 'Etiqueta', color: '#6366f1'}, {id: 'attr', title: 'Atributo', color: '#f59e0b'}], items: [{text: '<a>', category: 'tag'}, {text: 'href', category: 'attr'}, {text: 'target', category: 'attr'}, {text: '</a>', category: 'tag'}] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes elementos son indispensables para crear un enlace funcional?', options: ['Etiqueta <a>', 'Atributo href', 'Etiqueta <img>', 'Atributo target'], correctAnswers: [0, 1] }
             ]
@@ -203,7 +203,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea faltan las comillas del atributo target?', filename: 'index.html', lines: ['<nav>', '  <a href="/inicio" target="_blank">Inicio</a>', '  <a href="/ayuda" target=_blank>Ayuda</a>', '</nav>'], errorLineIndex: 2, explanation: 'Recuerda que los valores de todos los atributos deben ir entre comillas: target="_blank".' },
               { id: 'ex5', type: 'multiple-choice', question: '¿Qué valor del atributo target abre el enlace en una nueva ventana o pestaña?', options: ['_self', '_blank', '_parent', '_top'], correct: 1 },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la estructura completa de un enlace con target', items: ['target="_blank">Ir a sitio</a>', '<a href="https://web.com"'], correctOrder: ['<a href="https://web.com"', 'target="_blank">Ir a sitio</a>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo para abrir en pestaña nueva.', startingCode: 'target="', validationRegex: '^target="_blank"$', explanationIncorrect: 'Debe ser target="_blank"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade el atributo que permite abrir el enlace en una pestaña nueva (_blank).', startingCode: 'target="', validationRegex: '^target="_blank"$', explanationIncorrect: 'Debe ser target="_blank"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué beneficios ofrece utilizar rutas relativas en tu propio sitio?', options: ['Funciona sin conexión a internet externa', 'Permite mover el proyecto de carpeta sin romper los enlaces', 'Carga más rápido los servidores de Google', 'Obliga al navegador a pedir clave'], correctAnswers: [0, 1] }
             ]
           },
@@ -228,7 +228,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'multiple-choice', question: 'Si un enlace tiene href="#seccion1", ¿qué respuesta dará el navegador al hacer clic?', options: ['Descargará un archivo .zip', 'Se desplazará al elemento que contenga id="seccion1"', 'Abrirá una ventana de chat', 'Redirigirá a Google'], correct: 1 },
               { id: 'ex5', type: 'word-bank', instruction: 'Completa el enlace para iniciar llamada telefónica', filename: 'index.html', parts: ['<a href="', '___', '5550199">\n  Llamar a soporte\n</a>'], words: ['tel:', 'call:', 'phone:', 'mailto:'], answers: ['tel:'] },
               { id: 'ex6', type: 'code-error', instruction: '¿Dónde está el error al declarar el enlace ancla?', filename: 'index.html', lines: ['<a href="contacto">Ir a contacto</a>', '<div id="contacto">', '  Contacto', '</div>'], errorLineIndex: 0, explanation: 'Recuerda que los enlaces ancla a un ID deben llevar el signo de gato o numeral # antes del nombre: href="#contacto".' },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el valor del href para enviar correo a hola@app.com', startingCode: 'mailto:', validationRegex: '^mailto:hola@app\\.com$', explanationIncorrect: 'Debe ser mailto:hola@app.com' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Configura el enlace (href) para que al pulsarlo abra el gestor de correo dirigido a hola@app.com', startingCode: 'mailto:', validationRegex: '^mailto:hola@app\\.com$', explanationIncorrect: 'Debe ser mailto:hola@app.com' },
               { id: 'ex8', type: 'drag-sort', prompt: 'Ordena la estructura para vincular un id interno', items: ['<h2 id="precios">Precios</h2>', '<a href="#precios">Ver precios</a>'], correctOrder: ['<a href="#precios">Ver precios</a>', '<h2 id="precios">Precios</h2>'] }
             ]
           }
@@ -280,7 +280,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea se intentó cerrar la etiqueta img como si fuera normal?', filename: 'index.html', lines: ['<div>', '  <img src="logo.png"></img>', '</div>'], errorLineIndex: 1, explanation: 'Recuerda que <img> es una etiqueta huérfana y NO debe llevar </img>.' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena la sintaxis completa de una imagen', items: ['alt="Logo">', 'src="logo.png"', '<img'], correctOrder: ['<img', 'src="logo.png"', 'alt="Logo">'] },
               { id: 'ex6', type: 'categorize', instruction: 'Clasifica los atributos de <img>', categories: [{id: 'req', title: 'Obligatorio', color: '#ec4899'}, {id: 'dim', title: 'Dimensiones', color: '#3b82f6'}], items: [{text: 'src', category: 'req'}, {text: 'alt', category: 'req'}, {text: 'width', category: 'dim'}, {text: 'height', category: 'dim'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo alt="Foto"', startingCode: 'alt="', validationRegex: '^alt="Foto"$', explanationIncorrect: 'Debe ser alt="Foto"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade el texto alternativo Foto para quienes no pueden ver la imagen.', startingCode: 'alt="', validationRegex: '^alt="Foto"$', explanationIncorrect: 'Debe ser alt="Foto"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué funciones cumple el atributo alt?', options: ['Mejora la accesibilidad para usuarios ciegos', 'Se muestra si la imagen no carga', 'Ayuda al posicionamiento SEO en Google', 'Cambia los colores de la imagen'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -297,7 +297,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los atributos multimedia', categories: [{id: 'ctrl', title: 'Interacción', color: '#10b981'}, {id: 'auto', title: 'Reproducción', color: '#f59e0b'}], items: [{text: 'controls', category: 'ctrl'}, {text: 'autoplay', category: 'auto'}, {text: 'loop (repetir)', category: 'auto'}, {text: 'muted (silencio)', category: 'auto'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrita la etiqueta de audio?', filename: 'index.html', lines: ['<audio controls>', '  <src="musica.mp3">', '</audio>'], errorLineIndex: 1, explanation: 'Recuerda que la etiqueta interna para fuentes de audio/video es <source src="...">.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la estructura de la etiqueta de video', items: ['</video>', '  <source src="clip.mp4">', '<video controls>'], correctOrder: ['<video controls>', '  <source src="clip.mp4">', '</video>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la etiqueta <source src="a.mp4">', startingCode: '<source ', validationRegex: '^<source\\s+src="a\\.mp4">$', explanationIncorrect: 'Asegúrate de escribir <source src="a.mp4">' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade la fuente de un video que provenga del archivo a.mp4', startingCode: '<source ', validationRegex: '^<source\\s+src="a\\.mp4">$', explanationIncorrect: 'Asegúrate de escribir <source src="a.mp4">' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes son etiquetas multimedia de HTML5?', options: ['<video>', '<audio>', '<radio>', '<source>'], correctAnswers: [0, 1, 3] }
             ]
           },
@@ -313,7 +313,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'drag-sort', prompt: 'Ordena de afuera hacia adentro los elementos de la figura', items: ['<figcaption>Leyenda</figcaption>', '<figure>', '<img src="a.jpg">'], correctOrder: ['<figure>', '<img src="a.jpg">', '<figcaption>Leyenda</figcaption>'] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de anidamiento de la leyenda?', filename: 'index.html', lines: ['<figcaption>', '  <figure>', '    <img src="a.jpg">', '  </figure>', '</figcaption>'], errorLineIndex: 0, explanation: 'Recuerda que <figcaption> debe ir DENTRO de <figure>, no al revés.' },
               { id: 'ex6', type: 'categorize', instruction: 'Empareja elemento con su significado', categories: [{id: 'fig', title: 'Contenedor', color: '#3b82f6'}, {id: 'cap', title: 'Leyenda', color: '#ec4899'}], items: [{text: '<figure>', category: 'fig'}, {text: '<figcaption>', category: 'cap'}, {text: 'Pie de foto informativo', category: 'cap'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la apertura de la etiqueta <figure>', startingCode: '<', validationRegex: '^<figure>$', explanationIncorrect: 'Debe ser <figure>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la apertura de la etiqueta semántica para contener medios gráficos (figure).', startingCode: '<', validationRegex: '^<figure>$', explanationIncorrect: 'Debe ser <figure>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué elementos suelen alojarse dentro de un <figure>?', options: ['Etiquetas <img>', 'Etiquetas <figcaption>', 'Diagramas e ilustraciones', 'Menús de navegación <nav>'], correctAnswers: [0, 1, 2] }
             ]
           }
@@ -338,7 +338,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea se colocó texto directo en ul sin usar li?', filename: 'index.html', lines: ['<ul>', '  <li>Item 1</li>', '  Texto sin li', '</ul>'], errorLineIndex: 2, explanation: 'Recuerda que todos los elementos directos de una lista <ul> deben ir envueltos en etiquetas <li>.' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena la estructura de la lista', items: ['<li>Elemento</li>', '</ul>', '<ul>'], correctOrder: ['<ul>', '<li>Elemento</li>', '</ul>'] },
               { id: 'ex6', type: 'categorize', instruction: 'Clasifica las etiquetas de listas', categories: [{id: 'parent', title: 'Padre (Contenedor)', color: '#3b82f6'}, {id: 'child', title: 'Hijo (Elemento)', color: '#ec4899'}], items: [{text: '<ul>', category: 'parent'}, {text: '<li>', category: 'child'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe un elemento de lista <li>Item</li>', startingCode: '', validationRegex: '^<li>\\s*Item\\s*<\\/li>$', explanationIncorrect: 'Asegúrate de escribir <li>Item</li>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade un elemento a la lista con el texto Item', startingCode: '', validationRegex: '^<li>\\s*Item\\s*<\\/li>$', explanationIncorrect: 'Asegúrate de escribir <li>Item</li>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Para qué casos de uso en desarrollo web se utilizan las listas <ul>?', options: ['Menús de navegación principales', 'Listas de viñetas de compras', 'Listados de tarjetas de productos', 'Videos de Youtube'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -354,7 +354,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: '¿Qué tipo de lista deberías usar?', categories: [{id: 'ol', title: 'Usar <ol> (Ordenado)', color: '#10b981'}, {id: 'ul', title: 'Usar <ul> (Sin orden)', color: '#8b5cf6'}], items: [{text: 'Pasos de una receta de cocina', category: 'ol'}, {text: 'Lista de ingredientes de compra', category: 'ul'}, {text: 'Top 10 canciones más escuchadas', category: 'ol'}, {text: 'Menú superior de navegación', category: 'ul'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error sintáctico?', filename: 'index.html', lines: ['<ol>', '  <li>Paso 1</li>', '  <li>Paso 2</ol>', '</ol>'], errorLineIndex: 2, explanation: 'Recuerda cerrar la etiqueta <li> con </li> y no con </ol>.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena de mayor a menor el nivel del contenedor', items: ['<li>Texto</li>', '<ol>'], correctOrder: ['<ol>', '<li>Texto</li>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la etiqueta de apertura <ol>', startingCode: '<', validationRegex: '^<ol>$', explanationIncorrect: 'Debe ser <ol>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre la etiqueta contenedora de una lista ordenada.', startingCode: '<', validationRegex: '^<ol>$', explanationIncorrect: 'Debe ser <ol>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes afirmaciones sobre <ol> son verdaderas?', options: ['Numera los elementos automáticamente', 'Requiere etiquetas <li> en su interior', 'Solo permite máximo 3 elementos', 'Se usa para secuencias de pasos ordenados'], correctAnswers: [0, 1, 3] }
             ]
           },
@@ -370,7 +370,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: 'Asigna cada etiqueta a su significado', categories: [{id: 'dt', title: '<dt> (Término)', color: '#ec4899'}, {id: 'dd', title: '<dd> (Definición)', color: '#3b82f6'}], items: [{text: 'El título de la palabra', category: 'dt'}, {text: 'El significado o explicación', category: 'dd'}, {text: 'Nombre de un producto', category: 'dt'}, {text: 'Descripción de características', category: 'dd'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de etiqueta?', filename: 'index.html', lines: ['<dl>', '  <dt>HTML</dt>', '  <dt>Lenguaje de marcas</dt>', '</dl>'], errorLineIndex: 2, explanation: 'La explicación del término debe ir dentro de <dd>, no dentro de <dt>.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los elementos de un glosario', items: ['<dd>Definición</dd>', '<dl>', '<dt>Término</dt>'], correctOrder: ['<dl>', '<dt>Término</dt>', '<dd>Definición</dd>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la etiqueta de apertura <dd>', startingCode: '<', validationRegex: '^<dd>$', explanationIncorrect: 'Debe ser <dd>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre la etiqueta para la definición del término en la lista (dd).', startingCode: '<', validationRegex: '^<dd>$', explanationIncorrect: 'Debe ser <dd>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué etiquetas forman la familia de listas de descripción?', options: ['<dl>', '<dt>', '<dd>', '<ul>'], correctAnswers: [0, 1, 2] }
             ]
           }
@@ -395,7 +395,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea se puso texto directo en la tabla sin celda td?', filename: 'index.html', lines: ['<table>', '  <tr>', '    Texto directo sin td', '  </tr>', '</table>'], errorLineIndex: 2, explanation: 'Recuerda que el contenido de una fila debe ir siempre dentro de celdas <td>.' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena la jerarquía de una tabla', items: ['<td>Dato</td>', '<table>', '<tr>'], correctOrder: ['<table>', '<tr>', '<td>Dato</td>'] },
               { id: 'ex6', type: 'categorize', instruction: 'Clasifica los componentes de una tabla', categories: [{id: 'row', title: 'Fila (<tr>)', color: '#3b82f6'}, {id: 'cell', title: 'Celda (<td>)', color: '#ec4899'}], items: [{text: 'Contiene varias celdas horizontales', category: 'row'}, {text: 'Contiene el dato o texto', category: 'cell'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la celda <td>Dato</td>', startingCode: '', validationRegex: '^<td>\\s*Dato\\s*<\\/td>$', explanationIncorrect: 'Asegúrate de escribir <td>Dato</td>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Inserta una celda de datos estándar en la tabla con el texto Dato.', startingCode: '', validationRegex: '^<td>\\s*Dato\\s*<\\/td>$', explanationIncorrect: 'Asegúrate de escribir <td>Dato</td>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles son etiquetas indispensables en una tabla básica?', options: ['<table>', '<tr>', '<td>', '<video>'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -411,7 +411,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: '¿Qué celda deberías usar en cada caso?', categories: [{id: 'th', title: '<th> (Encabezado)', color: '#f59e0b'}, {id: 'td', title: '<td> (Dato normal)', color: '#10b981'}], items: [{text: 'Título de la columna "Precio"', category: 'th'}, {text: 'El valor "$100"', category: 'td'}, {text: 'Título de la columna "Producto"', category: 'th'}, {text: 'El nombre "Zapatos"', category: 'td'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal cerrada la celda th?', filename: 'index.html', lines: ['<tr>', '  <th>Precio</td>', '</tr>'], errorLineIndex: 1, explanation: 'Recuerda cerrar la etiqueta <th> con </th> y no con </td>.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la fila de encabezados', items: ['<th>Edad</th>', '<tr>', '<th>Nombre</th>'], correctOrder: ['<tr>', '<th>Nombre</th>', '<th>Edad</th>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la celda de encabezado <th>ID</th>', startingCode: '', validationRegex: '^<th>\\s*ID\\s*<\\/th>$', explanationIncorrect: 'Debe ser <th>ID</th>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Inserta una celda de encabezado en la tabla con el texto ID.', startingCode: '', validationRegex: '^<th>\\s*ID\\s*<\\/th>$', explanationIncorrect: 'Debe ser <th>ID</th>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué características aplican a la etiqueta <th>?', options: ['Texto en negrita por defecto', 'Alineado al centro por defecto', 'Define títulos de columna o fila', 'Crea botones automáticos'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -427,7 +427,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: 'Asigna las secciones de la tabla', categories: [{id: 'head', title: '<thead>', color: '#3b82f6'}, {id: 'body', title: '<tbody>', color: '#10b981'}, {id: 'foot', title: '<tfoot>', color: '#f59e0b'}], items: [{text: 'Títulos de columnas', category: 'head'}, {text: 'Filas de productos', category: 'body'}, {text: 'Fila con el Total General', category: 'foot'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde se ubicó erróneamente el thead?', filename: 'index.html', lines: ['<tbody>', '  <thead><tr><th>Título</th></tr></thead>', '</tbody>'], errorLineIndex: 1, explanation: 'Recuerda que <thead> debe ir fuera y antes de <tbody>, no dentro.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena las secciones principales de la tabla', items: ['<tfoot>...</tfoot>', '<tbody>...</tbody>', '<thead>...</thead>'], correctOrder: ['<thead>...</thead>', '<tbody>...</tbody>', '<tfoot>...</tfoot>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la apertura de <tbody>', startingCode: '<', validationRegex: '^<tbody>$', explanationIncorrect: 'Debe ser <tbody>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre la etiqueta contenedora para el cuerpo de datos de la tabla.', startingCode: '<', validationRegex: '^<tbody>$', explanationIncorrect: 'Debe ser <tbody>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estas etiquetas forman parte de la semántica avanzada de tablas?', options: ['<thead>', '<tbody>', '<tfoot>', '<head>'], correctAnswers: [0, 1, 2] }
             ]
           }
@@ -484,7 +484,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea se intentó cerrar la etiqueta input como si no fuera huérfana?', filename: 'index.html', lines: ['<form>', '  <input type="text"></input>', '</form>'], errorLineIndex: 1, explanation: 'Recuerda que <input> es una etiqueta huérfana y NO debe llevar </input>.' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena los atributos del input de texto', items: ['placeholder="Nombre">', 'type="text"', '<input'], correctOrder: ['<input', 'type="text"', 'placeholder="Nombre">'] },
               { id: 'ex6', type: 'categorize', instruction: 'Clasifica según el tipo de input apropiado', categories: [{id: 'text', title: 'type="text"', color: '#3b82f6'}, {id: 'pass', title: 'type="password"', color: '#ec4899'}], items: [{text: 'Nombre de usuario', category: 'text'}, {text: 'Contraseña de acceso', category: 'pass'}, {text: 'Código PIN secreto', category: 'pass'}, {text: 'Ciudad de residencia', category: 'text'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo type="email"', startingCode: 'type="', validationRegex: '^type="email"$', explanationIncorrect: 'Debe ser type="email"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Configura el input para que solo acepte correos electrónicos.', startingCode: 'type="', validationRegex: '^type="email"$', explanationIncorrect: 'Debe ser type="email"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son tipos de input válidos en HTML?', options: ['text', 'password', 'email', 'secret-code'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -500,7 +500,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea no coinciden los valores de for e id?', filename: 'index.html', lines: ['<label for="clave">Contraseña</label>', '<input id="password" type="password">'], errorLineIndex: 1, explanation: 'El atributo "for" del label ("clave") debe coincidir exactamente con el "id" del input ("password").' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena la pareja label e input', items: ['<input id="nombre" type="text">', '<label for="nombre">Nombre:</label>'], correctOrder: ['<label for="nombre">Nombre:</label>', '<input id="nombre" type="text">'] },
               { id: 'ex6', type: 'categorize', instruction: 'Relaciona atributo con la etiqueta que lo posee', categories: [{id: 'lbl', title: 'Etiqueta <label>', color: '#ec4899'}, {id: 'inp', title: 'Etiqueta <input>', color: '#3b82f6'}], items: [{text: 'Atributo for="..."', category: 'lbl'}, {text: 'Atributo id="..."', category: 'inp'}, {text: 'Atributo placeholder="..."', category: 'inp'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo for="email"', startingCode: 'for="', validationRegex: '^for="email"$', explanationIncorrect: 'Debe ser for="email"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Enlaza este label al input de correo indicando su id ("email").', startingCode: 'for="', validationRegex: '^for="email"$', explanationIncorrect: 'Debe ser for="email"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué ventajas ofrece hacer clic en un <label>?', options: ['Foca automáticamente el campo <input> vinculado', 'Marca el checkbox o radio asociado', 'Facilita la interacción en pantallas táctiles móviles', 'Borra los datos del servidor'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -516,7 +516,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿Dónde está el error en el tipo de botón?', filename: 'index.html', lines: ['<form>', '  <button type="send">Enviar</button>', '</form>'], errorLineIndex: 1, explanation: 'El tipo estándar para enviar formularios es type="submit", no type="send".' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena la estructura del formulario con botón', items: ['  <button type="submit">Enviar</button>', '</form>', '<form>'], correctOrder: ['<form>', '  <button type="submit">Enviar</button>', '</form>'] },
               { id: 'ex6', type: 'categorize', instruction: 'Clasifica los tipos de botones', categories: [{id: 'sub', title: 'Enviar Formulario', color: '#10b981'}, {id: 'btn', title: 'Acción genérica', color: '#3b82f6'}], items: [{text: 'type="submit"', category: 'sub'}, {text: 'type="button"', category: 'btn'}] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo type="submit"', startingCode: 'type="', validationRegex: '^type="submit"$', explanationIncorrect: 'Debe ser type="submit"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Convierte este input en un botón de envío (submit) para procesar el formulario.', startingCode: 'type="', validationRegex: '^type="submit"$', explanationIncorrect: 'Debe ser type="submit"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes etiquetas pueden desencadenar el envío de un formulario?', options: ['<button type="submit">', '<input type="submit">', '<p>', '<div>'], correctAnswers: [0, 1] }
             ]
           }
@@ -541,7 +541,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: '¿Qué tipo de entrada debes usar?', categories: [{id: 'rad', title: 'type="radio" (1 sola)', color: '#ec4899'}, {id: 'chk', title: 'type="checkbox" (Varias)', color: '#3b82f6'}], items: [{text: 'Seleccionar género (M / F / Otro)', category: 'rad'}, {text: 'Elegir tus pasatiempos favoritos', category: 'chk'}, {text: 'Aceptar términos y condiciones', category: 'chk'}, {text: 'Método de pago único (Tarjeta o Efectivo)', category: 'rad'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Por qué estos dos radio buttons se pueden seleccionar al mismo tiempo?', filename: 'index.html', lines: ['<input type="radio" name="pago1"> Tarjeta', '<input type="radio" name="pago2"> Efectivo'], errorLineIndex: 1, explanation: 'Para pertenecer al mismo grupo y permitir una sola opción, ambos radio buttons deben tener el mismo atributo name="pago".' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la casilla marcada por defecto', items: ['checked>', 'type="checkbox"', '<input'], correctOrder: ['<input', 'type="checkbox"', 'checked>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo type="checkbox"', startingCode: 'type="', validationRegex: '^type="checkbox"$', explanationIncorrect: 'Debe ser type="checkbox"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Convierte este input en una casilla de verificación (checkbox).', startingCode: 'type="', validationRegex: '^type="checkbox"$', explanationIncorrect: 'Debe ser type="checkbox"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué atributo permite marcar por defecto una casilla o radio button?', options: ['checked', 'selected', 'active', 'open'], correctAnswers: [0] }
             ]
           },
@@ -558,7 +558,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿Dónde está el error en el cierre del área de texto?', filename: 'index.html', lines: ['<textarea placeholder="Mensaje">', '</input>'], errorLineIndex: 1, explanation: 'Recuerda que <textarea> es una etiqueta normal y debe cerrarse con </textarea>.' },
               { id: 'ex5', type: 'categorize', instruction: 'Asigna el control según el tipo de datos', categories: [{id: 'sel', title: '<select>', color: '#f59e0b'}, {id: 'area', title: '<textarea>', color: '#10b981'}], items: [{text: 'Seleccionar país de origen', category: 'sel'}, {text: 'Escribir carta de presentación', category: 'area'}, {text: 'Elegir año de nacimiento', category: 'sel'}, {text: 'Mensaje de soporte técnico', category: 'area'}] },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la estructura del select', items: ['</select>', '<option>Opción 1</option>', '<select>'], correctOrder: ['<select>', '<option>Opción 1</option>', '</select>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la etiqueta de apertura <textarea>', startingCode: '<', validationRegex: '^<textarea>$', explanationIncorrect: 'Debe ser <textarea>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre la etiqueta para un área de texto multilinea (textarea).', startingCode: '<', validationRegex: '^<textarea>$', explanationIncorrect: 'Debe ser <textarea>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué etiquetas se combinan para crear un menú desplegable?', options: ['<select>', '<option>', '<input>', '<textarea>'], correctAnswers: [0, 1] }
             ]
           },
@@ -574,7 +574,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los atributos de validación nativa', categories: [{id: 'obl', title: 'Obligatoriedad', color: '#ec4899'}, {id: 'len', title: 'Longitud de caracteres', color: '#3b82f6'}], items: [{text: 'required', category: 'obl'}, {text: 'minlength', category: 'len'}, {text: 'maxlength', category: 'len'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrito el atributo de obligatoriedad?', filename: 'index.html', lines: ['<form>', '  <input type="text" obligatori="true">', '</form>'], errorLineIndex: 1, explanation: 'El atributo estándar de HTML5 para campos obligatorios es simplemente required.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los atributos de validación', items: ['minlength="5">', 'required', '<input type="text"'], correctOrder: ['<input type="text"', 'required', 'minlength="5">'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el atributo required', startingCode: 'r', validationRegex: '^required$', explanationIncorrect: 'Debe ser required' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade el atributo que hace que completar este campo sea obligatorio.', startingCode: 'r', validationRegex: '^required$', explanationIncorrect: 'Debe ser required' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estos atributos validan datos de forma nativa en HTML5?', options: ['required', 'minlength', 'maxlength', 'src'], correctAnswers: [0, 1, 2] }
             ]
           }
@@ -600,7 +600,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los contenedores', categories: [{id: 'gen', title: 'Genérico (Sin significado)', color: '#8b5cf6'}, {id: 'sem', title: 'Semántico (Con significado)', color: '#10b981'}], items: [{text: '<div>', category: 'gen'}, {text: '<header>', category: 'sem'}, {text: '<span>', category: 'gen'}, {text: '<nav>', category: 'sem'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error al cerrar el div?', filename: 'index.html', lines: ['<div>', '  <p>Contenido</p>', '</span >'], errorLineIndex: 2, explanation: 'Recuerda cerrar la etiqueta <div> con </div>.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la envoltura de un div', items: ['</div>', '  <p>Texto</p>', '<div>'], correctOrder: ['<div>', '  <p>Texto</p>', '</div>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la etiqueta de apertura <div>', startingCode: '<', validationRegex: '^<div>$', explanationIncorrect: 'Debe ser <div>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre una etiqueta contenedora genérica (div).', startingCode: '<', validationRegex: '^<div>$', explanationIncorrect: 'Debe ser <div>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles son características del elemento <div>?', options: ['Es un elemento de bloque', 'No tiene significado semántico por sí mismo', 'Sirve para agrupar elementos y aplicar estilos', 'Cambia el texto a negrita automáticamente'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -616,7 +616,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-error', instruction: '¿En qué línea se violó la regla del <main> único?', filename: 'index.html', lines: ['<body>', '  <main>Noticia 1</main>', '  <main>Noticia 2</main>', '</body>'], errorLineIndex: 2, explanation: 'Solo puede haber UN elemento <main> por página web.' },
               { id: 'ex5', type: 'word-bank', instruction: 'Envuelve la barra de navegación en su etiqueta semántica', filename: 'index.html', parts: ['', '___', '\n  <a href="/inicio">Inicio</a>\n', '___', ''], words: ['<nav>', '</nav>', '<header>', '</header>'], answers: ['<nav>', '</nav>'] },
               { id: 'ex6', type: 'multiple-choice', question: '¿Cuántos elementos <main> deben existir por documento HTML?', options: ['Uno solo por página', 'Tantos como quieras', 'Dos (uno arriba y uno abajo)', 'Ninguno'], correct: 0 },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la apertura de <header>', startingCode: '<', validationRegex: '^<header>$', explanationIncorrect: 'Debe ser <header>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre la etiqueta semántica que representa el encabezado principal del sitio (header).', startingCode: '<', validationRegex: '^<header>$', explanationIncorrect: 'Debe ser <header>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes son etiquetas semánticas de estructura en HTML5?', options: ['<header>', '<nav>', '<main>', '<footer>'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -632,7 +632,7 @@ export const curriculumHtml = [
               { id: 'ex4', type: 'code-highlight', instruction: 'Toca la etiqueta reservada para barras laterales o información secundaria.', code: '<main>\n  <article>Noticia</article>\n  [[<aside>]]Links relacionados[[</aside>]]\n</main>', correctIndex: 0 },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal cerrada la etiqueta de artículo?', filename: 'index.html', lines: ['<main>', '  <article>', '    <h2>Título</h2>', '  </section>', '</main>'], errorLineIndex: 3, explanation: 'Recuerda cerrar la etiqueta <article> con </article> y no con </section>.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena de mayor jerarquía a menor jerarquía semántica', items: ['<article>', '<main>', '<body>'], correctOrder: ['<body>', '<main>', '<article>'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la apertura de <article>', startingCode: '<', validationRegex: '^<article>$', explanationIncorrect: 'Debe ser <article>' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Abre la etiqueta semántica que representa un artículo independiente (article).', startingCode: '<', validationRegex: '^<article>$', explanationIncorrect: 'Debe ser <article>' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes etiquetas estructuran el contenido interno en HTML5?', options: ['<article>', '<section>', '<aside>', '<html>'], correctAnswers: [0, 1, 2] }
             ]
           }

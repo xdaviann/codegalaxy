@@ -26,7 +26,7 @@ export const curriculumCss = [
               { id: 'ex3', type: 'code-highlight', instruction: 'Toca los DOS PUNTOS que separan la propiedad del valor.', code: '[[p]] [[{]]\n  [[color]][[:]] [[blue]];\n[[}]]', correctIndex: 3 },
               { id: 'ex4', type: 'code-error', instruction: 'Encuentra la línea a la que le falta el punto y coma final.', filename: 'style.css', lines: ['h1 {', '  color: red', '}'], errorLineIndex: 1, explanation: 'Recuerda que toda declaración de propiedad y valor en CSS debe terminar con un punto y coma (;).' },
               { id: 'ex5', type: 'drag-sort', prompt: 'Ordena los fragmentos para formar una regla CSS válida', items: ['color: blue;', 'h1', '}', '{'], correctOrder: ['h1', '{', 'color: blue;', '}'] },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe la declaración color: red; completa.', startingCode: '  color: ', validationRegex: '^\\s*color:\\s*red;$', explanationIncorrect: 'Asegúrate de escribir red; incluyendo el punto y coma final.' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Completa la declaración asignando el color rojo (red).', startingCode: '  color: ', validationRegex: '^\\s*color:\\s*red;$', explanationIncorrect: 'Asegúrate de escribir red; incluyendo el punto y coma final.' },
               { id: 'ex7', type: 'word-bank', instruction: 'Arma una regla que cambie el tamaño de texto a 18px', filename: 'style.css', parts: ['p {\n  ', '___', ':', '___', ';\n}'], words: ['font-size', '18px', 'color', '18'], answers: ['font-size', '18px'] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son símbolos indispensables en la sintaxis de CSS?', options: ['Llaves { }', 'Punto y coma ;', 'Dos puntos :', 'Etiqueta <css>'], correctAnswers: [0, 1, 2] }
             ]
@@ -54,7 +54,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los métodos de inclusión de CSS', categories: [{id: 'ext', title: 'Externo (Recomendado)', color: '#10b981'}, {id: 'inline', title: 'Inline (No recomendado)', color: '#ef4444'}], items: [{text: '<link rel="stylesheet" href="a.css">', category: 'ext'}, {text: '<p style="color:red">', category: 'inline'}, {text: 'Archivo styles.css separado', category: 'ext'}, {text: 'Atributo style directo', category: 'inline'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea se usó src en lugar de href para el archivo CSS?', filename: 'index.html', lines: ['<head>', '  <title>Tienda</title>', '  <link rel="stylesheet" src="estilos.css">', '</head>'], errorLineIndex: 2, explanation: 'Recuerda que la etiqueta <link> utiliza el atributo href="..." para definir la ruta de la hoja de estilos.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los atributos dentro de la etiqueta link', items: ['href="styles.css">', '<link', 'rel="stylesheet"'], correctOrder: ['<link', 'rel="stylesheet"', 'href="styles.css">'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la ruta en href para el archivo app.css', startingCode: 'href="', validationRegex: '^href="app\\.css"$', explanationIncorrect: 'Debe ser href="app.css"' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Indica la ruta hacia el archivo app.css usando el atributo correspondiente.', startingCode: 'href="', validationRegex: '^href="app\\.css"$', explanationIncorrect: 'Debe ser href="app.css"' },
               { id: 'ex8', type: 'multi-select', prompt: '¿En qué lugar del documento HTML se ubica la etiqueta <link>?', options: ['Dentro del <head>', 'Al final del <body>', 'En el archivo .css', 'Antes del <!DOCTYPE>'], correctAnswers: [0] }
             ]
           },
@@ -70,7 +70,7 @@ export const curriculumCss = [
               { id: 'ex3', type: 'multiple-choice', question: 'Si colocas una regla CSS válida entre los símbolos /* y */, ¿qué ocurrirá?', options: ['Producirá un error sintáctico', 'El navegador la ignorará como si no existiera', 'Se eliminará del disco duro', 'La aplicará solo en modo noche'], correct: 1 },
               { id: 'ex4', type: 'word-bank', instruction: 'Comenta la regla de estilos para deshabilitarla', filename: 'style.css', parts: ['', '___', ' color: green; ', '___', ''], words: ['/*', '*/', '<!--', '-->'], answers: ['/*', '*/'] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea se usó la sintaxis de comentarios de HTML dentro de CSS?', filename: 'style.css', lines: ['/* Estilos de cabecera */', 'header {', '  <!-- color: red; -->', '}'], errorLineIndex: 2, explanation: 'Recuerda que en archivos CSS los comentarios se escriben con /* ... */ y no con <!-- ... -->.' },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe el cierre de un comentario en CSS.', startingCode: '*', validationRegex: '^\\*\\/$', explanationIncorrect: 'Recuerda que los comentarios en CSS se cierran con */' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Cierra el comentario en CSS.', startingCode: '*', validationRegex: '^\\*\\/$', explanationIncorrect: 'Recuerda que los comentarios en CSS se cierran con */' },
               { id: 'ex7', type: 'drag-sort', prompt: 'Ordena la apertura y cierre de un comentario CSS', items: ['nota */', '/*', 'Esta es una'], correctOrder: ['/*', 'Esta es una', 'nota */'] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Para qué resulta útil usar comentarios en hojas CSS?', options: ['Explicar la estructura de secciones a otros desarrolladores', 'Desactivar reglas temporalmente mientras pruebas', 'Aumentar la velocidad de descarga', 'Cambiar dinámicamente los colores'], correctAnswers: [0, 1] }
             ]
@@ -104,7 +104,7 @@ export const curriculumCss = [
                 options: ['color', 'background-color', 'text-color', 'bg'], answers: ['color', 'background-color']
               },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea falta el carácter # del código Hexadecimal?', filename: 'style.css', lines: ['body {', '  color: 333333;', '  background-color: #f5f5f5;', '}'], errorLineIndex: 1, explanation: 'Recuerda que los códigos de color hexadecimales deben comenzar siempre con el signo de numeral (#).' },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe la propiedad color: blue;', startingCode: '  ', validationRegex: '^color:\\s*blue;$', explanationIncorrect: 'Debe ser color: blue;' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Añade la propiedad para cambiar el color del texto a azul (blue).', startingCode: '  ', validationRegex: '^color:\\s*blue;$', explanationIncorrect: 'Debe ser color: blue;' },
               { id: 'ex7', type: 'drag-sort', prompt: 'Ordena la regla para aplicar fondo amarillo', items: ['background-color: yellow;', 'body {', '}'], correctOrder: ['body {', 'background-color: yellow;', '}'] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles son formatos de representación de color válidos en CSS?', options: ['Hexadecimal (#000)', 'Nombres en inglés (red)', 'RGB rgb(0,0,0)', 'Puntos cardinales (Norte)'], correctAnswers: [0, 1, 2] }
             ]
@@ -121,7 +121,7 @@ export const curriculumCss = [
               { id: 'ex3', type: 'categorize', instruction: 'Clasifica los valores del canal Alfa (opacidad)', categories: [{id: 'trans', title: 'Transparente', color: '#ec4899'}, {id: 'opac', title: 'Opaco', color: '#10b981'}], items: [{text: '0.0', category: 'trans'}, {text: '1.0', category: 'opac'}, {text: '0.2', category: 'trans'}, {text: '0.9', category: 'opac'}] },
               { id: 'ex4', type: 'word-bank', instruction: 'Crea un fondo en degradado lineal', filename: 'style.css', parts: ['button {\n  background: ', '___', '(to right, red, blue);\n}'], words: ['linear-gradient', 'gradient', 'rgba', 'color'], answers: ['linear-gradient'] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal formulada la función rgba?', filename: 'style.css', lines: ['header {', '  background: rgba(0, 0, 0);', '}'], errorLineIndex: 1, explanation: 'Recuerda que rgba() requiere 4 parámetros (rojo, verde, azul y opacidad alfa).' },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe la propiedad opacity: 0.5;', startingCode: '  opacity: ', validationRegex: '^opacity:\\s*0\\.5;$', explanationIncorrect: 'Debe ser opacity: 0.5;' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Añade la propiedad para aplicar una opacidad del 50% (0.5).', startingCode: '  opacity: ', validationRegex: '^opacity:\\s*0\\.5;$', explanationIncorrect: 'Debe ser opacity: 0.5;' },
               { id: 'ex7', type: 'drag-sort', prompt: 'Ordena los parámetros de rgba(0, 128, 255, 0.8)', items: ['0.8)', 'rgba(0, 128, 255,'], correctOrder: ['rgba(0, 128, 255,', '0.8)'] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué propiedades admiten valores de degradados?', options: ['background', 'background-image', 'color', 'font-family'], correctAnswers: [0, 1] }
             ]
@@ -138,7 +138,7 @@ export const curriculumCss = [
               { id: 'ex3', type: 'categorize', instruction: 'Clasifica según la propiedad de fondo correspondiente', categories: [{id: 'img', title: 'background-image', color: '#ec4899'}, {id: 'pos', title: 'background-position', color: '#3b82f6'}], items: [{text: 'url("foto.jpg")', category: 'img'}, {text: 'center', category: 'pos'}, {text: 'top left', category: 'pos'}, {text: 'url("pattern.png")', category: 'img'}] },
               { id: 'ex4', type: 'word-bank', instruction: 'Establece una imagen de fondo para el héroe', filename: 'style.css', parts: ['section {\n  background-image: ', '___', '("hero.jpg");\n}'], words: ['url', 'src', 'link', 'file'], answers: ['url'] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea se olvidaron las comillas o la función url()?', filename: 'style.css', lines: ['header {', '  background-image: foto.jpg;', '}'], errorLineIndex: 1, explanation: 'Recuerda que las imágenes de fondo deben ir envueltas en la función url("...").' },
-              { id: 'ex6', type: 'code-typing', instruction: 'Escribe background-size: cover;', startingCode: '  background-size: ', validationRegex: '^background-size:\\s*cover;$', explanationIncorrect: 'Debe ser background-size: cover;' },
+              { id: 'ex6', type: 'code-typing', instruction: 'Configura el tamaño del fondo para que cubra todo el contenedor.', startingCode: '  background-size: ', validationRegex: '^background-size:\\s*cover;$', explanationIncorrect: 'Debe ser background-size: cover;' },
               { id: 'ex7', type: 'drag-sort', prompt: 'Ordena la regla completa de fondo con imagen', items: ['background-size: cover;', 'background-image: url("bg.jpg");', 'div {', '}'], correctOrder: ['div {', 'background-image: url("bg.jpg");', 'background-size: cover;', '}'] },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estas propiedades pertenecen al módulo de fondos de CSS?', options: ['background-color', 'background-image', 'background-size', 'text-align'], correctAnswers: [0, 1, 2] }
             ]
@@ -190,7 +190,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'word-bank', instruction: 'Establece un relleno interno de 20px', filename: 'style.css', parts: ['button {\n  ', '___', ': 20px;\n}'], words: ['padding', 'margin', 'border', 'spacing'], answers: ['padding'] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea falta el punto y coma?', filename: 'style.css', lines: ['.caja {', '  padding: 10px', '  margin: 20px;', '}'], errorLineIndex: 1, explanation: 'Toda propiedad en CSS debe finalizar obligatoriamente con punto y coma (;).' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena de afuera hacia adentro en el Box Model', items: ['Content (Contenido)', 'Margin (Margen externo)', 'Padding (Relleno interno)'], correctOrder: ['Margin (Margen externo)', 'Padding (Relleno interno)', 'Content (Contenido)'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe margin: 10px;', startingCode: '  margin: ', validationRegex: '^margin:\\s*10px;$', explanationIncorrect: 'Debe ser margin: 10px;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade un margen exterior de 10 píxeles.', startingCode: '  margin: ', validationRegex: '^margin:\\s*10px;$', explanationIncorrect: 'Debe ser margin: 10px;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de las siguientes son capas del Box Model de CSS?', options: ['Content', 'Padding', 'Border', 'Margin'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -206,7 +206,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica la propiedad según el lado que modifica', categories: [{id: 'top', title: 'Arriba', color: '#3b82f6'}, {id: 'bot', title: 'Abajo', color: '#ec4899'}], items: [{text: 'padding-top', category: 'top'}, {text: 'margin-bottom', category: 'bot'}, {text: 'border-bottom', category: 'bot'}, {text: 'margin-top', category: 'top'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrita la propiedad del margen izquierdo?', filename: 'style.css', lines: ['.box {', '  margin-izquierda: 10px;', '}'], errorLineIndex: 1, explanation: 'Las propiedades de CSS están en inglés: debe ser margin-left: 10px;.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la notación de reloj de 4 valores (Clockwise)', items: ['Left (Izquierda)', 'Right (Derecha)', 'Top (Arriba)', 'Bottom (Abajo)'], correctOrder: ['Top (Arriba)', 'Right (Derecha)', 'Bottom (Abajo)', 'Left (Izquierda)'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe padding-left: 15px;', startingCode: '  padding-left: ', validationRegex: '^padding-left:\\s*15px;$', explanationIncorrect: 'Debe ser padding-left: 15px;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade un margen interior izquierdo de 15 píxeles.', startingCode: '  padding-left: ', validationRegex: '^padding-left:\\s*15px;$', explanationIncorrect: 'Debe ser padding-left: 15px;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son nombres válidos de propiedades de lados en CSS?', options: ['margin-top', 'padding-right', 'margin-bottom', 'padding-left'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -222,7 +222,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Compara los modos de box-sizing', categories: [{id: 'bb', title: 'border-box (Recomendado)', color: '#10b981'}, {id: 'cb', title: 'content-box (Defecto)', color: '#ef4444'}], items: [{text: 'El padding no aumenta el width total', category: 'bb'}, {text: 'El padding suma y ensancha la caja', category: 'cb'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrito el valor de box-sizing?', filename: 'style.css', lines: ['* {', '  box-sizing: borderbox;', '}'], errorLineIndex: 1, explanation: 'Recuerda que el valor lleva guion entre las palabras: border-box.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla global de box-sizing', items: ['box-sizing: border-box;', '* {', '}'], correctOrder: ['* {', 'box-sizing: border-box;', '}'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe box-sizing: border-box;', startingCode: '  box-sizing: ', validationRegex: '^box-sizing:\\s*border-box;$', explanationIncorrect: 'Debe ser box-sizing: border-box;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Cambia el modelo de caja para que incluya los bordes y el padding en el tamaño total.', startingCode: '  box-sizing: ', validationRegex: '^box-sizing:\\s*border-box;$', explanationIncorrect: 'Debe ser box-sizing: border-box;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué ventajas ofrece usar box-sizing: border-box;?', options: ['Evita descuadres al diseñar layouts', 'Mantiene los anchos exactos al añadir padding o border', 'Facilita la maquetación responsive', 'Cambia el idioma a español'], correctAnswers: [0, 1, 2] }
             ]
           }
@@ -247,7 +247,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica la propiedad tipográfica', categories: [{id: 'ff', title: 'font-family (Familia)', color: '#3b82f6'}, {id: 'fs', title: 'font-size (Tamaño)', color: '#ec4899'}], items: [{text: '"Arial", sans-serif', category: 'ff'}, {text: '1.5rem', category: 'fs'}, {text: '24px', category: 'fs'}, {text: '"Roboto", serif', category: 'ff'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de sintaxis en font-size?', filename: 'style.css', lines: ['p {', '  font-size: 16;', '}'], errorLineIndex: 1, explanation: 'Recuerda especificar la unidad de medida (por ejemplo 16px o 1rem).' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los estilos tipográficos básicos', items: ['font-size: 1rem;', 'font-family: sans-serif;', 'p {', '}'], correctOrder: ['p {', 'font-family: sans-serif;', 'font-size: 1rem;', '}'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe font-size: 1.2rem;', startingCode: '  font-size: ', validationRegex: '^font-size:\\s*1\\.2rem;$', explanationIncorrect: 'Debe ser font-size: 1.2rem;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Cambia el tamaño de fuente a 1.2rem.', startingCode: '  font-size: ', validationRegex: '^font-size:\\s*1\\.2rem;$', explanationIncorrect: 'Debe ser font-size: 1.2rem;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles son propiedades válidas para modificar el texto en CSS?', options: ['font-family', 'font-size', 'font-weight', 'text-align'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -263,7 +263,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica según el valor pertenezca a font-weight o text-align', categories: [{id: 'fw', title: 'font-weight', color: '#f59e0b'}, {id: 'ta', title: 'text-align', color: '#10b981'}], items: [{text: 'bold', category: 'fw'}, {text: 'center', category: 'ta'}, {text: '700', category: 'fw'}, {text: 'justify', category: 'ta'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea la propiedad está mal escrita?', filename: 'style.css', lines: ['h1 {', '  align-text: center;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta en CSS es text-align, no align-text.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla para texto centrado y en negrita', items: ['font-weight: bold;', 'text-align: center;', 'h2 {', '}'], correctOrder: ['h2 {', 'text-align: center;', 'font-weight: bold;', '}'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe font-weight: bold;', startingCode: '  font-weight: ', validationRegex: '^font-weight:\\s*bold;$', explanationIncorrect: 'Debe ser font-weight: bold;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Haz que la fuente se muestre en negrita.', startingCode: '  font-weight: ', validationRegex: '^font-weight:\\s*bold;$', explanationIncorrect: 'Debe ser font-weight: bold;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son valores válidos para text-align?', options: ['left', 'center', 'right', 'justify'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -279,7 +279,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los valores de text-transform', categories: [{id: 'up', title: 'uppercase', color: '#ec4899'}, {id: 'cap', title: 'capitalize', color: '#3b82f6'}], items: [{text: 'TODO EN MAYÚSCULAS', category: 'up'}, {text: 'Primera Letra De Cada Palabra', category: 'cap'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de sintaxis?', filename: 'style.css', lines: ['p {', '  line-height: 1,6;', '}'], errorLineIndex: 1, explanation: 'En CSS los decimales utilizan punto en lugar de coma: line-height: 1.6;' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena las propiedades tipográficas avanzadas', items: ['text-transform: uppercase;', 'line-height: 1.5;', 'p {', '}'], correctOrder: ['p {', 'line-height: 1.5;', 'text-transform: uppercase;', '}'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe text-transform: uppercase;', startingCode: '  text-transform: ', validationRegex: '^text-transform:\\s*uppercase;$', explanationIncorrect: 'Debe ser text-transform: uppercase;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Transforma el texto a mayúsculas.', startingCode: '  text-transform: ', validationRegex: '^text-transform:\\s*uppercase;$', explanationIncorrect: 'Debe ser text-transform: uppercase;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estos ajustes mejoran la legibilidad de párrafos largos?', options: ['Aumentar el line-height a 1.5 o 1.6', 'Usar un tamaño de fuente accesible (1rem)', 'Poner todo el texto en mayúsculas sostenidas', 'Limitar el ancho del contenedor de lectura'], correctAnswers: [0, 1, 3] }
             ]
           }
@@ -304,7 +304,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los valores de border-style', categories: [{id: 'sol', title: 'Línea Continua', color: '#10b981'}, {id: 'dash', title: 'Línea Punteada', color: '#f59e0b'}], items: [{text: 'solid', category: 'sol'}, {text: 'dashed', category: 'dash'}, {text: 'dotted', category: 'dash'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea falta el estilo de borde (solid)?', filename: 'style.css', lines: ['button {', '  border: 2px red;', '}'], errorLineIndex: 1, explanation: 'Falta especificar el tipo de borde (por ejemplo: solid, dashed o dotted).' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los valores del atajo border', items: ['#3b82f6;', 'solid', '2px'], correctOrder: ['2px', 'solid', '#3b82f6;'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe border-radius: 8px;', startingCode: '  border-radius: ', validationRegex: '^border-radius:\\s*8px;$', explanationIncorrect: 'Debe ser border-radius: 8px;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Redondea los bordes del elemento con un radio de 8 píxeles.', startingCode: '  border-radius: ', validationRegex: '^border-radius:\\s*8px;$', explanationIncorrect: 'Debe ser border-radius: 8px;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son estilos de borde válidos en CSS?', options: ['solid', 'dashed', 'dotted', 'double'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -320,7 +320,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: '¿A qué elemento le aplicas la sombra?', categories: [{id: 'box', title: 'box-shadow (Contenedor)', color: '#3b82f6'}, {id: 'txt', title: 'text-shadow (Texto)', color: '#ec4899'}], items: [{text: 'Una tarjeta <div>', category: 'box'}, {text: 'Un botón de compra', category: 'box'}, {text: 'Un gran título <h1>', category: 'txt'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error en la propiedad?', filename: 'style.css', lines: ['.btn {', '  card-shadow: 0 2px 4px #000;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta en CSS es box-shadow.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena los parámetros de box-shadow', items: ['rgba(0,0,0,0.1);', '10px', '0 4px', 'box-shadow:'], correctOrder: ['box-shadow:', '0 4px', '10px', 'rgba(0,0,0,0.1);'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el nombre de la propiedad box-shadow:', startingCode: '  box-', validationRegex: '^box-shadow:$', explanationIncorrect: 'Debe ser box-shadow:' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Escribe el nombre de la propiedad para agregar sombras de caja.', startingCode: '  box-', validationRegex: '^box-shadow:$', explanationIncorrect: 'Debe ser box-shadow:' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué efectos visuales aporta usar box-shadow?', options: ['Efecto de elevación o flotación sobre el fondo', 'Profundidad de interfaz moderna', 'Destacar tarjetas activas o en hover', 'Reconocer el código de barras'], correctAnswers: [0, 1, 2] }
             ]
           },
@@ -336,7 +336,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica los estados', categories: [{id: 'norm', title: 'Estado Normal', color: '#3b82f6'}, {id: 'hov', title: 'Estado :hover (Cursor encima)', color: '#10b981'}], items: [{text: 'button { background: red; }', category: 'norm'}, {text: 'button:hover { background: darkred; }', category: 'hov'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde está el error de sintaxis en el hover?', filename: 'style.css', lines: ['button.hover {', '  background: blue;', '}'], errorLineIndex: 0, explanation: 'Las pseudoclases en CSS usan dos puntos (:) antes del nombre: button:hover.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla de transición en el elemento base', items: ['background: blue;', 'transition: background 0.3s;', 'button {', '}'], correctOrder: ['button {', 'background: blue;', 'transition: background 0.3s;', '}'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe la pseudoclase :hover', startingCode: ':', validationRegex: '^:hover$', explanationIncorrect: 'Debe ser :hover' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade la pseudoclase que detecta cuando el mouse pasa por encima.', startingCode: ':', validationRegex: '^:hover$', explanationIncorrect: 'Debe ser :hover' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué propiedades se pueden animar con transition?', options: ['background-color', 'opacity', 'transform', 'border-radius'], correctAnswers: [0, 1, 2, 3] }
             ]
           }
@@ -362,7 +362,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Clasifica el rol de los elementos en Flexbox', categories: [{id: 'padre', title: 'Contenedor Padre (display: flex)', color: '#3b82f6'}, {id: 'hijo', title: 'Elementos Hijos (Flex items)', color: '#10b981'}], items: [{text: 'Contiene las reglas de alineación', category: 'padre'}, {text: 'Se ordenan en fila o columna', category: 'hijo'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿En qué línea está mal escrita la propiedad?', filename: 'style.css', lines: ['.padre {', '  flex-display: true;', '}'], errorLineIndex: 1, explanation: 'La propiedad correcta para encender Flexbox es display: flex;.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena la regla para encender Flexbox', items: ['display: flex;', '.box {', '}'], correctOrder: ['.box {', 'display: flex;', '}'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe display: flex;', startingCode: '  display: ', validationRegex: '^display:\\s*flex;$', explanationIncorrect: 'Debe ser display: flex;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Activa el modelo Flexbox en este contenedor.', startingCode: '  display: ', validationRegex: '^display:\\s*flex;$', explanationIncorrect: 'Debe ser display: flex;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Qué sucede inmediatamente al aplicar display: flex a un contenedor?', options: ['Los hijos directos se colocan en fila horizontal', 'Los hijos se convierten en elementos flex items', 'Se borra el texto del navegador', 'Se habilita la alineación con justify-content'], correctAnswers: [0, 1, 3] }
             ]
           },
@@ -379,7 +379,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'categorize', instruction: 'Asigna la propiedad según su eje', categories: [{id: 'horiz', title: 'Eje Principal (justify-content)', color: '#3b82f6'}, {id: 'vert', title: 'Eje Cruzado (align-items)', color: '#ec4899'}], items: [{text: 'Alineación horizontal', category: 'horiz'}, {text: 'Alineación vertical', category: 'vert'}] },
               { id: 'ex5', type: 'code-error', instruction: '¿Dónde se confundieron los nombres de las propiedades?', filename: 'style.css', lines: ['.caja {', '  display: flex;', '  align-content: center;', '}'], errorLineIndex: 2, explanation: 'Para alinear los items en el eje cruzado la propiedad es align-items: center;.' },
               { id: 'ex6', type: 'drag-sort', prompt: 'Ordena el centrado total con Flexbox', items: ['align-items: center;', 'justify-content: center;', 'display: flex;', '.hero {'], correctOrder: ['.hero {', 'display: flex;', 'justify-content: center;', 'align-items: center;'] },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe justify-content: center;', startingCode: '  justify-content: ', validationRegex: '^justify-content:\\s*center;$', explanationIncorrect: 'Debe ser justify-content: center;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Centra los elementos a lo largo del eje principal.', startingCode: '  justify-content: ', validationRegex: '^justify-content:\\s*center;$', explanationIncorrect: 'Debe ser justify-content: center;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de los siguientes son valores válidos para justify-content?', options: ['flex-start', 'center', 'flex-end', 'space-between'], correctAnswers: [0, 1, 2, 3] }
             ]
           },
@@ -395,7 +395,7 @@ export const curriculumCss = [
               { id: 'ex4', type: 'word-bank', instruction: 'Añade una separación de 15px entre elementos flex', filename: 'style.css', parts: ['.row {\n  display: flex;\n  ', '___', ': 15px;\n}'], words: ['gap', 'spacing', 'padding', 'margin'], answers: ['gap'] },
               { id: 'ex5', type: 'categorize', instruction: 'Clasifica los tipos de espaciado', categories: [{id: 'space', title: 'Distribución (justify-content)', color: '#10b981'}, {id: 'gap', title: 'Separación fija (gap)', color: '#f59e0b'}], items: [{text: 'space-between', category: 'space'}, {text: 'gap: 24px', category: 'gap'}, {text: 'space-around', category: 'space'}] },
               { id: 'ex6', type: 'code-error', instruction: '¿En qué línea está mal aplicada la propiedad gap?', filename: 'style.css', lines: ['.box {', '  flex-gap: 20px;', '}'], errorLineIndex: 1, explanation: 'La propiedad se llama simplemente gap: 20px;.' },
-              { id: 'ex7', type: 'code-typing', instruction: 'Escribe gap: 20px;', startingCode: '  gap: ', validationRegex: '^gap:\\s*20px;$', explanationIncorrect: 'Debe ser gap: 20px;' },
+              { id: 'ex7', type: 'code-typing', instruction: 'Añade una separación de 20 píxeles entre los elementos de la caja flexible.', startingCode: '  gap: ', validationRegex: '^gap:\\s*20px;$', explanationIncorrect: 'Debe ser gap: 20px;' },
               { id: 'ex8', type: 'multi-select', prompt: '¿Cuáles de estos valores de justify-content distribuyen espacio automáticamente?', options: ['space-between', 'space-around', 'space-evenly', 'center'], correctAnswers: [0, 1, 2] }
             ]
           }

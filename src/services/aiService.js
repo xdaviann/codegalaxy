@@ -106,25 +106,32 @@ export async function evaluateCodeWithAI({ instruction, expectedAnswers, validat
   if (expectedAnswers && expectedAnswers.length > 0) {
     reference = JSON.stringify(expectedAnswers);
   } else if (validationRegex) {
-    reference = `La intención es que coincida con esta expresión regular: ${validationRegex}`;
+    reference = `Regla de referencia: ${validationRegex}`;
   } else {
     reference = 'N/A';
   }
 
-  const prompt = `Eres un compilador y tutor experto en ${language} para la app educativa Cody.
-Consigna: "${instruction}"
-Respuestas esperadas/referencia: ${reference}
+  const prompt = `Actúa como un profesor de programación comprensivo, humano e indulgente en la app educativa Cody.
+Consigna dada al estudiante: "${instruction}"
+Referencia de respuesta esperada: ${reference}
 
 Código escrito por el estudiante:
 \`\`\`${language.toLowerCase()}
 ${userCode}
 \`\`\`
 
-Analiza si el código del estudiante cumple semánticamente con la consigna. Sé MUY permisivo con espacios extra, saltos de línea al principio o al final, o usar comillas simples en lugar de dobles. Concéntrate en si escribió correctamente la lógica o etiqueta pedida.
-Si la referencia es una expresión regular, úsala solo para entender qué se espera, pero permite flexibilidad humana (espacios, saltos de línea).
+REGLAS DE EVALUACIÓN INDULGENTE DE UN BUEN PROFESOR:
+1. Sé EXTREMADAMENTE permisivo y flexible:
+   - Acepta comillas simples (') o dobles (").
+   - Ignora diferencias de mayúsculas/minúsculas en nombres de atributos o valores si significan lo mismo (ej: 'foto' vs 'Foto').
+   - Permite espacios adicionales alrededor de '=' o dentro de las etiquetas.
+   - Permite saltos de línea antes, después o dentro del código.
+   - Si el estudiante escribió solo la propiedad/atributo solicitado (ej: alt="foto") o la etiqueta completa (ej: <img alt="foto">), ambas son VÁLIDAS.
+2. Si el intento del estudiante demuestra que comprendió y aplicó lo pedido en la consigna, RESPONDE CON "isCorrect": true.
+3. Responde únicamente con "isCorrect": false si el código carece por completo del concepto o tiene un error de sintaxis grave e insalvable.
 
-Responde ÚNICAMENTE en formato JSON estructurado como este, sin texto alrededor y sin bloques markdown:
-{"isCorrect": true, "feedback": "Explicación breve de 1 oración en español sobre por qué es correcto o qué error cometió."}`;
+Responde ÚNICAMENTE en formato JSON estructurado así (sin bloques markdown ni texto explicativo alrededor):
+{"isCorrect": true, "feedback": "Felicitación breve del profesor."}`;
 
   const rawResult = await callGemini(prompt, 5000);
   if (!rawResult) return null;
@@ -139,6 +146,52 @@ Responde ÚNICAMENTE en formato JSON estructurado como este, sin texto alrededor
     };
   } catch (e) {
     console.error('[AI Service] Error parseando JSON de Gemini:', e, rawResult);
+    return null;
+  }
+}
+
+/**
+ * Evalúa mediante IA el código de un desafío completo.
+ */
+export async function evaluateChallengeWithAI({ title, instruction, requirements, userCode, language = 'HTML' }) {
+  const reqList = (requirements || []).map((r, i) => `${i + 1}. ${r}`).join('\n');
+  const prompt = `Eres un tutor experto y compilador semántico de ${language} para la app educativa Cody.
+El estudiante debe resolver este desafío:
+Título: "${title}"
+Consigna: "${instruction}"
+
+Requisitos indispensables:
+${reqList}
+
+Código escrito por el estudiante:
+\`\`\`${language.toLowerCase()}
+${userCode}
+\`\`\`
+
+INSTRUCCIONES DE EVALUACIÓN:
+1. Revisa si el código cumple CADA UNO de los requisitos arriba listados.
+2. IMPORTANTE: En HTML, etiquetas como <h1>, <p>, <a>, <title> NO PUEDEN ESTAR VACÍAS (ej: <h1></h1> o <p></p>) si la consigna pide incluir información (como tu nombre, una presentación o texto en un enlace). Deben contener texto real dentro.
+3. IMPORTANTE: Revisa la jerarquía de etiquetas de HTML (por ejemplo, <body> NO puede estar dentro de <head>, <html> debe envolver head y body).
+4. Sé permisivo con espacios extra, comillas simples o dobles, pero estricto con que la solución sea completa, válida y con contenido real.
+
+Responde ÚNICAMENTE en formato JSON estructurado como este, sin texto alrededor y sin bloques markdown:
+{
+  "allPassed": false,
+  "evaluations": [
+    { "index": 0, "passed": true, "reason": "" },
+    { "index": 1, "passed": false, "reason": "La etiqueta <h1> está vacía y <body> está dentro de <head>." }
+  ],
+  "generalFeedback": "Explicación breve y amable de lo que falló o una felicitación si todo estuvo perfecto."
+}`;
+
+  const rawResult = await callGemini(prompt, 6000);
+  if (!rawResult) return null;
+
+  try {
+    const cleanedJson = rawResult.replace(/```json/gi, '').replace(/```/g, '').trim();
+    return JSON.parse(cleanedJson);
+  } catch (e) {
+    console.error('[AI Service] Error parseando JSON del desafío:', e, rawResult);
     return null;
   }
 }

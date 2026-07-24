@@ -78,7 +78,7 @@ export default function ModuleAccordion({ module, defaultOpen = false, onNoHeart
       {/* Lesson list — animated expand */}
       <div
         className="overflow-hidden transition-all duration-350 ease-in-out"
-        style={{ maxHeight: open ? `${module.lessons.length * 80 + 16}px` : '0px' }}
+        style={{ maxHeight: open ? `${module.lessons.length * 95 + 150}px` : '0px' }}
       >
         <div className="px-3 pb-3 flex flex-col gap-1.5">
           {module.lessons.map((lesson, i) => {

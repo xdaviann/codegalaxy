@@ -1,19 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, CheckCircle2, Circle, Play, Trophy } from 'lucide-react';
-import QuickSymbolKeyboard from './QuickSymbolKeyboard';
-import { evaluateCodeWithAI } from '../../services/aiService';
+import CodeEditor from '../ui/CodeEditor';
+import { evaluateChallengeWithAI } from '../../services/aiService';
 
 export default function ChallengeScreen({ lesson, onClose, onComplete }) {
   const [code, setCode] = useState(lesson.startingCode || '');
   const [results, setResults] = useState([]);
   const [success, setSuccess] = useState(false);
-  const [shakingIdxs, setShakingIdxs] = useState([]);
   const [evaluating, setEvaluating] = useState(false);
-  const [aiFeedback, setAiFeedback] = useState(null);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [shakingIdxs, setShakingIdxs] = useState([]);
   const textareaRef = useRef(null);
 
   const insertSymbol = (symbol) => {
-    if (success) return;
+    if (success || evaluating) return;
     const textarea = textareaRef.current;
     if (!textarea) return;
     
@@ -34,71 +34,73 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
       setResults(lesson.validators.map(v => ({ passed: false, desc: v.description })));
     }
     setSuccess(false);
-    setAiFeedback(null);
+    setEvaluating(false);
+    setFeedbackMessage('');
   }, [lesson]);
 
   const handleCheck = async () => {
-    if (!lesson.validators || evaluating) return;
+    if (!lesson.validators || evaluating || success || code.trim() === '') return;
     setEvaluating(true);
-    setAiFeedback(null);
+    setFeedbackMessage('');
 
-    // Use DOMParser as our "Smart Compiler"
-    const parser = new DOMParser();
-    
-    const isCSS = lesson.language === 'CSS';
-    
-    let doc;
-    if (isCSS) {
-      doc = parser.parseFromString(`<html><head><style>${code}</style></head><body>${lesson.dummyHtml || ''}</body></html>`, 'text/html');
-    } else {
-      doc = parser.parseFromString(code, 'text/html');
-    }
+    let newResults = [];
+    let allPassed = false;
 
-    const newResults = lesson.validators.map(validator => {
-      try {
-        const passed = validator.test(doc, code);
-        return { passed, desc: validator.description };
-      } catch (err) {
-        return { passed: false, desc: validator.description };
-      }
+    // Intentar evaluación inteligente con IA primero
+    const aiRes = await evaluateChallengeWithAI({
+      title: lesson.title,
+      instruction: lesson.instruction,
+      requirements: lesson.validators.map(v => v.description),
+      userCode: code,
+      language: lesson.language
     });
 
-    setResults(newResults);
-    
-    const allPassed = newResults.every(r => r.passed);
-    
-    if (!allPassed) {
-      setEvaluating(false);
-      const failedIdxs = newResults.map((r, i) => r.passed ? null : i).filter(i => i !== null);
-      setShakingIdxs(failedIdxs);
-      setTimeout(() => setShakingIdxs([]), 800);
-      import('../../utils/audio').then(({ playWrongSound }) => playWrongSound());
-      return;
-    }
-
-    // All structural validators passed. Let's do a semantic check with AI.
-    try {
-      const aiEval = await evaluateCodeWithAI({
-        instruction: lesson.instruction,
-        expectedAnswers: [],
-        validationRegex: "El estudiante debe haber escrito texto real dentro de las etiquetas, no etiquetas vacías.",
-        userCode: code,
-        language: lesson.language
+    if (aiRes && Array.isArray(aiRes.evaluations)) {
+      newResults = lesson.validators.map((v, i) => {
+        const ev = aiRes.evaluations.find(e => e.index === i);
+        return {
+          passed: ev ? Boolean(ev.passed) : Boolean(aiRes.allPassed),
+          desc: v.description,
+          reason: ev?.reason || ''
+        };
       });
-
-      if (aiEval && !aiEval.isCorrect) {
-        setAiFeedback(aiEval.feedback);
-        setEvaluating(false);
-        import('../../utils/audio').then(({ playWrongSound }) => playWrongSound());
-        return;
+      allPassed = Boolean(aiRes.allPassed);
+      if (aiRes.generalFeedback) {
+        setFeedbackMessage(aiRes.generalFeedback);
       }
-    } catch (err) {
-      console.error(err);
+    } else {
+      // Fallback a validadores locales si la IA no responde
+      const parser = new DOMParser();
+      const isCSS = lesson.language === 'CSS';
+      let doc = isCSS 
+        ? parser.parseFromString(`<html><head><style>${code}</style></head><body>${lesson.dummyHtml || ''}</body></html>`, 'text/html')
+        : parser.parseFromString(code, 'text/html');
+
+      newResults = lesson.validators.map(validator => {
+        try {
+          const passed = validator.test(doc, code);
+          return { passed, desc: validator.description };
+        } catch (err) {
+          return { passed: false, desc: validator.description };
+        }
+      });
+      allPassed = newResults.every(r => r.passed);
     }
 
+    setResults(newResults);
     setEvaluating(false);
-    setSuccess(true);
-    import('../../utils/audio').then(({ playCorrectSound }) => playCorrectSound());
+
+    import('../../utils/audio').then(({ playCorrectSound, playWrongSound }) => {
+      if (allPassed) {
+        setSuccess(true);
+        playCorrectSound();
+      } else {
+        const failedIdxs = newResults.map((r, i) => r.passed ? null : i).filter(i => i !== null);
+        setShakingIdxs(failedIdxs);
+        setTimeout(() => setShakingIdxs([]), 800);
+        playWrongSound();
+      }
+    });
   };
 
   const handleFinish = () => {
@@ -131,44 +133,15 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
             <p className="text-gray-600 leading-relaxed">{lesson.instruction}</p>
           </div>
 
-          <div className="flex-1 flex flex-col rounded-2xl overflow-hidden border-2 border-border-subtle bg-[#1e1e2e] shadow-inner relative min-h-[300px]">
-            <div className="bg-[#181825] px-4 py-3 border-b border-white/5 flex items-center justify-between">
-              <span className="text-xs font-mono text-white/50 uppercase tracking-widest">
-                index.{lesson.language === 'CSS' ? 'css' : 'html'}
-              </span>
-            </div>
-            <textarea
-              ref={textareaRef}
+          <div className="flex-1 flex flex-col min-h-[320px]">
+            <CodeEditor
               value={code}
-              onChange={(e) => {
-                let val = e.target.value;
-                if (val.includes('\\n')) {
-                  val = val.replace(/\\n/g, '\n');
-                }
-                setCode(val);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  const start = e.target.selectionStart;
-                  const end = e.target.selectionEnd;
-                  setCode(code.substring(0, start) + '\n' + code.substring(end));
-                  setTimeout(() => {
-                    e.target.selectionStart = e.target.selectionEnd = start + 1;
-                  }, 0);
-                }
-              }}
-              disabled={success}
+              onChange={setCode}
+              language={lesson.language}
+              disabled={success || evaluating}
               placeholder="Escribe tu código aquí..."
-              spellCheck="false"
-              autoCapitalize="none"
-              autoComplete="off"
-              autoCorrect="off"
-              className="flex-1 w-full p-5 bg-transparent text-[#c0caf5] font-mono text-base leading-relaxed resize-none focus:outline-none focus:ring-0 placeholder:text-white/20 disabled:opacity-70 transition-opacity"
+              minHeight="320px"
             />
-            {!success && (
-              <QuickSymbolKeyboard language={lesson.language} onInsert={insertSymbol} />
-            )}
           </div>
         </div>
 
@@ -180,50 +153,58 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
               {results.map((res, i) => {
                 const isShaking = shakingIdxs.includes(i);
                 return (
-                  <div
-                    key={i}
-                    className={`flex items-start gap-3 p-3 rounded-xl border transition-all duration-300 ${
-                      res.passed
-                        ? 'bg-accent-green/10 border-accent-green/30'
-                        : isShaking
-                          ? 'bg-red-100 border-red-400 animate-shake'
-                          : 'bg-bg-tertiary border-transparent'
-                    }`}
-                  >
-                    {res.passed ? (
-                      <CheckCircle2 size={20} className="text-accent-green flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <Circle size={20} className={`flex-shrink-0 mt-0.5 ${isShaking ? 'text-red-500' : 'text-text-muted'}`} />
+                  <div key={i} className="flex flex-col gap-1">
+                    <div
+                      className={`flex items-start gap-3 p-3 rounded-xl border transition-all duration-300 ${
+                        res.passed
+                          ? 'bg-accent-green/10 border-accent-green/30'
+                          : isShaking
+                            ? 'bg-red-100 border-red-400 animate-shake'
+                            : 'bg-bg-tertiary border-transparent'
+                      }`}
+                    >
+                      {res.passed ? (
+                        <CheckCircle2 size={20} className="text-accent-green flex-shrink-0 mt-0.5" />
+                      ) : (
+                        <Circle size={20} className={`flex-shrink-0 mt-0.5 ${isShaking ? 'text-red-500' : 'text-text-muted'}`} />
+                      )}
+                      <span className={`text-sm leading-tight ${
+                        res.passed
+                          ? 'text-accent-green font-medium'
+                          : isShaking
+                            ? 'text-red-600 font-semibold'
+                            : 'text-text-secondary'
+                      }`}>
+                        {res.desc}
+                      </span>
+                    </div>
+                    {res.reason && !res.passed && (
+                      <span className="text-[11px] text-red-500 px-3 font-medium">
+                        ↳ {res.reason}
+                      </span>
                     )}
-                    <span className={`text-sm leading-tight ${
-                      res.passed
-                        ? 'text-accent-green font-medium'
-                        : isShaking
-                          ? 'text-red-600 font-semibold'
-                          : 'text-text-secondary'
-                    }`}>
-                      {res.desc}
-                    </span>
                   </div>
                 );
               })}
             </div>
           </div>
 
-          {aiFeedback && (
-            <div className="rounded-xl border border-accent-red/40 bg-accent-red/10 px-4 py-3 animate-fade-in-up">
-              <p className="text-accent-red text-sm font-semibold">🤖 {aiFeedback}</p>
+          {feedbackMessage && !success && (
+            <div className="bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl text-xs font-medium leading-relaxed animate-fade-in">
+              💡 <span className="font-bold">Sugerencia de Cody:</span> {feedbackMessage}
             </div>
           )}
 
           {!success ? (
             <button
               onClick={handleCheck}
-              disabled={evaluating}
-              className="mt-auto py-4 rounded-2xl font-bold text-sm tracking-wide bg-indigo-600 text-white hover:bg-indigo-500 active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(99,102,241,0.4)] flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              disabled={code.trim() === '' || evaluating}
+              className={`mt-auto py-4 rounded-2xl font-bold text-sm tracking-wide bg-indigo-600 text-white hover:bg-indigo-500 active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(99,102,241,0.4)] flex justify-center items-center gap-2 ${
+                evaluating || code.trim() === '' ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
             >
               <Play size={18} className="fill-white" />
-              {evaluating ? 'EVALUANDO...' : 'EJECUTAR CÓDIGO'}
+              {evaluating ? 'EVALUANDO CON IA...' : 'EJECUTAR CÓDIGO'}
             </button>
           ) : (
             <div className="mt-auto animate-fade-in-up">

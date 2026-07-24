@@ -1,18 +1,11 @@
 import { curriculumHtml } from './curriculum-html.js';
 import { curriculumCss } from './curriculum-css.js';
+import { curriculumJs } from './curriculum-js.js';
 
 export const curriculum = [
   ...curriculumHtml,
   ...curriculumCss,
-  {
-    id: 'js-1',
-    title: 'JavaScript Básico',
-    description: 'Próximamente — ¡Haz que tu web cobre vida!',
-    color: '#f39c12',
-    language: 'JS',
-    locked: true,
-    lessons: [],
-  },
+  ...curriculumJs,
 ];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────

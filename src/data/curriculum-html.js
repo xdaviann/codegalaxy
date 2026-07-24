@@ -247,16 +247,29 @@ export const curriculumHtml = [
         startingCode: '<!DOCTYPE html>\n<html>\n  \n</html>',
         validators: [
           {
-            description: 'Debe contener las etiquetas <head> y <title>',
-            test: (doc, code) => code.toLowerCase().includes('<head') && code.toLowerCase().includes('<title')
+            description: 'Debe contener las etiquetas <head> y <title> con texto',
+            test: (doc, code) => {
+              const head = doc.querySelector('head');
+              const title = doc.querySelector('title');
+              return head !== null && title !== null && title.textContent.trim().length > 0;
+            }
           },
           {
-            description: 'Debe contener un <body> con un <h1>',
-            test: (doc, code) => code.toLowerCase().includes('<body') && code.toLowerCase().includes('<h1')
+            description: 'Debe contener un <body> con un <h1> que tenga tu nombre',
+            test: (doc, code) => {
+              const body = doc.querySelector('body');
+              const h1 = doc.querySelector('h1');
+              const isHeadContainingBody = code.toLowerCase().indexOf('<head') < code.toLowerCase().indexOf('<body') && code.toLowerCase().indexOf('</head>') > code.toLowerCase().indexOf('<body');
+              return body !== null && h1 !== null && h1.textContent.trim().length > 0 && !isHeadContainingBody;
+            }
           },
           {
-            description: 'Debe incluir un párrafo <p> y un enlace <a href="...">',
-            test: (doc, code) => code.toLowerCase().includes('<p') && code.toLowerCase().includes('<a ') && code.toLowerCase().includes('href=')
+            description: 'Debe incluir un párrafo <p> presentándote y un enlace <a href="..."> con texto',
+            test: (doc, code) => {
+              const p = doc.querySelector('p');
+              const a = doc.querySelector('a[href]');
+              return p !== null && a !== null && p.textContent.trim().length > 0 && a.textContent.trim().length > 0;
+            }
           }
         ]
       },

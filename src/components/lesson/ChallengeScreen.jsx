@@ -80,7 +80,7 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
     try {
       const aiEval = await evaluateCodeWithAI({
         instruction: lesson.instruction,
-        expectedAnswers: null,
+        expectedAnswers: [],
         validationRegex: "El estudiante debe haber escrito texto real dentro de las etiquetas, no etiquetas vacías.",
         userCode: code,
         language: lesson.language

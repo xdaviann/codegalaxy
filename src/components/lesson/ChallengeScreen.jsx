@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, CheckCircle2, Circle, Play, Trophy } from 'lucide-react';
 import QuickSymbolKeyboard from './QuickSymbolKeyboard';
+import { evaluateCodeWithAI } from '../../services/aiService';
 
 export default function ChallengeScreen({ lesson, onClose, onComplete }) {
   const [code, setCode] = useState(lesson.startingCode || '');
   const [results, setResults] = useState([]);
   const [success, setSuccess] = useState(false);
   const [shakingIdxs, setShakingIdxs] = useState([]);
+  const [evaluating, setEvaluating] = useState(false);
+  const [aiFeedback, setAiFeedback] = useState(null);
   const textareaRef = useRef(null);
 
   const insertSymbol = (symbol) => {
@@ -31,10 +34,13 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
       setResults(lesson.validators.map(v => ({ passed: false, desc: v.description })));
     }
     setSuccess(false);
+    setAiFeedback(null);
   }, [lesson]);
 
-  const handleCheck = () => {
-    if (!lesson.validators) return;
+  const handleCheck = async () => {
+    if (!lesson.validators || evaluating) return;
+    setEvaluating(true);
+    setAiFeedback(null);
 
     // Use DOMParser as our "Smart Compiler"
     const parser = new DOMParser();
@@ -61,18 +67,38 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
     
     const allPassed = newResults.every(r => r.passed);
     
-    import('../../utils/audio').then(({ playCorrectSound, playWrongSound }) => {
-      if (allPassed) {
-        setSuccess(true);
-        playCorrectSound();
-      } else {
-        // Trigger shake + red flash on failed validators
-        const failedIdxs = newResults.map((r, i) => r.passed ? null : i).filter(i => i !== null);
-        setShakingIdxs(failedIdxs);
-        setTimeout(() => setShakingIdxs([]), 800);
-        playWrongSound();
+    if (!allPassed) {
+      setEvaluating(false);
+      const failedIdxs = newResults.map((r, i) => r.passed ? null : i).filter(i => i !== null);
+      setShakingIdxs(failedIdxs);
+      setTimeout(() => setShakingIdxs([]), 800);
+      import('../../utils/audio').then(({ playWrongSound }) => playWrongSound());
+      return;
+    }
+
+    // All structural validators passed. Let's do a semantic check with AI.
+    try {
+      const aiEval = await evaluateCodeWithAI({
+        instruction: lesson.instruction,
+        expectedAnswers: null,
+        validationRegex: "El estudiante debe haber escrito texto real dentro de las etiquetas, no etiquetas vacías.",
+        userCode: code,
+        language: lesson.language
+      });
+
+      if (aiEval && !aiEval.isCorrect) {
+        setAiFeedback(aiEval.feedback);
+        setEvaluating(false);
+        import('../../utils/audio').then(({ playWrongSound }) => playWrongSound());
+        return;
       }
-    });
+    } catch (err) {
+      console.error(err);
+    }
+
+    setEvaluating(false);
+    setSuccess(true);
+    import('../../utils/audio').then(({ playCorrectSound }) => playCorrectSound());
   };
 
   const handleFinish = () => {
@@ -184,13 +210,20 @@ export default function ChallengeScreen({ lesson, onClose, onComplete }) {
             </div>
           </div>
 
+          {aiFeedback && (
+            <div className="rounded-xl border border-accent-red/40 bg-accent-red/10 px-4 py-3 animate-fade-in-up">
+              <p className="text-accent-red text-sm font-semibold">🤖 {aiFeedback}</p>
+            </div>
+          )}
+
           {!success ? (
             <button
               onClick={handleCheck}
-              className="mt-auto py-4 rounded-2xl font-bold text-sm tracking-wide bg-indigo-600 text-white hover:bg-indigo-500 active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(99,102,241,0.4)] flex justify-center items-center gap-2"
+              disabled={evaluating}
+              className="mt-auto py-4 rounded-2xl font-bold text-sm tracking-wide bg-indigo-600 text-white hover:bg-indigo-500 active:scale-95 transition-all duration-200 shadow-[0_0_20px_rgba(99,102,241,0.4)] flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <Play size={18} className="fill-white" />
-              EJECUTAR CÓDIGO
+              {evaluating ? 'EVALUANDO...' : 'EJECUTAR CÓDIGO'}
             </button>
           ) : (
             <div className="mt-auto animate-fade-in-up">

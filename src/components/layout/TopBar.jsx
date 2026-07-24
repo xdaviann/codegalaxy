@@ -29,6 +29,15 @@ export default function TopBar({
   const { secondsLeft } = useHeartRefill(user, userData, refreshUserData);
   const countdown = formatCountdown(secondsLeft);
 
+  const isStreakActiveToday = (() => {
+    if (!userData?.lastActivityDate) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const lastDate = userData.lastActivityDate?.toDate ? userData.lastActivityDate.toDate() : new Date(userData.lastActivityDate);
+    lastDate.setHours(0, 0, 0, 0);
+    return today.getTime() === lastDate.getTime();
+  })();
+
   useEffect(() => {
     if (!menuOpen) return;
     const close = (e) => { if (!menuRef.current?.contains(e.target)) setMenuOpen(false); };
@@ -105,8 +114,12 @@ export default function TopBar({
           </button>
 
           {/* Streak */}
-          <div className="flex items-center gap-1 bg-orange-50 border border-orange-200 rounded-full px-2 sm:px-2.5 py-1.5 text-[11px] sm:text-xs font-bold text-orange-600 shrink-0">
-            <Flame size={13} className="fill-accent-orange text-accent-orange" />
+          <div className={`flex items-center gap-1 rounded-full px-2 sm:px-2.5 py-1.5 text-[11px] sm:text-xs font-bold shrink-0 transition-colors ${
+            isStreakActiveToday 
+              ? 'bg-orange-50 border border-orange-200 text-orange-600' 
+              : 'bg-bg-tertiary border border-border text-text-secondary opacity-90'
+          }`}>
+            <Flame size={13} className={isStreakActiveToday ? "fill-accent-orange text-accent-orange" : "fill-text-muted/30 text-text-muted"} />
             <span>{streak}</span>
           </div>
 
